@@ -1,6 +1,11 @@
 import { and, eq, inArray } from 'drizzle-orm'
 import { db, dbPool } from '@/lib/db/client'
-import { incomeSources, occurrences, transactions } from '@/lib/db/schema'
+import {
+  accounts,
+  incomeSources,
+  occurrences,
+  transactions,
+} from '@/lib/db/schema'
 import type { Currency } from '@/lib/money/money'
 
 export type ConfirmResult = { ok: true } | { ok: false; error: string }
@@ -34,14 +39,26 @@ async function loadSource(
   tx: DbTx,
   kind: OccurrenceKind,
   sourceId: string,
+  userId: string,
 ): Promise<SourceInfo> {
   switch (kind) {
     case 'income': {
+      // Join accounts so a stale pending occurrence can never post into a
+      // write-frozen (archived) account (P2 invariant). Shared by P4/P5.
       const [s] = await tx
-        .select()
+        .select({
+          accountId: incomeSources.accountId,
+          currency: incomeSources.currency,
+          name: incomeSources.name,
+          archivedAt: accounts.archivedAt,
+        })
         .from(incomeSources)
-        .where(eq(incomeSources.id, sourceId))
+        .innerJoin(accounts, eq(incomeSources.accountId, accounts.id))
+        .where(
+          and(eq(incomeSources.id, sourceId), eq(incomeSources.userId, userId)),
+        )
       if (!s) throw new ConfirmError('Income source not found')
+      if (s.archivedAt) throw new ConfirmError('Account is archived')
       return { accountId: s.accountId, currency: s.currency, name: s.name }
     }
     default:
@@ -73,7 +90,7 @@ export async function confirmOccurrence(params: {
       if (!occ)
         throw new ConfirmError('Occurrence not found or already settled')
 
-      const source = await loadSource(tx, occ.kind, occ.sourceId)
+      const source = await loadSource(tx, occ.kind, occ.sourceId, userId)
 
       const [txn] = await tx
         .insert(transactions)

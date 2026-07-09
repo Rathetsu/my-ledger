@@ -1,6 +1,6 @@
 'use server'
 
-import { and, eq, isNull } from 'drizzle-orm'
+import { and, eq, gt, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { dueDateFor } from '@/lib/dates/cairo'
@@ -130,6 +130,27 @@ export async function updateIncomeSource(
             dueDate: dueDateFor(occ.period, parsed.data.dayOfMonth),
           })
           .where(eq(occurrences.id, occ.id))
+      }
+
+      // recurring true->false: a non-recurring source keeps at most one pending
+      // occurrence. Housekeeping seeds current + next; drop everything after the
+      // earliest period (string min works on 'YYYY-MM'). Deterministic, no "today".
+      if (!parsed.data.recurring && pending.length >= 2) {
+        const minPeriod = pending.reduce(
+          (m, o) => (o.period < m ? o.period : m),
+          pending[0].period,
+        )
+        await tx
+          .delete(occurrences)
+          .where(
+            and(
+              eq(occurrences.userId, user.id),
+              eq(occurrences.kind, 'income'),
+              eq(occurrences.sourceId, id),
+              eq(occurrences.status, 'pending'),
+              gt(occurrences.period, minPeriod),
+            ),
+          )
       }
     })
   } catch (e) {

@@ -25,6 +25,23 @@ export default async function EditIncomeSourcePage({
     })
     .from(accounts)
     .where(and(eq(accounts.userId, user.id), isNull(accounts.archivedAt)))
+  // The <select> defaults to source.accountId; if that account is now archived
+  // it's missing from the list and the browser would silently retarget the
+  // source on save. Keep the current account present (labelled) so it stays put.
+  if (!accountRows.some((a) => a.id === source.accountId)) {
+    const [current] = await db
+      .select({
+        id: accounts.id,
+        name: accounts.name,
+        currency: accounts.currency,
+      })
+      .from(accounts)
+      .where(
+        and(eq(accounts.id, source.accountId), eq(accounts.userId, user.id)),
+      )
+    if (current)
+      accountRows.push({ ...current, name: `${current.name} (archived)` })
+  }
   return (
     <main>
       <h1 className="px-4 py-3 text-lg font-semibold">Edit income source</h1>

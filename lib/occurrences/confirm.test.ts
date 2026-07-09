@@ -90,6 +90,29 @@ describe('confirmOccurrence', () => {
     expect(result).toEqual({ ok: true })
   })
 
+  it('refuses to post into an archived (write-frozen) account', async () => {
+    const { userId, account, occ } = await seed()
+    await db
+      .update(accounts)
+      .set({ archivedAt: new Date() })
+      .where(eq(accounts.id, account.id))
+    const result = await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 250000,
+      actualDate: '2026-07-25',
+    })
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.error).toMatch(/archived/i)
+    // The rollback must leave no transaction behind for this occurrence.
+    expect(
+      await db
+        .select()
+        .from(transactions)
+        .where(eq(transactions.sourceId, occ.id)),
+    ).toHaveLength(0)
+  })
+
   it('rejects a second confirm (guard on status)', async () => {
     const { userId, occ } = await seed()
     await confirmOccurrence({
