@@ -26,7 +26,7 @@
 
 **Files:**
 - Modify: `lib/db/schema.ts` (replace the empty baseline)
-- Create: `drizzle/0000_*.sql` (generated, then hand-edited to append the seed row)
+- Create: the newly generated migration `.sql` (it will be `drizzle/0001_*.sql`, since P0's `0000_*` holds the Better Auth tables), then hand-edited to append the seed row
 
 **Interfaces:**
 - Consumes: `db`/`dbPool` and drizzle-kit scripts from P0 Task 4.
@@ -34,7 +34,7 @@
 
 **Steps:**
 
-- [ ] Replace `lib/db/schema.ts` with the four P1 tables (spec §4). Note: `category_id` is a plain nullable uuid for now; the `expense_categories` table and its FK arrive in P6.
+- [ ] Extend `lib/db/schema.ts`: KEEP the existing `export * from './auth-schema'` line (the Better Auth tables generated in P0) and ADD the four P1 tables (spec §4). Do NOT drop the auth re-export, or the next `db:generate` will diff the auth tables out of the schema and emit DROP statements against the live DB. Note: `category_id` is a plain nullable uuid for now; the `expense_categories` table and its FK arrive in P6.
 
 ```ts
 import {
@@ -48,6 +48,10 @@ import {
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core'
+
+// Keep the Better Auth tables (generated in P0) part of the Drizzle schema,
+// or db:generate will try to drop them.
+export * from './auth-schema'
 
 export const currencyEnum = pgEnum('currency', ['EUR', 'USD', 'EGP'])
 
@@ -114,7 +118,7 @@ export const settings = pgTable('settings', {
 
 ponytail: no indexes yet, personal-scale row counts; add them when a query is measurably slow.
 
-- [ ] Generate the migration: `npm run db:generate`. Expected: a new `drizzle/0000_*.sql` creating both enums and all four tables.
+- [ ] Generate the migration: `npm run db:generate`. Expected: a new `drizzle/0001_*.sql` creating both enums and all four P1 tables (and NO changes to the P0 Better Auth tables; if you see DROP statements for user/session/account/verification, the auth re-export was lost, fix schema.ts and regenerate).
 - [ ] Append the hardcoded seed rates row to the END of that generated `.sql` file (editing is safe: this migration has never been applied anywhere). The stale `fetched_at` makes the first real `getRates()` call refresh immediately, while still giving a last-good fallback if that fetch fails:
 
 ```sql
