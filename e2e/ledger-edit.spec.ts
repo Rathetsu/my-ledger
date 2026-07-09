@@ -73,6 +73,7 @@ test('transfer group edits and deletes as a unit; legs are not directly editable
     .first()
     .fill('250.00')
   await page.getByRole('button', { name: 'Save transfer' }).click()
+  await expect(page.getByText('-$250.00')).toBeVisible()
   await page.goto('/accounts')
   await expect(page.getByRole('link', { name: new RegExp(a) })).toContainText(
     '$250.00',
