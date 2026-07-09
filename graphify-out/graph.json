@@ -6,12 +6,1002 @@
     {
       "label": "page.tsx",
       "file_type": "code",
+      "source_file": "app/(app)/income/[id]/edit/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_app_income_id_edit_page",
+      "community": 71,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "EditIncomeSourcePage()",
+      "file_type": "code",
+      "source_file": "app/(app)/income/[id]/edit/page.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_app_income_id_edit_page_editincomesourcepage",
+      "community": 71,
+      "norm_label": "editincomesourcepage()"
+    },
+    {
+      "label": "accounts.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_actions_accounts",
+      "community": 57,
+      "norm_label": "accounts.ts"
+    },
+    {
+      "label": "ActionState",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_actionstate",
+      "community": 57,
+      "norm_label": "actionstate"
+    },
+    {
+      "label": "createAccountSchema",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_createaccountschema",
+      "community": 57,
+      "norm_label": "createaccountschema"
+    },
+    {
+      "label": "createAccount()",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_createaccount",
+      "community": 57,
+      "norm_label": "createaccount()"
+    },
+    {
+      "label": "renameSchema",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L71",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_renameschema",
+      "community": 57,
+      "norm_label": "renameschema"
+    },
+    {
+      "label": "renameAccount()",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_renameaccount",
+      "community": 57,
+      "norm_label": "renameaccount()"
+    },
+    {
+      "label": "archiveAccount()",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L96",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_archiveaccount",
+      "community": 57,
+      "norm_label": "archiveaccount()"
+    },
+    {
+      "label": "income.test.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/income.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_actions_income_test",
+      "community": 72,
+      "norm_label": "income.test.ts"
+    },
+    {
+      "label": "seedThreePending()",
+      "file_type": "code",
+      "source_file": "lib/actions/income.test.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "lib_actions_income_test_seedthreepending",
+      "community": 72,
+      "norm_label": "seedthreepending()"
+    },
+    {
+      "label": "income.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_actions_income",
+      "community": 66,
+      "norm_label": "income.ts"
+    },
+    {
+      "label": "ActionResult",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "lib_actions_income_actionresult",
+      "community": 66,
+      "norm_label": "actionresult"
+    },
+    {
+      "label": "UpdateIncomeSourceError",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "lib_actions_income_updateincomesourceerror",
+      "community": 66,
+      "norm_label": "updateincomesourceerror"
+    },
+    {
+      "label": "ownedActiveAccount()",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "lib_actions_income_ownedactiveaccount",
+      "community": 66,
+      "norm_label": "ownedactiveaccount()"
+    },
+    {
+      "label": "parseAmount()",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "lib_actions_income_parseamount",
+      "community": 66,
+      "norm_label": "parseamount()"
+    },
+    {
+      "label": "createIncomeSource()",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "lib_actions_income_createincomesource",
+      "community": 66,
+      "norm_label": "createincomesource()"
+    },
+    {
+      "label": "updateIncomeSource()",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "lib_actions_income_updateincomesource",
+      "community": 66,
+      "norm_label": "updateincomesource()"
+    },
+    {
+      "label": "setIncomeSourceActive()",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L167",
+      "_origin": "ast",
+      "id": "lib_actions_income_setincomesourceactive",
+      "community": 66,
+      "norm_label": "setincomesourceactive()"
+    },
+    {
+      "label": "addWindfall()",
+      "file_type": "code",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L184",
+      "_origin": "ast",
+      "id": "lib_actions_income_addwindfall",
+      "community": 66,
+      "norm_label": "addwindfall()"
+    },
+    {
+      "label": "queries.ts",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_db_queries",
+      "community": 57,
+      "norm_label": "queries.ts"
+    },
+    {
+      "label": "accountBalanceMinor()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "lib_db_queries_accountbalanceminor",
+      "community": 57,
+      "norm_label": "accountbalanceminor()"
+    },
+    {
+      "label": "totalsByCurrency()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "lib_db_queries_totalsbycurrency",
+      "community": 57,
+      "norm_label": "totalsbycurrency()"
+    },
+    {
+      "label": "archiveBlockers()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "lib_db_queries_archiveblockers",
+      "community": 57,
+      "norm_label": "archiveblockers()"
+    },
+    {
+      "label": "getSettings()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "lib_db_queries_getsettings",
+      "community": 57,
+      "norm_label": "getsettings()"
+    },
+    {
+      "label": "confirm.test.ts",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_test",
+      "community": 64,
+      "norm_label": "confirm.test.ts"
+    },
+    {
+      "label": "seed()",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.test.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_test_seed",
+      "community": 64,
+      "norm_label": "seed()"
+    },
+    {
+      "label": "confirm.ts",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm",
+      "community": 64,
+      "norm_label": "confirm.ts"
+    },
+    {
+      "label": "ConfirmResult",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_confirmresult",
+      "community": 64,
+      "norm_label": "confirmresult"
+    },
+    {
+      "label": "OccurrenceKind",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_occurrencekind",
+      "community": 64,
+      "norm_label": "occurrencekind"
+    },
+    {
+      "label": "ConfirmError",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_confirmerror",
+      "community": 64,
+      "norm_label": "confirmerror"
+    },
+    {
+      "label": "TXN_TYPE",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_txn_type",
+      "community": 64,
+      "norm_label": "txn_type"
+    },
+    {
+      "label": "TXN_SIGN",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_txn_sign",
+      "community": 64,
+      "norm_label": "txn_sign"
+    },
+    {
+      "label": "SOURCE_TYPE",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_source_type",
+      "community": 64,
+      "norm_label": "source_type"
+    },
+    {
+      "label": "DbTx",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_dbtx",
+      "community": 64,
+      "norm_label": "dbtx"
+    },
+    {
+      "label": "SourceInfo",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_sourceinfo",
+      "community": 64,
+      "norm_label": "sourceinfo"
+    },
+    {
+      "label": "loadSource()",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_loadsource",
+      "community": 64,
+      "norm_label": "loadsource()"
+    },
+    {
+      "label": "confirmOccurrence()",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_confirmoccurrence",
+      "community": 64,
+      "norm_label": "confirmoccurrence()"
+    },
+    {
+      "label": "skipOccurrence()",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L123",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_skipoccurrence",
+      "community": 64,
+      "norm_label": "skipoccurrence()"
+    },
+    {
+      "label": "unconfirmOccurrence()",
+      "file_type": "code",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L143",
+      "_origin": "ast",
+      "id": "lib_occurrences_confirm_unconfirmoccurrence",
+      "community": 64,
+      "norm_label": "unconfirmoccurrence()"
+    },
+    {
+      "label": "income.spec.ts",
+      "file_type": "code",
+      "source_file": "e2e/income.spec.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 69,
+      "norm_label": "income.spec.ts",
+      "id": "e2e_income_spec"
+    },
+    {
+      "label": "createAccount()",
+      "file_type": "code",
+      "source_file": "e2e/income.spec.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "community": 69,
+      "norm_label": "createaccount()",
+      "id": "e2e_income_spec_createaccount"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "page.tsx",
+      "id": "app_app_page"
+    },
+    {
+      "label": "isStale()",
+      "file_type": "code",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "isstale()",
+      "id": "app_app_page_isstale"
+    },
+    {
+      "label": "HomePage()",
+      "file_type": "code",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "homepage()",
+      "id": "app_app_page_homepage"
+    },
+    {
+      "label": "attention-list.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "attention-list.tsx",
+      "id": "components_dashboard_attention_list"
+    },
+    {
+      "label": "CTA",
+      "file_type": "code",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "cta",
+      "id": "components_dashboard_attention_list_cta"
+    },
+    {
+      "label": "AttentionList()",
+      "file_type": "code",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "attentionlist()",
+      "id": "components_dashboard_attention_list_attentionlist"
+    },
+    {
+      "label": "confirm-sheet.tsx",
+      "file_type": "code",
+      "source_file": "components/occurrences/confirm-sheet.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "confirm-sheet.tsx",
+      "id": "components_occurrences_confirm_sheet"
+    },
+    {
+      "label": "ConfirmSheet()",
+      "file_type": "code",
+      "source_file": "components/occurrences/confirm-sheet.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "confirmsheet()",
+      "id": "components_occurrences_confirm_sheet_confirmsheet"
+    },
+    {
+      "label": "attention.ts",
+      "file_type": "code",
+      "source_file": "lib/occurrences/attention.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "attention.ts",
+      "id": "lib_occurrences_attention"
+    },
+    {
+      "label": "AttentionItem",
+      "file_type": "code",
+      "source_file": "lib/occurrences/attention.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "attentionitem",
+      "id": "lib_occurrences_attention_attentionitem"
+    },
+    {
+      "label": "getAttentionItems()",
+      "file_type": "code",
+      "source_file": "lib/occurrences/attention.ts",
+      "source_location": "L16",
+      "_origin": "ast",
+      "community": 62,
+      "norm_label": "getattentionitems()",
+      "id": "lib_occurrences_attention_getattentionitems"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/(app)/income/new/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 17,
+      "norm_label": "page.tsx",
+      "id": "app_app_income_new_page"
+    },
+    {
+      "label": "NewIncomeSourcePage()",
+      "file_type": "code",
+      "source_file": "app/(app)/income/new/page.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 17,
+      "norm_label": "newincomesourcepage()",
+      "id": "app_app_income_new_page_newincomesourcepage"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/(app)/income/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 68,
+      "norm_label": "page.tsx",
+      "id": "app_app_income_page"
+    },
+    {
+      "label": "IncomePage()",
+      "file_type": "code",
+      "source_file": "app/(app)/income/page.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "community": 68,
+      "norm_label": "incomepage()",
+      "id": "app_app_income_page_incomepage"
+    },
+    {
+      "label": "bottom-tabs.tsx",
+      "file_type": "code",
+      "source_file": "components/bottom-tabs.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 33,
+      "norm_label": "bottom-tabs.tsx",
+      "id": "components_bottom_tabs"
+    },
+    {
+      "label": "TABS",
+      "file_type": "code",
+      "source_file": "components/bottom-tabs.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 33,
+      "norm_label": "tabs",
+      "id": "components_bottom_tabs_tabs"
+    },
+    {
+      "label": "BottomTabs()",
+      "file_type": "code",
+      "source_file": "components/bottom-tabs.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "community": 33,
+      "norm_label": "bottomtabs()",
+      "id": "components_bottom_tabs_bottomtabs"
+    },
+    {
+      "label": "income-source-form.tsx",
+      "file_type": "code",
+      "source_file": "components/income/income-source-form.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 17,
+      "norm_label": "income-source-form.tsx",
+      "id": "components_income_income_source_form"
+    },
+    {
+      "label": "AccountOption",
+      "file_type": "code",
+      "source_file": "components/income/income-source-form.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "community": 17,
+      "norm_label": "accountoption",
+      "id": "components_income_income_source_form_accountoption"
+    },
+    {
+      "label": "SourceValues",
+      "file_type": "code",
+      "source_file": "components/income/income-source-form.tsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "community": 17,
+      "norm_label": "sourcevalues",
+      "id": "components_income_income_source_form_sourcevalues"
+    },
+    {
+      "label": "IncomeSourceForm()",
+      "file_type": "code",
+      "source_file": "components/income/income-source-form.tsx",
+      "source_location": "L27",
+      "_origin": "ast",
+      "community": 17,
+      "norm_label": "incomesourceform()",
+      "id": "components_income_income_source_form_incomesourceform"
+    },
+    {
+      "label": "windfall-form.tsx",
+      "file_type": "code",
+      "source_file": "components/income/windfall-form.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 68,
+      "norm_label": "windfall-form.tsx",
+      "id": "components_income_windfall_form"
+    },
+    {
+      "label": "AccountOption",
+      "file_type": "code",
+      "source_file": "components/income/windfall-form.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "community": 68,
+      "norm_label": "accountoption",
+      "id": "components_income_windfall_form_accountoption"
+    },
+    {
+      "label": "WindfallForm()",
+      "file_type": "code",
+      "source_file": "components/income/windfall-form.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "community": 68,
+      "norm_label": "windfallform()",
+      "id": "components_income_windfall_form_windfallform"
+    },
+    {
+      "label": "occurrences.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "occurrences.ts",
+      "id": "lib_actions_occurrences"
+    },
+    {
+      "label": "revalidateOccurrenceScreens()",
+      "file_type": "code",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "revalidateoccurrencescreens()",
+      "id": "lib_actions_occurrences_revalidateoccurrencescreens"
+    },
+    {
+      "label": "confirmOccurrenceAction()",
+      "file_type": "code",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "confirmoccurrenceaction()",
+      "id": "lib_actions_occurrences_confirmoccurrenceaction"
+    },
+    {
+      "label": "skipOccurrenceAction()",
+      "file_type": "code",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L49",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "skipoccurrenceaction()",
+      "id": "lib_actions_occurrences_skipoccurrenceaction"
+    },
+    {
+      "label": "unconfirmOccurrenceAction()",
+      "file_type": "code",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L60",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "unconfirmoccurrenceaction()",
+      "id": "lib_actions_occurrences_unconfirmoccurrenceaction"
+    },
+    {
+      "label": "schemas.test.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "schemas.test.ts",
+      "id": "lib_actions_schemas_test"
+    },
+    {
+      "label": "schemas.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "schemas.ts",
+      "id": "lib_actions_schemas"
+    },
+    {
+      "label": "currencySchema",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "currencyschema",
+      "id": "lib_actions_schemas_currencyschema"
+    },
+    {
+      "label": "isoDate",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "isodate",
+      "id": "lib_actions_schemas_isodate"
+    },
+    {
+      "label": "incomeSourceInput",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "incomesourceinput",
+      "id": "lib_actions_schemas_incomesourceinput"
+    },
+    {
+      "label": "windfallInput",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "windfallinput",
+      "id": "lib_actions_schemas_windfallinput"
+    },
+    {
+      "label": "confirmInput",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "confirminput",
+      "id": "lib_actions_schemas_confirminput"
+    },
+    {
+      "label": "idInput",
+      "file_type": "code",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L31",
+      "_origin": "ast",
+      "community": 56,
+      "norm_label": "idinput",
+      "id": "lib_actions_schemas_idinput"
+    },
+    {
+      "label": "index.test.ts",
+      "file_type": "code",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "index.test.ts",
+      "id": "lib_housekeeping_index_test"
+    },
+    {
+      "label": "seedIncomeSource()",
+      "file_type": "code",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "seedincomesource()",
+      "id": "lib_housekeeping_index_test_seedincomesource"
+    },
+    {
+      "label": "occurrencesFor()",
+      "file_type": "code",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L33",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "occurrencesfor()",
+      "id": "lib_housekeeping_index_test_occurrencesfor"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "lib/housekeeping/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "index.ts",
+      "id": "lib_housekeeping_index"
+    },
+    {
+      "label": "nextPeriod()",
+      "file_type": "code",
+      "source_file": "lib/housekeeping/index.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "nextperiod()",
+      "id": "lib_housekeeping_index_nextperiod"
+    },
+    {
+      "label": "housekeeping()",
+      "file_type": "code",
+      "source_file": "lib/housekeeping/index.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "community": 15,
+      "norm_label": "housekeeping()",
+      "id": "lib_housekeeping_index_housekeeping"
+    },
+    {
+      "label": "vitest.setup.ts",
+      "file_type": "code",
+      "source_file": "vitest.setup.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 38,
+      "norm_label": "vitest.setup.ts",
+      "id": "vitest_setup"
+    },
+    {
+      "label": "schema.ts",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "schema.ts",
+      "id": "lib_db_schema"
+    },
+    {
+      "label": "currencyEnum",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "currencyenum",
+      "id": "lib_db_schema_currencyenum"
+    },
+    {
+      "label": "TRANSACTION_TYPES",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "transaction_types",
+      "id": "lib_db_schema_transaction_types"
+    },
+    {
+      "label": "transactionTypeEnum",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L33",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "transactiontypeenum",
+      "id": "lib_db_schema_transactiontypeenum"
+    },
+    {
+      "label": "accounts",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L35",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "accounts",
+      "id": "lib_db_schema_accounts"
+    },
+    {
+      "label": "transactions",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L46",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "transactions",
+      "id": "lib_db_schema_transactions"
+    },
+    {
+      "label": "exchangeRates",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L69",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "exchangerates",
+      "id": "lib_db_schema_exchangerates"
+    },
+    {
+      "label": "settings",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L77",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "settings",
+      "id": "lib_db_schema_settings"
+    },
+    {
+      "label": "occurrenceKind",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L86",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "occurrencekind",
+      "id": "lib_db_schema_occurrencekind"
+    },
+    {
+      "label": "occurrenceStatus",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L91",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "occurrencestatus",
+      "id": "lib_db_schema_occurrencestatus"
+    },
+    {
+      "label": "incomeSources",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L98",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "incomesources",
+      "id": "lib_db_schema_incomesources"
+    },
+    {
+      "label": "occurrences",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L112",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "occurrences",
+      "id": "lib_db_schema_occurrences"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
       "source_file": "app/(app)/accounts/[id]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_app_accounts_id_page",
       "community": 20,
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "app_app_accounts_id_page"
     },
     {
       "label": "AccountPage()",
@@ -19,9 +1009,9 @@
       "source_file": "app/(app)/accounts/[id]/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "app_app_accounts_id_page_accountpage",
       "community": 20,
-      "norm_label": "accountpage()"
+      "norm_label": "accountpage()",
+      "id": "app_app_accounts_id_page_accountpage"
     },
     {
       "label": "page.tsx",
@@ -29,9 +1019,9 @@
       "source_file": "app/(app)/transactions/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_app_transactions_page",
       "community": 47,
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "app_app_transactions_page"
     },
     {
       "label": "Filters",
@@ -39,9 +1029,9 @@
       "source_file": "app/(app)/transactions/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "app_app_transactions_page_filters",
       "community": 47,
-      "norm_label": "filters"
+      "norm_label": "filters",
+      "id": "app_app_transactions_page_filters"
     },
     {
       "label": "TransactionsPage()",
@@ -49,9 +1039,9 @@
       "source_file": "app/(app)/transactions/page.tsx",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "app_app_transactions_page_transactionspage",
       "community": 47,
-      "norm_label": "transactionspage()"
+      "norm_label": "transactionspage()",
+      "id": "app_app_transactions_page_transactionspage"
     },
     {
       "label": "account-settings-form.tsx",
@@ -59,9 +1049,9 @@
       "source_file": "components/account-settings-form.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_account_settings_form",
       "community": 20,
-      "norm_label": "account-settings-form.tsx"
+      "norm_label": "account-settings-form.tsx",
+      "id": "components_account_settings_form"
     },
     {
       "label": "AccountSettingsForm()",
@@ -69,9 +1059,9 @@
       "source_file": "components/account-settings-form.tsx",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "components_account_settings_form_accountsettingsform",
       "community": 20,
-      "norm_label": "accountsettingsform()"
+      "norm_label": "accountsettingsform()",
+      "id": "components_account_settings_form_accountsettingsform"
     },
     {
       "label": "ledger.spec.ts",
@@ -79,9 +1069,9 @@
       "source_file": "e2e/ledger.spec.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "e2e_ledger_spec",
       "community": 45,
-      "norm_label": "ledger.spec.ts"
+      "norm_label": "ledger.spec.ts",
+      "id": "e2e_ledger_spec"
     },
     {
       "label": "createAccount()",
@@ -89,9 +1079,9 @@
       "source_file": "e2e/ledger.spec.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "e2e_ledger_spec_createaccount",
       "community": 45,
-      "norm_label": "createaccount()"
+      "norm_label": "createaccount()",
+      "id": "e2e_ledger_spec_createaccount"
     },
     {
       "label": "transactions.ts",
@@ -99,9 +1089,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "lib_actions_transactions",
       "community": 20,
-      "norm_label": "transactions.ts"
+      "norm_label": "transactions.ts",
+      "id": "lib_actions_transactions"
     },
     {
       "label": "postSchema",
@@ -109,9 +1099,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "lib_actions_transactions_postschema",
       "community": 20,
-      "norm_label": "postschema"
+      "norm_label": "postschema",
+      "id": "lib_actions_transactions_postschema"
     },
     {
       "label": "postTransaction()",
@@ -119,9 +1109,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "lib_actions_transactions_posttransaction",
       "community": 20,
-      "norm_label": "posttransaction()"
+      "norm_label": "posttransaction()",
+      "id": "lib_actions_transactions_posttransaction"
     },
     {
       "label": "updateSchema",
@@ -129,9 +1119,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "lib_actions_transactions_updateschema",
       "community": 20,
-      "norm_label": "updateschema"
+      "norm_label": "updateschema",
+      "id": "lib_actions_transactions_updateschema"
     },
     {
       "label": "loadOwnedPlainRow()",
@@ -139,9 +1129,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L84",
       "_origin": "ast",
-      "id": "lib_actions_transactions_loadownedplainrow",
       "community": 20,
-      "norm_label": "loadownedplainrow()"
+      "norm_label": "loadownedplainrow()",
+      "id": "lib_actions_transactions_loadownedplainrow"
     },
     {
       "label": "updateTransaction()",
@@ -149,9 +1139,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L100",
       "_origin": "ast",
-      "id": "lib_actions_transactions_updatetransaction",
       "community": 20,
-      "norm_label": "updatetransaction()"
+      "norm_label": "updatetransaction()",
+      "id": "lib_actions_transactions_updatetransaction"
     },
     {
       "label": "reconcileAccount()",
@@ -159,9 +1149,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L141",
       "_origin": "ast",
-      "id": "lib_actions_transactions_reconcileaccount",
       "community": 20,
-      "norm_label": "reconcileaccount()"
+      "norm_label": "reconcileaccount()",
+      "id": "lib_actions_transactions_reconcileaccount"
     },
     {
       "label": "deleteTransaction()",
@@ -169,9 +1159,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L195",
       "_origin": "ast",
-      "id": "lib_actions_transactions_deletetransaction",
       "community": 20,
-      "norm_label": "deletetransaction()"
+      "norm_label": "deletetransaction()",
+      "id": "lib_actions_transactions_deletetransaction"
     },
     {
       "label": "transfers.ts",
@@ -179,9 +1169,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "lib_actions_transfers",
       "community": 58,
-      "norm_label": "transfers.ts"
+      "norm_label": "transfers.ts",
+      "id": "lib_actions_transfers"
     },
     {
       "label": "transferSchema",
@@ -189,9 +1179,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "lib_actions_transfers_transferschema",
       "community": 58,
-      "norm_label": "transferschema"
+      "norm_label": "transferschema",
+      "id": "lib_actions_transfers_transferschema"
     },
     {
       "label": "createTransfer()",
@@ -199,9 +1189,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "lib_actions_transfers_createtransfer",
       "community": 58,
-      "norm_label": "createtransfer()"
+      "norm_label": "createtransfer()",
+      "id": "lib_actions_transfers_createtransfer"
     },
     {
       "label": "groupUpdateSchema",
@@ -209,9 +1199,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "lib_actions_transfers_groupupdateschema",
       "community": 58,
-      "norm_label": "groupupdateschema"
+      "norm_label": "groupupdateschema",
+      "id": "lib_actions_transfers_groupupdateschema"
     },
     {
       "label": "loadGroupLegs()",
@@ -219,9 +1209,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L115",
       "_origin": "ast",
-      "id": "lib_actions_transfers_loadgrouplegs",
       "community": 58,
-      "norm_label": "loadgrouplegs()"
+      "norm_label": "loadgrouplegs()",
+      "id": "lib_actions_transfers_loadgrouplegs"
     },
     {
       "label": "updateTransferGroup()",
@@ -229,9 +1219,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L131",
       "_origin": "ast",
-      "id": "lib_actions_transfers_updatetransfergroup",
       "community": 58,
-      "norm_label": "updatetransfergroup()"
+      "norm_label": "updatetransfergroup()",
+      "id": "lib_actions_transfers_updatetransfergroup"
     },
     {
       "label": "deleteTransferGroup()",
@@ -239,9 +1229,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L212",
       "_origin": "ast",
-      "id": "lib_actions_transfers_deletetransfergroup",
       "community": 58,
-      "norm_label": "deletetransfergroup()"
+      "norm_label": "deletetransfergroup()",
+      "id": "lib_actions_transfers_deletetransfergroup"
     },
     {
       "label": "mutability.test.ts",
@@ -249,9 +1239,9 @@
       "source_file": "lib/transactions/mutability.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "lib_transactions_mutability_test",
       "community": 63,
-      "norm_label": "mutability.test.ts"
+      "norm_label": "mutability.test.ts",
+      "id": "lib_transactions_mutability_test"
     },
     {
       "label": "architecture.md",
@@ -269,7 +1259,7 @@
       "source_file": "docs/wiki/architecture.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "architecture",
       "id": "docs_wiki_architecture_architecture"
     },
@@ -279,7 +1269,7 @@
       "source_file": "docs/wiki/architecture.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "core model",
       "id": "docs_wiki_architecture_core_model"
     },
@@ -289,7 +1279,7 @@
       "source_file": "docs/wiki/architecture.md",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "stack",
       "id": "docs_wiki_architecture_stack"
     },
@@ -299,7 +1289,7 @@
       "source_file": "docs/wiki/architecture.md",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "module map",
       "id": "docs_wiki_architecture_module_map"
     },
@@ -309,7 +1299,7 @@
       "source_file": "docs/wiki/architecture.md",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "key flows",
       "id": "docs_wiki_architecture_key_flows"
     },
@@ -319,7 +1309,7 @@
       "source_file": "docs/wiki/architecture.md",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "hard invariants",
       "id": "docs_wiki_architecture_hard_invariants"
     },
@@ -342,36 +1332,6 @@
       "community": 0,
       "norm_label": "status",
       "id": "docs_wiki_status_status"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 62,
-      "norm_label": "page.tsx",
-      "id": "app_app_page"
-    },
-    {
-      "label": "isStale()",
-      "file_type": "code",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L15",
-      "_origin": "ast",
-      "community": 62,
-      "norm_label": "isstale()",
-      "id": "app_app_page_isstale"
-    },
-    {
-      "label": "HomePage()",
-      "file_type": "code",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 62,
-      "norm_label": "homepage()",
-      "id": "app_app_page_homepage"
     },
     {
       "label": "page.tsx",
@@ -724,76 +1684,6 @@
       "id": "e2e_accounts_spec"
     },
     {
-      "label": "accounts.ts",
-      "file_type": "code",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "accounts.ts",
-      "id": "lib_actions_accounts"
-    },
-    {
-      "label": "ActionState",
-      "file_type": "code",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L15",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "actionstate",
-      "id": "lib_actions_accounts_actionstate"
-    },
-    {
-      "label": "createAccountSchema",
-      "file_type": "code",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L17",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "createaccountschema",
-      "id": "lib_actions_accounts_createaccountschema"
-    },
-    {
-      "label": "createAccount()",
-      "file_type": "code",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L23",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "createaccount()",
-      "id": "lib_actions_accounts_createaccount"
-    },
-    {
-      "label": "renameSchema",
-      "file_type": "code",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L71",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "renameschema",
-      "id": "lib_actions_accounts_renameschema"
-    },
-    {
-      "label": "renameAccount()",
-      "file_type": "code",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L76",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "renameaccount()",
-      "id": "lib_actions_accounts_renameaccount"
-    },
-    {
-      "label": "archiveAccount()",
-      "file_type": "code",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L96",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "archiveaccount()",
-      "id": "lib_actions_accounts_archiveaccount"
-    },
-    {
       "label": "convert.test.ts",
       "file_type": "code",
       "source_file": "lib/currency/convert.test.ts",
@@ -892,136 +1782,6 @@
       "community": 57,
       "norm_label": "mockdb",
       "id": "lib_db_queries_test_mockdb"
-    },
-    {
-      "label": "queries.ts",
-      "file_type": "code",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "queries.ts",
-      "id": "lib_db_queries"
-    },
-    {
-      "label": "accountBalanceMinor()",
-      "file_type": "code",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "accountbalanceminor()",
-      "id": "lib_db_queries_accountbalanceminor"
-    },
-    {
-      "label": "totalsByCurrency()",
-      "file_type": "code",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L16",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "totalsbycurrency()",
-      "id": "lib_db_queries_totalsbycurrency"
-    },
-    {
-      "label": "archiveBlockers()",
-      "file_type": "code",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "archiveblockers()",
-      "id": "lib_db_queries_archiveblockers"
-    },
-    {
-      "label": "getSettings()",
-      "file_type": "code",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L41",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "getsettings()",
-      "id": "lib_db_queries_getsettings"
-    },
-    {
-      "label": "schema.ts",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "schema.ts",
-      "id": "lib_db_schema"
-    },
-    {
-      "label": "currencyEnum",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L17",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "currencyenum",
-      "id": "lib_db_schema_currencyenum"
-    },
-    {
-      "label": "TRANSACTION_TYPES",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "transaction_types",
-      "id": "lib_db_schema_transaction_types"
-    },
-    {
-      "label": "transactionTypeEnum",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L32",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "transactiontypeenum",
-      "id": "lib_db_schema_transactiontypeenum"
-    },
-    {
-      "label": "accounts",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "accounts",
-      "id": "lib_db_schema_accounts"
-    },
-    {
-      "label": "transactions",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L45",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "transactions",
-      "id": "lib_db_schema_transactions"
-    },
-    {
-      "label": "exchangeRates",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L68",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "exchangerates",
-      "id": "lib_db_schema_exchangerates"
-    },
-    {
-      "label": "settings",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L76",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "settings",
-      "id": "lib_db_schema_settings"
     },
     {
       "label": "money.test.ts",
@@ -1189,7 +1949,7 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "package.json",
       "id": "package"
     },
@@ -1199,7 +1959,7 @@
       "source_file": "package.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "name",
       "id": "package_name"
     },
@@ -1209,7 +1969,7 @@
       "source_file": "package.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "version",
       "id": "package_version"
     },
@@ -1219,7 +1979,7 @@
       "source_file": "package.json",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "private",
       "id": "package_private"
     },
@@ -1229,7 +1989,7 @@
       "source_file": "package.json",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "scripts",
       "id": "package_scripts"
     },
@@ -1239,7 +1999,7 @@
       "source_file": "package.json",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "dev",
       "id": "package_scripts_dev"
     },
@@ -1249,7 +2009,7 @@
       "source_file": "package.json",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "build",
       "id": "package_scripts_build"
     },
@@ -1259,7 +2019,7 @@
       "source_file": "package.json",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "start",
       "id": "package_scripts_start"
     },
@@ -1269,7 +2029,7 @@
       "source_file": "package.json",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "lint",
       "id": "package_scripts_lint"
     },
@@ -1279,7 +2039,7 @@
       "source_file": "package.json",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "format",
       "id": "package_scripts_format"
     },
@@ -1289,7 +2049,7 @@
       "source_file": "package.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "format:check",
       "id": "package_scripts_format_check"
     },
@@ -1299,7 +2059,7 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "test",
       "id": "package_scripts_test"
     },
@@ -1309,7 +2069,7 @@
       "source_file": "package.json",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "test:watch",
       "id": "package_scripts_test_watch"
     },
@@ -1319,7 +2079,7 @@
       "source_file": "package.json",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "db:generate",
       "id": "package_scripts_db_generate"
     },
@@ -1329,7 +2089,7 @@
       "source_file": "package.json",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "db:migrate",
       "id": "package_scripts_db_migrate"
     },
@@ -1339,7 +2099,7 @@
       "source_file": "package.json",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 38,
+      "community": 65,
       "norm_label": "e2e",
       "id": "package_scripts_e2e"
     },
@@ -1349,7 +2109,7 @@
       "source_file": "package.json",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "dependencies",
       "id": "package_dependencies"
     },
@@ -1359,7 +2119,7 @@
       "source_file": "package.json",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "@neondatabase/serverless",
       "id": "package_dependencies_neondatabase_serverless"
     },
@@ -1369,7 +2129,7 @@
       "source_file": "package.json",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "better-auth",
       "id": "package_dependencies_better_auth"
     },
@@ -1379,7 +2139,7 @@
       "source_file": "package.json",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "drizzle-orm",
       "id": "package_dependencies_drizzle_orm"
     },
@@ -1389,7 +2149,7 @@
       "source_file": "package.json",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "next",
       "id": "package_dependencies_next"
     },
@@ -1399,7 +2159,7 @@
       "source_file": "package.json",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "react",
       "id": "package_dependencies_react"
     },
@@ -1409,7 +2169,7 @@
       "source_file": "package.json",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "react-dom",
       "id": "package_dependencies_react_dom"
     },
@@ -1419,7 +2179,7 @@
       "source_file": "package.json",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 4,
+      "community": 65,
       "norm_label": "zod",
       "id": "package_dependencies_zod"
     },
@@ -1429,7 +2189,7 @@
       "source_file": "package.json",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "devdependencies",
       "id": "package_devdependencies"
     },
@@ -1439,7 +2199,7 @@
       "source_file": "package.json",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "@playwright/test",
       "id": "package_devdependencies_playwright_test"
     },
@@ -1449,7 +2209,7 @@
       "source_file": "package.json",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "@tailwindcss/postcss",
       "id": "package_devdependencies_tailwindcss_postcss"
     },
@@ -1459,7 +2219,7 @@
       "source_file": "package.json",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "@types/node",
       "id": "package_devdependencies_types_node"
     },
@@ -1469,7 +2229,7 @@
       "source_file": "package.json",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "@types/react",
       "id": "package_devdependencies_types_react"
     },
@@ -1479,7 +2239,7 @@
       "source_file": "package.json",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "@types/react-dom",
       "id": "package_devdependencies_types_react_dom"
     },
@@ -1489,7 +2249,7 @@
       "source_file": "package.json",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "dotenv",
       "id": "package_devdependencies_dotenv"
     },
@@ -1499,7 +2259,7 @@
       "source_file": "package.json",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "drizzle-kit",
       "id": "package_devdependencies_drizzle_kit"
     },
@@ -1509,7 +2269,7 @@
       "source_file": "package.json",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "eslint",
       "id": "package_devdependencies_eslint"
     },
@@ -1519,7 +2279,7 @@
       "source_file": "package.json",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "eslint-config-next",
       "id": "package_devdependencies_eslint_config_next"
     },
@@ -1529,7 +2289,7 @@
       "source_file": "package.json",
       "source_location": "L37",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "eslint-config-prettier",
       "id": "package_devdependencies_eslint_config_prettier"
     },
@@ -1539,7 +2299,7 @@
       "source_file": "package.json",
       "source_location": "L38",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "prettier",
       "id": "package_devdependencies_prettier"
     },
@@ -1549,7 +2309,7 @@
       "source_file": "package.json",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "tailwindcss",
       "id": "package_devdependencies_tailwindcss"
     },
@@ -1559,7 +2319,7 @@
       "source_file": "package.json",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "typescript",
       "id": "package_devdependencies_typescript"
     },
@@ -1569,7 +2329,7 @@
       "source_file": "package.json",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 4,
+      "community": 70,
       "norm_label": "vitest",
       "id": "package_devdependencies_vitest"
     },
@@ -1892,36 +2652,6 @@
       "community": 49,
       "norm_label": "signuppage()",
       "id": "app_sign_up_page_signuppage"
-    },
-    {
-      "label": "bottom-tabs.tsx",
-      "file_type": "code",
-      "source_file": "components/bottom-tabs.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "bottom-tabs.tsx",
-      "id": "components_bottom_tabs"
-    },
-    {
-      "label": "TABS",
-      "file_type": "code",
-      "source_file": "components/bottom-tabs.tsx",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "tabs",
-      "id": "components_bottom_tabs_tabs"
-    },
-    {
-      "label": "BottomTabs()",
-      "file_type": "code",
-      "source_file": "components/bottom-tabs.tsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "bottomtabs()",
-      "id": "components_bottom_tabs_bottomtabs"
     },
     {
       "label": "route.ts",
@@ -3269,7 +3999,7 @@
       "source_file": "docs/superpowers/plans/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 56,
+      "community": 0,
       "norm_label": "my ledger - implementation plans (master index)",
       "id": "docs_superpowers_plans_readme_my_ledger_implementation_plans_master_index"
     },
@@ -3279,7 +4009,7 @@
       "source_file": "docs/superpowers/plans/README.md",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 56,
+      "community": 0,
       "norm_label": "global constraints (every task inherits these)",
       "id": "docs_superpowers_plans_readme_global_constraints_every_task_inherits_these"
     },
@@ -3289,7 +4019,7 @@
       "source_file": "docs/superpowers/plans/README.md",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 56,
+      "community": 0,
       "norm_label": "phase plans",
       "id": "docs_superpowers_plans_readme_phase_plans"
     },
@@ -3299,7 +4029,7 @@
       "source_file": "docs/superpowers/plans/README.md",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 56,
+      "community": 0,
       "norm_label": "canonical interfaces (cross-phase contracts - do not drift)",
       "id": "docs_superpowers_plans_readme_canonical_interfaces_cross_phase_contracts_do_not_drift"
     },
@@ -3309,7 +4039,7 @@
       "source_file": "docs/superpowers/plans/README.md",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 56,
+      "community": 0,
       "norm_label": "verification",
       "id": "docs_superpowers_plans_readme_verification"
     },
@@ -4279,7 +5009,7 @@
       "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 4,
       "norm_label": "2026-07-07-live-rates-snapshot-history-cron.md",
       "id": "docs_adr_2026_07_07_live_rates_snapshot_history_cron"
     },
@@ -4289,7 +5019,7 @@
       "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 4,
       "norm_label": "adr: live rates for aggregates; daily snapshots for history; one idempotent housekeeping routine",
       "id": "docs_adr_2026_07_07_live_rates_snapshot_history_cron_adr_live_rates_for_aggregates_daily_snapshots_for_history_one_idempotent_housekeeping_routine"
     },
@@ -4299,7 +5029,7 @@
       "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 17,
+      "community": 4,
       "norm_label": "decision",
       "id": "docs_adr_2026_07_07_live_rates_snapshot_history_cron_decision"
     },
@@ -4309,7 +5039,7 @@
       "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 17,
+      "community": 4,
       "norm_label": "why",
       "id": "docs_adr_2026_07_07_live_rates_snapshot_history_cron_why"
     },
@@ -4319,7 +5049,7 @@
       "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 17,
+      "community": 4,
       "norm_label": "rejected",
       "id": "docs_adr_2026_07_07_live_rates_snapshot_history_cron_rejected"
     },
@@ -4808,12 +5538,1488 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "app/(app)/income/[id]/edit/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "app_app_income_id_edit_page",
+      "target": "app_app_income_id_edit_page_editincomesourcepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_actions_accounts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_home_currency_form",
+      "target": "lib_actions_accounts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_actionstate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_archiveaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_createaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_createaccountschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_renameaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_renameschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_db_queries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_db_queries_archiveblockers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_actions_accounts_actionstate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_home_currency_form",
+      "target": "lib_actions_accounts_actionstate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_actions_accounts_createaccount"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "lib_actions_accounts_archiveaccount",
+      "target": "lib_db_queries_archiveblockers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.test.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "lib_actions_income_test",
+      "target": "lib_actions_income_test_seedthreepending",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_actionresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L184",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_addwindfall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_createincomesource",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_ownedactiveaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_parseamount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_setincomesourceactive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_updateincomesource",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "lib_actions_income",
+      "target": "lib_actions_income_updateincomesourceerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L188",
+      "weight": 1.0,
+      "source": "lib_actions_income_addwindfall",
+      "target": "lib_actions_income_ownedactiveaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "lib_actions_income_createincomesource",
+      "target": "lib_actions_income_ownedactiveaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "lib_actions_income_updateincomesource",
+      "target": "lib_actions_income_ownedactiveaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L190",
+      "weight": 1.0,
+      "source": "lib_actions_income_addwindfall",
+      "target": "lib_actions_income_parseamount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "lib_actions_income_createincomesource",
+      "target": "lib_actions_income_parseamount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/income.ts",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "lib_actions_income_updateincomesource",
+      "target": "lib_actions_income_parseamount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_queries"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_settings_page",
+      "target": "lib_db_queries"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_settings",
+      "target": "lib_db_queries"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_accountbalanceminor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_archiveblockers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_getsettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_totalsbycurrency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_queries_test",
+      "target": "lib_db_queries"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_queries_accountbalanceminor"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_queries_test",
+      "target": "lib_db_queries_accountbalanceminor"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_queries_test",
+      "target": "lib_db_queries_totalsbycurrency"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_settings_page",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_app_settings_page_settingspage",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_settings",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "lib_actions_settings_sethomecurrency",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.test.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm_test",
+      "target": "lib_occurrences_confirm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.test.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm_test",
+      "target": "lib_occurrences_confirm_confirmoccurrence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.test.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm_test",
+      "target": "lib_occurrences_confirm_skipoccurrence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.test.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm_test",
+      "target": "lib_occurrences_confirm_test_seed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.test.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm_test",
+      "target": "lib_occurrences_confirm_unconfirmoccurrence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_confirmerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_confirmoccurrence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_confirmresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_dbtx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_loadsource",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_occurrencekind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_skipoccurrence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_source_type",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_sourceinfo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_txn_sign",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_txn_type",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/confirm.ts",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "lib_occurrences_confirm",
+      "target": "lib_occurrences_confirm_unconfirmoccurrence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "e2e/income.spec.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "e2e_income_spec",
+      "target": "e2e_income_spec_createaccount"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_page",
+      "target": "app_app_page_homepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_page",
+      "target": "app_app_page_isstale"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_page",
+      "target": "components_dashboard_attention_list"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_page",
+      "target": "components_dashboard_attention_list_attentionlist"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_page",
+      "target": "lib_occurrences_attention"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_page",
+      "target": "lib_occurrences_attention_getattentionitems"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_page_homepage",
+      "target": "app_app_page_isstale"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "app_app_page_homepage",
+      "target": "lib_occurrences_attention_getattentionitems"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_attention_list",
+      "target": "components_dashboard_attention_list_attentionlist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_attention_list",
+      "target": "components_dashboard_attention_list_cta"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_attention_list",
+      "target": "components_occurrences_confirm_sheet"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_attention_list",
+      "target": "components_occurrences_confirm_sheet_confirmsheet"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_attention_list",
+      "target": "lib_occurrences_attention"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/attention-list.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_attention_list",
+      "target": "lib_occurrences_attention_attentionitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/occurrences/confirm-sheet.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_occurrences_confirm_sheet",
+      "target": "components_occurrences_confirm_sheet_confirmsheet"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/occurrences/confirm-sheet.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_occurrences_confirm_sheet",
+      "target": "lib_occurrences_attention"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/occurrences/confirm-sheet.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_occurrences_confirm_sheet",
+      "target": "lib_occurrences_attention_attentionitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/attention.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_occurrences_attention",
+      "target": "lib_occurrences_attention_attentionitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/occurrences/attention.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_occurrences_attention",
+      "target": "lib_occurrences_attention_getattentionitems"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/income/new/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_income_new_page",
+      "target": "app_app_income_new_page_newincomesourcepage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/income/new/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_income_new_page",
+      "target": "components_income_income_source_form"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/income/new/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_income_new_page",
+      "target": "components_income_income_source_form_incomesourceform"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/income/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_income_page",
+      "target": "app_app_income_page_incomepage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/income/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_income_page",
+      "target": "components_income_windfall_form"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/income/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_income_page",
+      "target": "components_income_windfall_form_windfallform"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_layout",
+      "target": "components_bottom_tabs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/bottom-tabs.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_bottom_tabs",
+      "target": "components_bottom_tabs_bottomtabs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/bottom-tabs.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_bottom_tabs",
+      "target": "components_bottom_tabs_tabs"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/layout.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_layout",
+      "target": "components_bottom_tabs_bottomtabs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/income/income-source-form.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_income_income_source_form",
+      "target": "components_income_income_source_form_accountoption"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/income/income-source-form.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_income_income_source_form",
+      "target": "components_income_income_source_form_incomesourceform"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/income/income-source-form.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_income_income_source_form",
+      "target": "components_income_income_source_form_sourcevalues"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/income/windfall-form.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_income_windfall_form",
+      "target": "components_income_windfall_form_accountoption"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/income/windfall-form.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_income_windfall_form",
+      "target": "components_income_windfall_form_windfallform"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences",
+      "target": "lib_actions_occurrences_confirmoccurrenceaction"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences",
+      "target": "lib_actions_occurrences_revalidateoccurrencescreens"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences",
+      "target": "lib_actions_occurrences_skipoccurrenceaction"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L60",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences",
+      "target": "lib_actions_occurrences_unconfirmoccurrenceaction"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences",
+      "target": "lib_actions_schemas"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences",
+      "target": "lib_actions_schemas_confirminput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences",
+      "target": "lib_actions_schemas_idinput"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences_confirmoccurrenceaction",
+      "target": "lib_actions_occurrences_revalidateoccurrencescreens"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences_skipoccurrenceaction",
+      "target": "lib_actions_occurrences_revalidateoccurrencescreens"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/occurrences.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_occurrences_unconfirmoccurrenceaction",
+      "target": "lib_actions_occurrences_revalidateoccurrencescreens"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas_test",
+      "target": "lib_actions_schemas"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas_test",
+      "target": "lib_actions_schemas_confirminput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas_test",
+      "target": "lib_actions_schemas_incomesourceinput"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas_test",
+      "target": "lib_actions_schemas_windfallinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas",
+      "target": "lib_actions_schemas_confirminput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas",
+      "target": "lib_actions_schemas_currencyschema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas",
+      "target": "lib_actions_schemas_idinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas",
+      "target": "lib_actions_schemas_incomesourceinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas",
+      "target": "lib_actions_schemas_isodate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/schemas.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_schemas",
+      "target": "lib_actions_schemas_windfallinput"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index_test",
+      "target": "lib_housekeeping_index"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index_test",
+      "target": "lib_housekeeping_index_housekeeping"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index_test",
+      "target": "lib_housekeeping_index_nextperiod"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index_test",
+      "target": "lib_housekeeping_index_test_occurrencesfor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.test.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index_test",
+      "target": "lib_housekeeping_index_test_seedincomesource"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index",
+      "target": "lib_housekeeping_index_housekeeping"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index",
+      "target": "lib_housekeeping_index_nextperiod"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/housekeeping/index.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_housekeeping_index_housekeeping",
+      "target": "lib_housekeeping_index_nextperiod"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_schema"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_db_schema"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/client.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_client",
+      "target": "lib_db_schema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_accounts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_currencyenum"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_exchangerates"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L98",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_incomesources"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_occurrencekind"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_occurrences"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L91",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_occurrencestatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_settings"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_transaction_types"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_transactions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_transactiontypeenum"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_schema_accounts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_db_schema_exchangerates"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "app/(app)/accounts/[id]/page.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_app_accounts_id_page",
-      "target": "app_app_accounts_id_page_accountpage",
-      "confidence_score": 1.0
+      "target": "app_app_accounts_id_page_accountpage"
     },
     {
       "relation": "imports_from",
@@ -4822,9 +7028,9 @@
       "source_file": "app/(app)/accounts/[id]/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_app_accounts_id_page",
-      "target": "components_account_settings_form",
-      "confidence_score": 1.0
+      "target": "components_account_settings_form"
     },
     {
       "relation": "imports",
@@ -4833,9 +7039,9 @@
       "source_file": "app/(app)/accounts/[id]/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_app_accounts_id_page",
-      "target": "components_account_settings_form_accountsettingsform",
-      "confidence_score": 1.0
+      "target": "components_account_settings_form_accountsettingsform"
     },
     {
       "relation": "contains",
@@ -4843,9 +7049,9 @@
       "source_file": "app/(app)/transactions/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_app_transactions_page",
-      "target": "app_app_transactions_page_filters",
-      "confidence_score": 1.0
+      "target": "app_app_transactions_page_filters"
     },
     {
       "relation": "contains",
@@ -4853,9 +7059,9 @@
       "source_file": "app/(app)/transactions/page.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_app_transactions_page",
-      "target": "app_app_transactions_page_transactionspage",
-      "confidence_score": 1.0
+      "target": "app_app_transactions_page_transactionspage"
     },
     {
       "relation": "contains",
@@ -4863,9 +7069,9 @@
       "source_file": "components/account-settings-form.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_account_settings_form",
-      "target": "components_account_settings_form_accountsettingsform",
-      "confidence_score": 1.0
+      "target": "components_account_settings_form_accountsettingsform"
     },
     {
       "relation": "imports_from",
@@ -4874,9 +7080,9 @@
       "source_file": "components/account-settings-form.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_account_settings_form",
-      "target": "lib_actions_transactions",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions"
     },
     {
       "relation": "imports",
@@ -4885,9 +7091,9 @@
       "source_file": "components/account-settings-form.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_account_settings_form",
-      "target": "lib_actions_transactions_reconcileaccount",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_reconcileaccount"
     },
     {
       "relation": "contains",
@@ -4895,9 +7101,9 @@
       "source_file": "e2e/ledger.spec.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "e2e_ledger_spec",
-      "target": "e2e_ledger_spec_createaccount",
-      "confidence_score": 1.0
+      "target": "e2e_ledger_spec_createaccount"
     },
     {
       "relation": "imports_from",
@@ -4927,9 +7133,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L195",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions",
-      "target": "lib_actions_transactions_deletetransaction",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_deletetransaction"
     },
     {
       "relation": "contains",
@@ -4937,9 +7143,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L84",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions",
-      "target": "lib_actions_transactions_loadownedplainrow",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_loadownedplainrow"
     },
     {
       "relation": "contains",
@@ -4947,9 +7153,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions",
-      "target": "lib_actions_transactions_postschema",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_postschema"
     },
     {
       "relation": "contains",
@@ -4957,9 +7163,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions",
-      "target": "lib_actions_transactions_posttransaction",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_posttransaction"
     },
     {
       "relation": "contains",
@@ -4967,9 +7173,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L141",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions",
-      "target": "lib_actions_transactions_reconcileaccount",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_reconcileaccount"
     },
     {
       "relation": "contains",
@@ -4977,9 +7183,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L74",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions",
-      "target": "lib_actions_transactions_updateschema",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_updateschema"
     },
     {
       "relation": "contains",
@@ -4987,9 +7193,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions",
-      "target": "lib_actions_transactions_updatetransaction",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_updatetransaction"
     },
     {
       "relation": "imports",
@@ -5009,9 +7215,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L204",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions_deletetransaction",
-      "target": "lib_actions_transactions_loadownedplainrow",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_loadownedplainrow"
     },
     {
       "relation": "calls",
@@ -5020,9 +7226,9 @@
       "source_file": "lib/actions/transactions.ts",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transactions_updatetransaction",
-      "target": "lib_actions_transactions_loadownedplainrow",
-      "confidence_score": 1.0
+      "target": "lib_actions_transactions_loadownedplainrow"
     },
     {
       "relation": "imports",
@@ -5074,9 +7280,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers",
-      "target": "lib_actions_transfers_createtransfer",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_createtransfer"
     },
     {
       "relation": "contains",
@@ -5084,9 +7290,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L212",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers",
-      "target": "lib_actions_transfers_deletetransfergroup",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_deletetransfergroup"
     },
     {
       "relation": "contains",
@@ -5094,9 +7300,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers",
-      "target": "lib_actions_transfers_groupupdateschema",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_groupupdateschema"
     },
     {
       "relation": "contains",
@@ -5104,9 +7310,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L115",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers",
-      "target": "lib_actions_transfers_loadgrouplegs",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_loadgrouplegs"
     },
     {
       "relation": "contains",
@@ -5114,9 +7320,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers",
-      "target": "lib_actions_transfers_transferschema",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_transferschema"
     },
     {
       "relation": "contains",
@@ -5124,9 +7330,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L131",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers",
-      "target": "lib_actions_transfers_updatetransfergroup",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_updatetransfergroup"
     },
     {
       "relation": "imports",
@@ -5146,9 +7352,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L221",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers_deletetransfergroup",
-      "target": "lib_actions_transfers_loadgrouplegs",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_loadgrouplegs"
     },
     {
       "relation": "calls",
@@ -5157,9 +7363,9 @@
       "source_file": "lib/actions/transfers.ts",
       "source_location": "L145",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_actions_transfers_updatetransfergroup",
-      "target": "lib_actions_transfers_loadgrouplegs",
-      "confidence_score": 1.0
+      "target": "lib_actions_transfers_loadgrouplegs"
     },
     {
       "relation": "imports",
@@ -5342,37 +7548,6 @@
       "confidence_score": 1.0,
       "source": "docs_wiki_status",
       "target": "docs_wiki_status_status"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_page",
-      "target": "app_app_page_homepage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_page",
-      "target": "app_app_page_isstale"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_page_homepage",
-      "target": "app_app_page_isstale"
     },
     {
       "relation": "contains",
@@ -5649,39 +7824,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/(app)/accounts/new/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_accounts_new_page",
-      "target": "lib_actions_accounts"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/accounts/new/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_accounts_new_page",
-      "target": "lib_actions_accounts_actionstate"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/accounts/new/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_accounts_new_page",
-      "target": "lib_actions_accounts_createaccount"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/accounts/new/page.tsx",
       "source_location": "L5",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -5708,50 +7850,6 @@
       "confidence_score": 1.0,
       "source": "app_app_accounts_page",
       "target": "app_app_accounts_page_accountspage"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/accounts/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_accounts_page",
-      "target": "lib_db_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/accounts/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_accounts_page",
-      "target": "lib_db_queries_accountbalanceminor"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/accounts/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_accounts_page",
-      "target": "lib_db_schema"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/accounts/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_accounts_page",
-      "target": "lib_db_schema_accounts"
     },
     {
       "relation": "imports_from",
@@ -5801,28 +7899,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/home-currency-form.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_home_currency_form",
-      "target": "lib_actions_accounts"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/home-currency-form.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_home_currency_form",
-      "target": "lib_actions_accounts_actionstate"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/home-currency-form.tsx",
       "source_location": "L6",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -5861,165 +7937,6 @@
       "confidence_score": 1.0,
       "source": "app_app_settings_page",
       "target": "components_home_currency_form_homecurrencyform"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_actions_accounts_actionstate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L96",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_actions_accounts_archiveaccount"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L23",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_actions_accounts_createaccount"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_actions_accounts_createaccountschema"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L76",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_actions_accounts_renameaccount"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L71",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_actions_accounts_renameschema"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_db_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_db_queries_archiveblockers"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_db_schema"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_db_schema_accounts"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_db_schema_transactions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_money_money"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_accounts",
-      "target": "lib_money_money_parsetominor"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L37",
-      "weight": 1.0,
-      "source": "lib_actions_accounts_createaccount",
-      "target": "lib_money_money_parsetominor"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/actions/accounts.ts",
-      "source_location": "L108",
-      "weight": 1.0,
-      "source": "lib_actions_accounts_archiveaccount",
-      "target": "lib_db_queries_archiveblockers"
     },
     {
       "relation": "contains",
@@ -6121,28 +8038,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "lib/currency/rates.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_currency_rates",
-      "target": "lib_db_schema"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/currency/rates.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_currency_rates",
-      "target": "lib_db_schema_exchangerates"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/currency/rates.ts",
       "source_location": "L4",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -6194,28 +8089,6 @@
       "target": "lib_money_money_currency"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.test.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries_test",
-      "target": "lib_db_queries"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.test.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries_test",
-      "target": "lib_db_queries_accountbalanceminor"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/db/queries.test.ts",
@@ -6224,259 +8097,6 @@
       "confidence_score": 1.0,
       "source": "lib_db_queries_test",
       "target": "lib_db_queries_test_mockdb"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.test.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries_test",
-      "target": "lib_db_queries_totalsbycurrency"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/settings/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_settings_page",
-      "target": "lib_db_queries"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/settings.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_settings",
-      "target": "lib_db_queries"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_db_queries_accountbalanceminor"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_db_queries_archiveblockers"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_db_queries_getsettings"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_db_queries_totalsbycurrency"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_db_schema"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_db_schema_settings"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_db_schema_transactions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_money_money"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/queries.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_queries",
-      "target": "lib_money_money_currency"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/settings/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_settings_page",
-      "target": "lib_db_queries_getsettings"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/(app)/settings/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_app_settings_page_settingspage",
-      "target": "lib_db_queries_getsettings"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/actions/settings.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_actions_settings",
-      "target": "lib_db_queries_getsettings"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/actions/settings.ts",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "lib_actions_settings_sethomecurrency",
-      "target": "lib_db_queries_getsettings"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/client.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_client",
-      "target": "lib_db_schema"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_schema_accounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_schema_currencyenum"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L68",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_schema_exchangerates"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L76",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_schema_settings"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_schema_transaction_types"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_schema_transactions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L32",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_schema_transactiontypeenum"
     },
     {
       "relation": "imports_from",
@@ -7204,28 +8824,6 @@
       "target": "app_app_layout_applayout"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/layout.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_layout",
-      "target": "components_bottom_tabs"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/layout.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_layout",
-      "target": "components_bottom_tabs_bottomtabs"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/(app)/plan/page.tsx",
@@ -7254,26 +8852,6 @@
       "confidence_score": 1.0,
       "source": "app_sign_up_page",
       "target": "app_sign_up_page_signuppage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/bottom-tabs.tsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_bottom_tabs",
-      "target": "components_bottom_tabs_bottomtabs"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/bottom-tabs.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_bottom_tabs",
-      "target": "components_bottom_tabs_tabs"
     },
     {
       "relation": "contains",
@@ -10179,5 +11757,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a63f4f58d95fafed0ddb2763629ec779e255701d"
+  "built_at_commit": "7524baf840e3b220d6e4c62a80b56b5ce5d77ef0"
 }
