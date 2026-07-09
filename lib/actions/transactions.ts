@@ -8,6 +8,7 @@ import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { parseToMinor } from '@/lib/money/money'
+import { directMutability } from '@/lib/transactions/mutability'
 import type { ActionState } from './accounts'
 
 const postSchema = z.object({
@@ -61,6 +62,100 @@ export async function postTransaction(
     oneOff,
     categoryId: null, // categories arrive in P6
   })
+  revalidatePath('/transactions')
+  revalidatePath('/accounts')
+  revalidatePath('/')
+  redirect('/transactions')
+}
+
+const updateSchema = z.object({
+  transactionId: z.string().uuid(),
+  amount: z.string().trim().min(1, 'Amount is required'),
+  occurredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date'),
+  note: z.string().trim().max(500).optional(),
+})
+
+// Explicit return type: without it, TS cross-widens the two branches'
+// object-literal returns (adding optional `txn`/`error` counterparts),
+// which defeats `'error' in loaded` narrowing at the call sites below.
+async function loadOwnedPlainRow(
+  userId: string,
+  transactionId: string,
+): Promise<{ error: string } | { txn: typeof transactions.$inferSelect }> {
+  const [txn] = await db
+    .select()
+    .from(transactions)
+    .where(
+      and(eq(transactions.id, transactionId), eq(transactions.userId, userId)),
+    )
+  if (!txn) return { error: 'Entry not found' as const }
+  const m = directMutability(txn)
+  if (!m.ok) return { error: m.reason }
+  return { txn }
+}
+
+export async function updateTransaction(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const user = await requireUser()
+  const parsed = updateSchema.safeParse({
+    transactionId: formData.get('transactionId'),
+    amount: formData.get('amount'),
+    occurredOn: formData.get('occurredOn'),
+    note: formData.get('note') || undefined,
+  })
+  if (!parsed.success) return { error: parsed.error.issues[0].message }
+  const loaded = await loadOwnedPlainRow(user.id, parsed.data.transactionId)
+  if ('error' in loaded) return { error: loaded.error }
+  const { txn } = loaded
+
+  let amountMinor: number
+  try {
+    amountMinor = parseToMinor(parsed.data.amount, txn.currency)
+  } catch {
+    return { error: 'Amount is not a valid number' }
+  }
+  // Re-apply the sign convention by type; opening/adjustment keep the raw sign.
+  const signed =
+    txn.type === 'expense'
+      ? -Math.abs(amountMinor)
+      : txn.type === 'income'
+        ? Math.abs(amountMinor)
+        : amountMinor
+
+  await db
+    .update(transactions)
+    .set({
+      amountMinor: signed,
+      occurredOn: parsed.data.occurredOn,
+      note: parsed.data.note ?? null,
+      oneOff: formData.get('oneOff') === 'on',
+    })
+    .where(and(eq(transactions.id, txn.id), eq(transactions.userId, user.id)))
+  revalidatePath('/transactions')
+  revalidatePath('/accounts')
+  revalidatePath('/')
+  redirect('/transactions')
+}
+
+export async function deleteTransaction(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const user = await requireUser()
+  const parsed = z
+    .object({ transactionId: z.string().uuid() })
+    .safeParse({ transactionId: formData.get('transactionId') })
+  if (!parsed.success) return { error: 'Invalid entry' }
+  const loaded = await loadOwnedPlainRow(user.id, parsed.data.transactionId)
+  if ('error' in loaded) return { error: loaded.error }
+
+  await db
+    .delete(transactions)
+    .where(
+      and(eq(transactions.id, loaded.txn.id), eq(transactions.userId, user.id)),
+    )
   revalidatePath('/transactions')
   revalidatePath('/accounts')
   revalidatePath('/')
