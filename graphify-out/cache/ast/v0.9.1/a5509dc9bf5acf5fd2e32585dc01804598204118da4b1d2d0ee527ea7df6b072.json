@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_md",
+      "label": "2026-07-07-integer-minor-units-derived-balances.md",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_adr_integer_minor_units_balances_derived_never_stored_round_half_up_conversion",
+      "label": "ADR: Integer minor units; balances derived, never stored; round-half-up conversion",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_decision",
+      "label": "Decision",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_why",
+      "label": "Why",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_rejected",
+      "label": "Rejected",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L13"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_adr_integer_minor_units_balances_derived_never_stored_round_half_up_conversion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_adr_integer_minor_units_balances_derived_never_stored_round_half_up_conversion",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_decision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_adr_integer_minor_units_balances_derived_never_stored_round_half_up_conversion",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_why",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_adr_integer_minor_units_balances_derived_never_stored_round_half_up_conversion",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_rejected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-integer-minor-units-derived-balances.md",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

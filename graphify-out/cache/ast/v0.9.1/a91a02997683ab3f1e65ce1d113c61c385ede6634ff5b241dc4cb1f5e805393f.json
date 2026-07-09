@@ -1,0 +1,211 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_md",
+      "label": "03-income.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_phase_03_income_implementation_plan",
+      "label": "Phase 03: Income Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_global_constraints_from_the_plans_readme_verbatim",
+      "label": "Global Constraints (from the plans README, verbatim)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "label": "Conventions consumed from P0-P2 (do not re-implement)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_1_schema_and_migration_for_income_sources_and_the_shared_occurrences_table",
+      "label": "Task 1: Schema and migration for income_sources and the shared occurrences table",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_2_housekeeping_v1_generate_income_occurrences_flip_overdue",
+      "label": "Task 2: housekeeping v1 (generate income occurrences, flip overdue)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L105"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_3_shared_confirm_module_confirm_skip_un_confirm",
+      "label": "Task 3: Shared confirm module (confirm / skip / un-confirm)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L293"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_4_income_source_crud_windfall_and_occurrence_server_actions",
+      "label": "Task 4: Income source CRUD, windfall, and occurrence server actions",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L600"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_5_income_screens_list_form_windfall_quick_action",
+      "label": "Task 5: Income screens (list, form, windfall quick action)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L962"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_6_dashboard_housekeeping_call_attention_list_v1_confirm_sheet",
+      "label": "Task 6: Dashboard housekeeping call, attention list v1, confirm sheet",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L1293"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_7_e2e_salary_source_to_confirmed_actual_balance",
+      "label": "Task 7: E2E, salary source to confirmed actual balance",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L1517"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_phase_03_income_implementation_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_02_transactions_and_balances_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_04_bills_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_phase_03_income_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_global_constraints_from_the_plans_readme_verbatim",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_phase_03_income_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_1_schema_and_migration_for_income_sources_and_the_shared_occurrences_table",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_2_housekeeping_v1_generate_income_occurrences_flip_overdue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_3_shared_confirm_module_confirm_skip_un_confirm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_4_income_source_crud_windfall_and_occurrence_server_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L600",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_5_income_screens_list_form_windfall_quick_action",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L962",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_6_dashboard_housekeeping_call_attention_list_v1_confirm_sheet",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L1293",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_conventions_consumed_from_p0_p2_do_not_re_implement",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_task_7_e2e_salary_source_to_confirmed_actual_balance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/03-income.md",
+      "source_location": "L1517",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

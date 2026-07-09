@@ -1,0 +1,239 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_my_ledger_implementation_plans_master_index",
+      "label": "My Ledger - Implementation Plans (Master Index)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_global_constraints_every_task_inherits_these",
+      "label": "Global constraints (every task inherits these)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_phase_plans",
+      "label": "Phase plans",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_canonical_interfaces_cross_phase_contracts_do_not_drift",
+      "label": "Canonical interfaces (cross-phase contracts - do not drift)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_verification",
+      "label": "Verification",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L102"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_my_ledger_implementation_plans_master_index",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_wiki_architecture_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_my_ledger_implementation_plans_master_index",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_global_constraints_every_task_inherits_these",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_my_ledger_implementation_plans_master_index",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_phase_plans",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_01_accounts_and_currency_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_02_transactions_and_balances_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_03_income_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_04_bills_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_05_installments_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_06_expenses_and_insights_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_08_wishlist_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_09_ai_advisor_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_11_polish_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_my_ledger_implementation_plans_master_index",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_canonical_interfaces_cross_phase_contracts_do_not_drift",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_my_ledger_implementation_plans_master_index",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_wiki_status_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/README.md",
+      "source_location": "L104",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_md",
+      "label": "2026-07-07-grilling-decisions.md",
+      "file_type": "document",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_2026_07_07_grilling_session_decisions_adversarial_audit",
+      "label": "2026-07-07 - Grilling session decisions + adversarial audit",
+      "file_type": "document",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_grilling_decisions",
+      "label": "Grilling decisions",
+      "file_type": "document",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_adversarial_audit_20_findings_all_resolved_into_the_spec",
+      "label": "Adversarial audit (20 findings, all resolved into the spec)",
+      "file_type": "document",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_verified_against_current_docs_during_planning",
+      "label": "Verified against current docs during planning",
+      "file_type": "document",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L29"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_2026_07_07_grilling_session_decisions_adversarial_audit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_wiki_architecture_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_2026_07_07_grilling_session_decisions_adversarial_audit",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_grilling_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_2026_07_07_grilling_session_decisions_adversarial_audit",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_adversarial_audit_20_findings_all_resolved_into_the_spec",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_2026_07_07_grilling_session_decisions_adversarial_audit",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_verified_against_current_docs_during_planning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
+      "source_location": "L29",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

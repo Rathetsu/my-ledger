@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_md",
+      "label": "2026-07-07-live-rates-snapshot-history-cron.md",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_adr_live_rates_for_aggregates_daily_snapshots_for_history_one_idempotent_housekeeping_routine",
+      "label": "ADR: Live rates for aggregates; daily snapshots for history; one idempotent housekeeping routine",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_decision",
+      "label": "Decision",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_why",
+      "label": "Why",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_rejected",
+      "label": "Rejected",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L13"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_adr_live_rates_for_aggregates_daily_snapshots_for_history_one_idempotent_housekeeping_routine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_adr_live_rates_for_aggregates_daily_snapshots_for_history_one_idempotent_housekeeping_routine",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_decision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_adr_live_rates_for_aggregates_daily_snapshots_for_history_one_idempotent_housekeeping_routine",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_why",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_adr_live_rates_for_aggregates_daily_snapshots_for_history_one_idempotent_housekeeping_routine",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_rejected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-live-rates-snapshot-history-cron.md",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

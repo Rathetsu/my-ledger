@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_md",
+      "label": "2026-07-07-debt-first-deadline-aware-planner.md",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_adr_deterministic_debt_first_planner_with_deadline_slack_currency_aware_funding_gaps",
+      "label": "ADR: Deterministic debt-first planner with deadline slack; currency-aware funding gaps",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_decision",
+      "label": "Decision",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_why",
+      "label": "Why",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_rejected",
+      "label": "Rejected",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L13"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_adr_deterministic_debt_first_planner_with_deadline_slack_currency_aware_funding_gaps",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_adr_deterministic_debt_first_planner_with_deadline_slack_currency_aware_funding_gaps",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_decision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_adr_deterministic_debt_first_planner_with_deadline_slack_currency_aware_funding_gaps",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_why",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_adr_deterministic_debt_first_planner_with_deadline_slack_currency_aware_funding_gaps",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_rejected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-debt-first-deadline-aware-planner.md",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

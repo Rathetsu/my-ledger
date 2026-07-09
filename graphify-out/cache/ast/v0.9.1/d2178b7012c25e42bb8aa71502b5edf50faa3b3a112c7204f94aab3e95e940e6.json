@@ -1,0 +1,144 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "label": "index.md",
+      "file_type": "document",
+      "source_file": "docs/index.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_index_docs_index_my_ledger",
+      "label": "Docs Index - My Ledger",
+      "file_type": "document",
+      "source_file": "docs/index.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_index_layers",
+      "label": "Layers",
+      "file_type": "document",
+      "source_file": "docs/index.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_index_conventions",
+      "label": "Conventions",
+      "file_type": "document",
+      "source_file": "docs/index.md",
+      "source_location": "L18"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_index_docs_index_my_ledger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_docs_index_my_ledger",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_index_layers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_context_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_wiki_architecture_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_wiki_status_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_stream_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_agents_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_index_docs_index_my_ledger",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_index_conventions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/index.md",
+      "source_location": "L18",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

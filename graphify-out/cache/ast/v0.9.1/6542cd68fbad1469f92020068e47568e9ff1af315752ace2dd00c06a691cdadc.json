@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_md",
+      "label": "2026-07-07-ai-advisor-contract.md",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_adr_ai_advisor_contract_free_text_second_opinion_anonymized_payload_gemini_free_tier",
+      "label": "ADR: AI advisor contract - free-text second opinion, anonymized payload, Gemini free tier",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_decision",
+      "label": "Decision",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_why",
+      "label": "Why",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_rejected",
+      "label": "Rejected",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L13"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_adr_ai_advisor_contract_free_text_second_opinion_anonymized_payload_gemini_free_tier",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_adr_ai_advisor_contract_free_text_second_opinion_anonymized_payload_gemini_free_tier",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_decision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_adr_ai_advisor_contract_free_text_second_opinion_anonymized_payload_gemini_free_tier",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_why",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_adr_ai_advisor_contract_free_text_second_opinion_anonymized_payload_gemini_free_tier",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_rejected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-ai-advisor-contract.md",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,316 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "label": "07-debts-and-planner.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "label": "Phase 07: Debts and Planner Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_1_flexible_debts_table_and_migration",
+      "label": "Task 1: flexible_debts table and migration",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L33"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_2_periodsbetween_helper",
+      "label": "Task 2: periodsBetween helper",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L67"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_3_derived_debt_balance",
+      "label": "Task 3: derived debt balance",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_4_debt_crud_actions",
+      "label": "Task 4: debt CRUD actions",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L179"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_5_debt_payment_flow_record_and_reverse",
+      "label": "Task 5: debt payment flow (record and reverse)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L298"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_6_debts_screens",
+      "label": "Task 6: debts screens",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L401"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_7_planner_types",
+      "label": "Task 7: planner types",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L721"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_8_engine_math_helpers",
+      "label": "Task 8: engine math helpers",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L775"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_9_variable_spend_estimate_the_g4_blend",
+      "label": "Task 9: variable spend estimate (the G4 blend)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L841"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_10_engine_core_surplus_avalanche_minimums_payoff_reporting",
+      "label": "Task 10: engine core - surplus, avalanche, minimums, payoff reporting",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L941"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_11_engine_deadline_just_in_time_payments_and_deadline_slack",
+      "label": "Task 11: engine - deadline just-in-time payments and deadline slack",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1178"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_12_engine_currency_aware_funding_gaps_flags_passthroughs",
+      "label": "Task 12: engine - currency-aware funding gaps, flags, passthroughs",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1242"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_13_plan_input_assembler",
+      "label": "Task 13: plan input assembler",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1368"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_14_plan_screen",
+      "label": "Task 14: plan screen",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1480"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_15_playwright_flow",
+      "label": "Task 15: Playwright flow",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1646"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_06_expenses_and_insights_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_08_wishlist_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_1_flexible_debts_table_and_migration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_2_periodsbetween_helper",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_3_derived_debt_balance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_4_debt_crud_actions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L179",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_5_debt_payment_flow_record_and_reverse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L298",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_6_debts_screens",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L401",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_7_planner_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L721",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_8_engine_math_helpers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L775",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_9_variable_spend_estimate_the_g4_blend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L841",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_10_engine_core_surplus_avalanche_minimums_payoff_reporting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L941",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_11_engine_deadline_just_in_time_payments_and_deadline_slack",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1178",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_12_engine_currency_aware_funding_gaps_flags_passthroughs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1242",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_13_plan_input_assembler",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1368",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_14_plan_screen",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1480",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_phase_07_debts_and_planner_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_07_debts_and_planner_task_15_playwright_flow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/07-debts-and-planner.md",
+      "source_location": "L1646",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

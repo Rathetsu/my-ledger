@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_md",
+      "label": "2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_adr_next_js_neon_postgres_drizzle_stack_auth_google_only_prod_email_password_test_project",
+      "label": "ADR: Next.js + Neon Postgres + Drizzle + Stack Auth (Google-only prod, email+password test project)",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_decision",
+      "label": "Decision",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_why",
+      "label": "Why",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_rejected",
+      "label": "Rejected",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L15"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_adr_next_js_neon_postgres_drizzle_stack_auth_google_only_prod_email_password_test_project",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_adr_next_js_neon_postgres_drizzle_stack_auth_google_only_prod_email_password_test_project",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_decision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_adr_next_js_neon_postgres_drizzle_stack_auth_google_only_prod_email_password_test_project",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_why",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_adr_next_js_neon_postgres_drizzle_stack_auth_google_only_prod_email_password_test_project",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_rejected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-nextjs-neon-drizzle-stackauth.md",
+      "source_location": "L15",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

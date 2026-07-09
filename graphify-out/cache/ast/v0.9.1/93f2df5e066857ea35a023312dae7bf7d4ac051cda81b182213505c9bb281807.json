@@ -1,0 +1,47 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_superpowers_sdd_progress_md",
+      "label": "progress.md",
+      "file_type": "document",
+      "source_file": ".superpowers/sdd/progress.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_superpowers_sdd_progress_sdd_progress_my_ledger",
+      "label": "SDD Progress: My Ledger",
+      "file_type": "document",
+      "source_file": ".superpowers/sdd/progress.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_superpowers_sdd_progress_phase_0_foundations_branch_phase_0_foundations",
+      "label": "Phase 0 - Foundations (branch: phase-0-foundations)",
+      "file_type": "document",
+      "source_file": ".superpowers/sdd/progress.md",
+      "source_location": "L3"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_superpowers_sdd_progress_md",
+      "target": "users_ezzat_personal_projects_my_ledger_superpowers_sdd_progress_sdd_progress_my_ledger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".superpowers/sdd/progress.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_superpowers_sdd_progress_sdd_progress_my_ledger",
+      "target": "users_ezzat_personal_projects_my_ledger_superpowers_sdd_progress_phase_0_foundations_branch_phase_0_foundations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".superpowers/sdd/progress.md",
+      "source_location": "L3",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

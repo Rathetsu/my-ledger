@@ -1,0 +1,188 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "label": "10-cron-and-snapshots.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "label": "Phase 10: Cron and Snapshots Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_1_net_worth_snapshots_table_and_migration",
+      "label": "Task 1: `net_worth_snapshots` table and migration",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_2_pure_snapshot_math_computesnapshotrow_rederivenetworthminor_rederivedebtminor",
+      "label": "Task 2: pure snapshot math (`computeSnapshotRow`, `rederiveNetWorthMinor`, `rederiveDebtMinor`)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L63"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_3_housekeeping_upserts_today_s_snapshot_idempotent",
+      "label": "Task 3: housekeeping upserts today's snapshot (idempotent)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L255"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_4_cron_route_and_vercel_json",
+      "label": "Task 4: cron route and `vercel.json`",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L453"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_5_dashboard_trend_charts_read_from_snapshots",
+      "label": "Task 5: dashboard trend charts (read from snapshots)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L575"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_6_e2e_trends_render_from_seeded_snapshots_cron_auth",
+      "label": "Task 6: E2E (trends render from seeded snapshots, cron auth)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L672"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_7_phase_gate",
+      "label": "Task 7: phase gate",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L759"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_live_rates_snapshot_history_cron_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_09_ai_advisor_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_11_polish_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_1_net_worth_snapshots_table_and_migration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_2_pure_snapshot_math_computesnapshotrow_rederivenetworthminor_rederivedebtminor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_3_housekeeping_upserts_today_s_snapshot_idempotent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_4_cron_route_and_vercel_json",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L453",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_5_dashboard_trend_charts_read_from_snapshots",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L575",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_6_e2e_trends_render_from_seeded_snapshots_cron_auth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L672",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_phase_10_cron_and_snapshots_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_10_cron_and_snapshots_task_7_phase_gate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/10-cron-and-snapshots.md",
+      "source_location": "L759",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_md",
+      "label": "2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_adr_per_currency_accounts_transactions_never_convert_transfers_carry_two_explicit_legs",
+      "label": "ADR: Per-currency accounts; transactions never convert; transfers carry two explicit legs",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_decision",
+      "label": "Decision",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_why",
+      "label": "Why",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_rejected",
+      "label": "Rejected",
+      "file_type": "document",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L13"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_adr_per_currency_accounts_transactions_never_convert_transfers_carry_two_explicit_legs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_adr_per_currency_accounts_transactions_never_convert_transfers_carry_two_explicit_legs",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_decision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_adr_per_currency_accounts_transactions_never_convert_transfers_carry_two_explicit_legs",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_why",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_adr_per_currency_accounts_transactions_never_convert_transfers_carry_two_explicit_legs",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_rejected",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/adr/2026-07-07-per-currency-accounts-two-leg-transfers.md",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

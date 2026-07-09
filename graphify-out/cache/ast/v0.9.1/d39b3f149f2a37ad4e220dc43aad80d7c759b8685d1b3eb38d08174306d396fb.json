@@ -1,0 +1,193 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_md",
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_my_ledger",
+      "label": "my-ledger",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "label": "Skill routing",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_starting_work",
+      "label": "Starting work",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_building",
+      "label": "Building",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_debugging",
+      "label": "Debugging",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_decisions_and_docs",
+      "label": "Decisions and docs",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_finishing",
+      "label": "Finishing",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_meta",
+      "label": "Meta",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_issue_tracker",
+      "label": "Issue tracker",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_claude_triage_labels",
+      "label": "Triage labels",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L50"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_md",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_my_ledger",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_index_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_md",
+      "target": "users_ezzat_personal_projects_my_ledger_context_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_my_ledger",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_starting_work",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_building",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_debugging",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_decisions_and_docs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_finishing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_skill_routing",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_meta",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_my_ledger",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_issue_tracker",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_claude_issue_tracker",
+      "target": "users_ezzat_personal_projects_my_ledger_claude_triage_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L50",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

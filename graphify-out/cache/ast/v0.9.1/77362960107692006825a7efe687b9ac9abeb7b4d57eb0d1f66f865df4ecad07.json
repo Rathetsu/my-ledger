@@ -1,0 +1,236 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "label": "00-foundations.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "label": "Phase 00: Foundations Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_global_constraints",
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_the_two_stack_auth_projects_read_this_before_anything_else",
+      "label": "The two Stack Auth projects (read this before anything else)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_1_scaffold_next_js_into_the_existing_repo",
+      "label": "Task 1: Scaffold Next.js into the existing repo",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L42"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_2_prettier",
+      "label": "Task 2: Prettier",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L99"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_3_vitest",
+      "label": "Task 3: Vitest",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L174"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_4_drizzle_wired_to_neon_empty_schema_baseline",
+      "label": "Task 4: Drizzle wired to Neon (empty schema baseline)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L235"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_5_stack_auth_wiring",
+      "label": "Task 5: Stack Auth wiring",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L359"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_6_protected_app_route_group_with_bottom_tab_shell",
+      "label": "Task 6: Protected (app) route group with bottom-tab shell",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L448"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_7_playwright_e2e_the_phase_gate",
+      "label": "Task 7: Playwright E2E (the phase gate)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L565"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_done",
+      "label": "Phase done",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L696"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_01_accounts_and_currency_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_global_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_the_two_stack_auth_projects_read_this_before_anything_else",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_1_scaffold_next_js_into_the_existing_repo",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_2_prettier",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_3_vitest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_4_drizzle_wired_to_neon_empty_schema_baseline",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_5_stack_auth_wiring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L359",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_6_protected_app_route_group_with_bottom_tab_shell",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L448",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_task_7_playwright_e2e_the_phase_gate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L565",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_phase_done",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L696",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_00_foundations_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_wiki_status_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L701",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

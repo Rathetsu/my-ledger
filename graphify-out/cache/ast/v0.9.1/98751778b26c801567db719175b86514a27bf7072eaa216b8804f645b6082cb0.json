@@ -1,0 +1,432 @@
+{
+  "nodes": [
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "label": "2026-07-07-my-ledger-design.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "label": "My Ledger - Design Spec",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_1_product",
+      "label": "1. Product",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L5"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_2_stack_and_platform_requirements",
+      "label": "2. Stack and platform requirements",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_3_hard_conventions_apply_to_every_feature",
+      "label": "3. Hard conventions (apply to every feature)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L19"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_4_data_model",
+      "label": "4. Data model",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "label": "5. Features",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L66"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_1_accounts_currency",
+      "label": "5.1 Accounts & currency",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_2_transactions_transfers",
+      "label": "5.2 Transactions & transfers",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_3_income",
+      "label": "5.3 Income",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_4_bills",
+      "label": "5.4 Bills",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L77"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_5_installments",
+      "label": "5.5 Installments",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L80"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_6_expenses_insights",
+      "label": "5.6 Expenses & insights",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L83"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_7_flexible_debts",
+      "label": "5.7 Flexible debts",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L86"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_8_wishlist",
+      "label": "5.8 Wishlist",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L89"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_9_planner_deterministic_engine",
+      "label": "5.9 Planner (deterministic engine)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L92"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_10_ai_advisor",
+      "label": "5.10 AI advisor",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L95"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_11_dashboard_attention_list",
+      "label": "5.11 Dashboard & attention list",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_12_housekeeping_cron",
+      "label": "5.12 Housekeeping & cron",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L101"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_13_first_run",
+      "label": "5.13 First run",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L104"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_6_out_of_scope_v1",
+      "label": "6. Out of scope (v1)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L107"
+    },
+    {
+      "id": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_7_verification",
+      "label": "7. Verification",
+      "file_type": "document",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L111"
+    }
+  ],
+  "edges": [
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_context_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_stream_2026_07_07_grilling_decisions_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_plans_readme_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_1_product",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_2_stack_and_platform_requirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_nextjs_neon_drizzle_stackauth_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_3_hard_conventions_apply_to_every_feature",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_integer_minor_units_derived_balances_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_per_currency_accounts_two_leg_transfers_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_4_data_model",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_1_accounts_currency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_2_transactions_transfers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_3_income",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_4_bills",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_5_installments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_6_expenses_insights",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_7_flexible_debts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_8_wishlist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_9_planner_deterministic_engine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_debt_first_deadline_aware_planner_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_10_ai_advisor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_md",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_adr_2026_07_07_ai_advisor_contract_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_11_dashboard_attention_list",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_12_housekeeping_cron",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_features",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_5_13_first_run",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_6_out_of_scope_v1",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_my_ledger_design_spec",
+      "target": "users_ezzat_personal_projects_my_ledger_docs_superpowers_specs_2026_07_07_my_ledger_design_7_verification",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/specs/2026-07-07-my-ledger-design.md",
+      "source_location": "L111",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
