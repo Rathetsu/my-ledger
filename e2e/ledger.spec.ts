@@ -32,3 +32,32 @@ test('post an expense and see the balance drop', async ({ page }) => {
     page.getByRole('link', { name: new RegExp(name) }),
   ).toContainText('€74.50')
 })
+
+test('cross-currency transfer with both explicit legs', async ({ page }) => {
+  const run = Date.now()
+  const eur = `From EUR ${run}`
+  const egp = `To EGP ${run}`
+  await createAccount(page, eur, 'EUR', '1000.00')
+  await createAccount(page, egp, 'EGP', '0.00')
+
+  await page.goto('/transfers/new')
+  await page.getByLabel('From').selectOption({ label: `${eur} (EUR)` })
+  await page.getByLabel('To').selectOption({ label: `${egp} (EGP)` })
+  await page.getByLabel(/Amount sent/).fill('100.00')
+  // the live-rate suggestion button must exist; we still enter the actual figure
+  await expect(
+    page.getByRole('button', { name: /Use live-rate suggestion/ }),
+  ).toBeVisible()
+  await page.getByLabel(/Amount received/).fill('5200.00')
+  await page.getByRole('button', { name: 'Create transfer' }).click()
+  await page.waitForURL(/\/transfers\//)
+  await expect(page.getByText('1 EUR = 52.0000 EGP')).toBeVisible()
+
+  await page.goto('/accounts')
+  await expect(page.getByRole('link', { name: new RegExp(eur) })).toContainText(
+    '€900.00',
+  )
+  await expect(page.getByRole('link', { name: new RegExp(egp) })).toContainText(
+    'EGP 5,200.00',
+  )
+})
