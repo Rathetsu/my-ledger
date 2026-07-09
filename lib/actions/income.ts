@@ -4,7 +4,7 @@ import { and, eq, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { dueDateFor } from '@/lib/dates/cairo'
-import { db } from '@/lib/db/client'
+import { db, dbPool } from '@/lib/db/client'
 import {
   accounts,
   incomeSources,
@@ -16,6 +16,8 @@ import type { Currency } from '@/lib/money/money'
 import { incomeSourceInput, windfallInput } from './schemas'
 
 export type ActionResult = { ok: true } | { ok: false; error: string }
+
+class UpdateIncomeSourceError extends Error {}
 
 async function ownedActiveAccount(userId: string, accountId: string) {
   const [account] = await db
@@ -88,43 +90,52 @@ export async function updateIncomeSource(
   )
   if (amountMinor === null) return { ok: false, error: 'Invalid amount' }
 
-  const updated = await db
-    .update(incomeSources)
-    .set({
-      name: parsed.data.name,
-      amountMinor,
-      currency: parsed.data.currency as Currency,
-      dayOfMonth: parsed.data.dayOfMonth,
-      accountId: parsed.data.accountId,
-      recurring: parsed.data.recurring,
-      active: parsed.data.active,
-    })
-    .where(and(eq(incomeSources.id, id), eq(incomeSources.userId, user.id)))
-    .returning({ id: incomeSources.id })
-  if (updated.length !== 1)
-    return { ok: false, error: 'Income source not found' }
+  // Source update + pending-occurrence rewrite must land together.
+  try {
+    await dbPool.transaction(async (tx) => {
+      const updated = await tx
+        .update(incomeSources)
+        .set({
+          name: parsed.data.name,
+          amountMinor,
+          currency: parsed.data.currency as Currency,
+          dayOfMonth: parsed.data.dayOfMonth,
+          accountId: parsed.data.accountId,
+          recurring: parsed.data.recurring,
+          active: parsed.data.active,
+        })
+        .where(and(eq(incomeSources.id, id), eq(incomeSources.userId, user.id)))
+        .returning({ id: incomeSources.id })
+      if (updated.length !== 1)
+        throw new UpdateIncomeSourceError('Income source not found')
 
-  // Definition edits rewrite pending occurrences only (spec §3).
-  // P4 extracts this loop into rewritePendingOccurrences(kind, sourceId) in lib/housekeeping.
-  const pending = await db
-    .select()
-    .from(occurrences)
-    .where(
-      and(
-        eq(occurrences.userId, user.id),
-        eq(occurrences.kind, 'income'),
-        eq(occurrences.sourceId, id),
-        eq(occurrences.status, 'pending'),
-      ),
-    )
-  for (const occ of pending) {
-    await db
-      .update(occurrences)
-      .set({
-        expectedAmountMinor: amountMinor,
-        dueDate: dueDateFor(occ.period, parsed.data.dayOfMonth),
-      })
-      .where(eq(occurrences.id, occ.id))
+      // Definition edits rewrite pending occurrences only (spec §3).
+      // P4 extracts this loop into rewritePendingOccurrences(kind, sourceId) in lib/housekeeping.
+      const pending = await tx
+        .select()
+        .from(occurrences)
+        .where(
+          and(
+            eq(occurrences.userId, user.id),
+            eq(occurrences.kind, 'income'),
+            eq(occurrences.sourceId, id),
+            eq(occurrences.status, 'pending'),
+          ),
+        )
+      for (const occ of pending) {
+        await tx
+          .update(occurrences)
+          .set({
+            expectedAmountMinor: amountMinor,
+            dueDate: dueDateFor(occ.period, parsed.data.dayOfMonth),
+          })
+          .where(eq(occurrences.id, occ.id))
+      }
+    })
+  } catch (e) {
+    if (e instanceof UpdateIncomeSourceError)
+      return { ok: false, error: e.message }
+    throw e
   }
 
   revalidatePath('/income')
