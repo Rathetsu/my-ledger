@@ -1,11 +1,15 @@
 import Link from 'next/link'
 import { desc, eq } from 'drizzle-orm'
+import { AttentionList } from '@/components/dashboard/attention-list'
 import { requireUser } from '@/lib/auth'
 import { convert } from '@/lib/currency/convert'
 import { getRates } from '@/lib/currency/rates'
+import { todayCairo } from '@/lib/dates/cairo'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { getSettings, totalsByCurrency } from '@/lib/db/queries'
+import { housekeeping } from '@/lib/housekeeping'
+import { getAttentionItems } from '@/lib/occurrences/attention'
 import { CURRENCIES, formatMoney } from '@/lib/money/money'
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -18,7 +22,9 @@ function isStale(fetchedAt: string): boolean {
 
 export default async function HomePage() {
   const user = await requireUser()
-  const [s, totals, rates, recent] = await Promise.all([
+  const today = todayCairo()
+  await housekeeping(user.id, today)
+  const [s, totals, rates, recent, attention] = await Promise.all([
     getSettings(user.id),
     totalsByCurrency(user.id),
     getRates(),
@@ -38,6 +44,7 @@ export default async function HomePage() {
       .where(eq(transactions.userId, user.id))
       .orderBy(desc(transactions.occurredOn), desc(transactions.createdAt))
       .limit(10),
+    getAttentionItems(user.id, today),
   ])
   const home = s.homeCurrency
   // Convert each per-currency total once, round half-up, then sum (spec §3).
@@ -50,6 +57,8 @@ export default async function HomePage() {
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-semibold">My Ledger</h1>
+
+      <AttentionList items={attention} />
 
       <section className="rounded border p-4">
         <p className="text-sm text-gray-500">Total ({home})</p>
