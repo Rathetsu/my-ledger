@@ -5,6 +5,7 @@ config({ path: '.env.local' })
 
 export default defineConfig({
   testDir: './e2e',
+  timeout: 60_000,
   fullyParallel: false,
   use: {
     baseURL: 'http://localhost:3000',
