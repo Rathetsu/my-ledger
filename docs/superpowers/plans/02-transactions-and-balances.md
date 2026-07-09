@@ -8,7 +8,7 @@
 
 **Architecture:** Everything in this phase writes plain `transactions` rows; the mutability rules (spec §3) are one pure guard function that every edit/delete action consults. Transfers are two explicit legs sharing a `transfer_group_id`, always written and mutated inside one `dbPool` transaction; the live rate only pre-fills the cross-currency suggestion via the pure `convert()`. No new tables: P1's schema already carries every column this phase needs.
 
-**Tech Stack:** Next.js App Router server actions + zod, Drizzle on Neon (`db` reads, `dbPool` transactions), Stack Auth (`requireUser()`), Vitest, Playwright, Tailwind (mobile-first).
+**Tech Stack:** Next.js App Router server actions + zod, Drizzle on Neon (`db` reads, `dbPool` transactions), Better Auth (`requireUser()`), Vitest, Playwright, Tailwind (mobile-first).
 
 ## Global Constraints
 
@@ -156,7 +156,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { and, eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { parseToMinor } from '@/lib/money/money'
@@ -304,7 +304,7 @@ export function TransactionForm({
 
 ```tsx
 import { and, asc, eq, isNull } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
 import { todayCairo } from '@/lib/dates/cairo'
@@ -570,7 +570,7 @@ export function TransactionEditForm({
 ```tsx
 import { notFound, redirect } from 'next/navigation'
 import { and, eq } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { directMutability } from '@/lib/transactions/mutability'
@@ -686,7 +686,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { and, eq, inArray } from 'drizzle-orm'
 import { z } from 'zod'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { parseToMinor } from '@/lib/money/money'
@@ -928,7 +928,7 @@ export function TransferForm({
 
 ```tsx
 import { and, asc, eq, isNull } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
 import { getRates } from '@/lib/currency/rates'
@@ -1115,7 +1115,7 @@ export async function deleteTransferGroup(
 ```tsx
 import { notFound } from 'next/navigation'
 import { and, eq } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { formatMoney } from '@/lib/money/money'
@@ -1448,7 +1448,7 @@ git commit -m "feat(ledger): reconciliation posts adjustment for the delta"
 ```tsx
 import Link from 'next/link'
 import { and, asc, desc, eq, gte, isNull, lte, type SQL } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions, TRANSACTION_TYPES } from '@/lib/db/schema'
 import { formatMoney } from '@/lib/money/money'
@@ -1609,7 +1609,7 @@ git commit -m "feat(ledger): history screen with account, type and date filters"
 ```tsx
 import Link from 'next/link'
 import { desc, eq } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { convert } from '@/lib/currency/convert'
 import { getRates } from '@/lib/currency/rates'
 import { db } from '@/lib/db/client'

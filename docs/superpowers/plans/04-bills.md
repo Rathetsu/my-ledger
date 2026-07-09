@@ -8,7 +8,7 @@
 
 **Architecture:** Bills reuse the shared machinery P3 built: the `occurrences` table, `housekeeping(userId, today)`, and `lib/occurrences/confirm.ts` (confirm / skip / un-confirm). This phase only adds the `bills` definition table, a `bill` branch in the confirm module's source lookup, a bill block in housekeeping generation, and extracts P3's inline pending-rewrite loop into `rewritePendingOccurrences` so income, bills, and (in P5) installments share one definition-edit rail.
 
-**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Neon Postgres + Drizzle (`db` neon-http reads, `dbPool` neon-serverless transactions), drizzle-kit migrations, Stack Auth, zod server actions, Vitest + Playwright.
+**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Neon Postgres + Drizzle (`db` neon-http reads, `dbPool` neon-serverless transactions), drizzle-kit migrations, Better Auth, zod server actions, Vitest + Playwright.
 
 ## Global Constraints (from the plans README, verbatim)
 
@@ -479,7 +479,7 @@ Expected: PASS.
 
 import { and, eq, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, bills } from '@/lib/db/schema'
 import { rewritePendingOccurrences } from '@/lib/housekeeping'
@@ -740,7 +740,7 @@ git add lib/occurrences && git commit -m "feat(occurrences): bill confirm posts 
 // app/(app)/bills/page.tsx
 import Link from 'next/link'
 import { eq } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { bills } from '@/lib/db/schema'
 import { formatMoney } from '@/lib/money/money'
@@ -890,7 +890,7 @@ export function BillForm({ accounts, bill }: { accounts: AccountOption[]; bill?:
 // app/(app)/bills/new/page.tsx
 import { and, eq, isNull } from 'drizzle-orm'
 import { BillForm } from '@/components/bills/bill-form'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
 
@@ -914,7 +914,7 @@ export default async function NewBillPage() {
 import { notFound } from 'next/navigation'
 import { and, eq, isNull } from 'drizzle-orm'
 import { BillForm } from '@/components/bills/bill-form'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, bills } from '@/lib/db/schema'
 
@@ -1066,7 +1066,7 @@ git add lib/occurrences/attention.ts && git commit -m "feat(dashboard): bills in
 - Test: `tests/e2e/bills.spec.ts`
 
 **Interfaces:**
-- Consumes: the running app against the Stack Auth test project; the same `signIn` helper as `tests/e2e/income.spec.ts` (extract it to `tests/e2e/helpers.ts` now that two specs share it, and update the income spec's import).
+- Consumes: the running app with email+password auth; the same `signIn` helper as `tests/e2e/income.spec.ts` (extract it to `tests/e2e/helpers.ts` now that two specs share it, and update the income spec's import).
 
 **Steps:**
 
@@ -1077,7 +1077,7 @@ git add lib/occurrences/attention.ts && git commit -m "feat(dashboard): bills in
 import type { Page } from '@playwright/test'
 
 export async function signIn(page: Page) {
-  await page.goto('/handler/sign-in')
+  await page.goto('/sign-in')
   await page.getByLabel(/email/i).fill(process.env.E2E_EMAIL!)
   await page.getByLabel(/password/i).fill(process.env.E2E_PASSWORD!)
   await page.getByRole('button', { name: /sign in/i }).click()

@@ -4,15 +4,15 @@ Single source of truth for requirements. Terms: [/CONTEXT.md](../../../CONTEXT.m
 
 ## 1. Product
 
-**My Ledger** - a mobile-first personal money ledger + dashboard for a single user (multi-device via Google sign-in). It tracks money across per-currency accounts (EUR/USD/EGP), confirms expected income, reminds about and confirms bills and installments, tracks flexible debts and everyday expenses, keeps a wishlist, computes a deterministic payoff plan with an AI second opinion, and shows honest net-worth history.
+**My Ledger** - a mobile-first personal money ledger + dashboard for a single user (multi-device via email/password sign-in). It tracks money across per-currency accounts (EUR/USD/EGP), confirms expected income, reminds about and confirms bills and installments, tracks flexible debts and everyday expenses, keeps a wishlist, computes a deterministic payoff plan with an AI second opinion, and shows honest net-worth history.
 
 ## 2. Stack and platform requirements
 
 - Next.js App Router + TypeScript + Tailwind CSS; **mobile-first** (bottom tab nav, large tap targets); responsive up to desktop.
 - Neon Postgres + Drizzle; migrations via drizzle-kit, run in the Vercel build command.
-- Stack Auth (Neon Auth): prod project **Google-only**; separate test project **email+password** for dev/E2E ([ADR](../../adr/2026-07-07-nextjs-neon-drizzle-stackauth.md)).
+- Self-hosted **Better Auth** (`better-auth`): **email+password only**, one auth config for dev/E2E/prod; auth tables in our Neon DB via Drizzle; open sign-up gated by `ALLOW_SIGNUP` ([ADR](../../adr/2026-07-09-better-auth-email-password.md)).
 - Server actions (zod-validated) for all mutations; `revalidatePath` after writes.
-- Vitest for pure logic; Playwright for E2E (against the test auth project).
+- Vitest for pure logic; Playwright for E2E (email+password sign-up/sign-in against the app's own Better Auth).
 - Vercel deploy; daily cron via `vercel.json` (`CRON_SECRET`-guarded route).
 - Every table carries `user_id` (single user today; future-proof isolation).
 
@@ -110,4 +110,4 @@ Push/email notifications; multi-user sharing; budgets/envelopes; receipt scannin
 
 ## 7. Verification
 
-Unit (Vitest): Money format/parse/round-half-up; convert cross-rates; Cairo day boundaries + due-day clamping (Feb, 30-day months); occurrence generation idempotency; planner (surplus blend, deadline just-in-time, avalanche order, funding gaps, windfall acceleration); sanitizer anonymization; cache-key bucketing. E2E (Playwright, test auth project): sign-in gate; account + opening balance; expense + transfer (both kinds); income confirm with edited amount; bill + installment confirm and overdue; debt + plan screen; wishlist purchase; AI panel disclosure + graceful degradation (mocked); cron route auth. Manual: mobile viewport walkthrough per phase; final full-scenario walkthrough.
+Unit (Vitest): Money format/parse/round-half-up; convert cross-rates; Cairo day boundaries + due-day clamping (Feb, 30-day months); occurrence generation idempotency; planner (surplus blend, deadline just-in-time, avalanche order, funding gaps, windfall acceleration); sanitizer anonymization; cache-key bucketing. E2E (Playwright, email+password): sign-in gate; account + opening balance; expense + transfer (both kinds); income confirm with edited amount; bill + installment confirm and overdue; debt + plan screen; wishlist purchase; AI panel disclosure + graceful degradation (mocked); cron route auth. Manual: mobile viewport walkthrough per phase; final full-scenario walkthrough.

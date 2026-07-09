@@ -8,20 +8,21 @@ Current truth of the system design. Terms per [/CONTEXT.md](../../CONTEXT.md); r
 
 ## Stack
 
-Next.js (App Router) + TypeScript + Tailwind, mobile-first (bottom tab nav). Neon Postgres via Drizzle (`neon-http` for reads, `neon-serverless` Pool for multi-step writes). Stack Auth (Neon Auth): Google-only in prod, email+password in a separate test project for E2E. Mutations are zod-validated server actions + `revalidatePath`. Vitest (pure logic) + Playwright (E2E). Vercel deploy; `drizzle-kit migrate` in the build command; daily Vercel cron (Hobby tier: once/day ±59 min).
+Next.js (App Router) + TypeScript + Tailwind, mobile-first (bottom tab nav). Neon Postgres via Drizzle (`neon-http` for reads, `neon-serverless` Pool for multi-step writes). Self-hosted Better Auth (email+password only; open sign-up gated by `ALLOW_SIGNUP`), auth tables in our own Neon DB via Drizzle; one auth config for dev, E2E, and prod. Mutations are zod-validated server actions + `revalidatePath`. Vitest (pure logic) + Playwright (E2E). Vercel deploy; `drizzle-kit migrate` in the build command; daily Vercel cron (Hobby tier: once/day ±59 min).
 
 ## Module map
 
 ```
 app/
-  handler/[...stack]/page.tsx     # Stack Auth handler
+  api/auth/[...all]/route.ts      # Better Auth handler (toNextJsHandler)
+  sign-in/page.tsx, sign-up/page.tsx  # email+password forms (outside (app))
   (app)/layout.tsx                # protected shell + bottom tabs
   (app)/page.tsx                  # dashboard: attention list, net worth, trends
   (app)/accounts|transactions|income|bills|installments|debts|expenses|wishlist|plan|settings/
   api/cron/daily/route.ts         # CRON_SECRET-guarded → housekeeping()
 lib/
   db/{client.ts, schema.ts}       # Drizzle clients + full schema
-  auth/stack.ts                   # stackServerApp + requireUser()
+  auth.ts, auth-client.ts         # betterAuth instance + requireUser(); client for forms
   money/money.ts                  # integer minor units, format/parse, round-half-up
   dates/cairo.ts                  # Africa/Cairo day boundaries, due-day clamping
   currency/{rates.ts, convert.ts} # open.er-api fetch/cache/seed + convert()

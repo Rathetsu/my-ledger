@@ -1,6 +1,6 @@
 # My Ledger - Domain Context
 
-Single-context repo. This glossary is the ubiquitous language: issues, tests, code, and docs use these terms exactly. Architecture lives in [docs/wiki/architecture.md](docs/wiki/architecture.md); rationale lives in [docs/adr/](docs/adr/); full requirements in [the spec](docs/superpowers/specs/2026-07-07-my-ledger-design.md).
+Single-context repo. Auth is self-hosted Better Auth, email+password only (see [ADR 2026-07-09](docs/adr/2026-07-09-better-auth-email-password.md)). This glossary is the ubiquitous language: issues, tests, code, and docs use these terms exactly. Architecture lives in [docs/wiki/architecture.md](docs/wiki/architecture.md); rationale lives in [docs/adr/](docs/adr/); full requirements in [the spec](docs/superpowers/specs/2026-07-07-my-ledger-design.md).
 
 ## Glossary
 

@@ -20,7 +20,7 @@ Backlinks: [Plans master index](../plans/README.md) | [Design spec](../specs/202
 - TDD: failing test → minimal code → pass → commit. Frequent small commits.
 - The deterministic engine owns all numbers; the AI only quotes.
 
-**Phase conventions:** unit tests colocated as `*.test.ts` next to source; E2E specs in `e2e/`; imports use the `@/` alias. Canonical interfaces consumed exactly as published in the README: `PlanInput`, `PlanResult` from `lib/planner/types` (P7), `Currency`, `CURRENCIES` from `lib/money/money` (P1), `requireUser` from `lib/auth/stack` (P0), `db` from `lib/db/client` and tables from `lib/db/schema`.
+**Phase conventions:** unit tests colocated as `*.test.ts` next to source; E2E specs in `e2e/`; imports use the `@/` alias. Canonical interfaces consumed exactly as published in the README: `PlanInput`, `PlanResult` from `lib/planner/types` (P7), `Currency`, `CURRENCIES` from `lib/money/money` (P1), `requireUser` from `lib/auth` (P0), `db` from `lib/db/client` and tables from `lib/db/schema`.
 
 ---
 
@@ -576,7 +576,7 @@ export function buildContents(
 - Test: `lib/ai/advisor.test.ts`
 
 **Interfaces:**
-- Consumes: `cacheKey`, `SanitizedPayload` from `./sanitize`; `SYSTEM_PROMPT`, `buildContents` from `./prompt`; `requireUser` from `@/lib/auth/stack`; `db` from `@/lib/db/client`; `settings`, `aiAdviceCache` from `@/lib/db/schema`.
+- Consumes: `cacheKey`, `SanitizedPayload` from `./sanitize`; `SYSTEM_PROMPT`, `buildContents` from `./prompt`; `requireUser` from `@/lib/auth`; `db` from `@/lib/db/client`; `settings`, `aiAdviceCache` from `@/lib/db/schema`.
 - Produces: `getAdvice(payload: SanitizedPayload): Promise<string | null>` (canonical). `null` means unavailable; it NEVER throws to the page.
 
 Behavior: no `GEMINI_API_KEY` → null. `settings.ai_enabled` false → null. Cache hit (stored `payload_hash` equals current bucketed key) → cached advice without any fetch. Miss → `POST https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent` with `x-goog-api-key` header (`GEMINI_MODEL` env, default `gemini-3-flash-preview`), `generationConfig.temperature: 0.3`; map `candidates[0].content.parts[].text`, upsert the single per-user cache row, return the text. Any error at all (429, network, malformed body) → null.
@@ -594,7 +594,7 @@ const state = {
   upserts: [] as { userId: string; payloadHash: string; advice: string }[],
 }
 
-vi.mock('@/lib/auth/stack', () => ({
+vi.mock('@/lib/auth', () => ({
   requireUser: vi.fn(async () => ({ id: 'user-1' })),
 }))
 
@@ -730,7 +730,7 @@ describe('getAdvice', () => {
 
 ```ts
 import { eq } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { aiAdviceCache, settings } from '@/lib/db/schema'
 import { SYSTEM_PROMPT, buildContents } from './prompt'
@@ -813,7 +813,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const deleted: string[] = []
 
-vi.mock('@/lib/auth/stack', () => ({
+vi.mock('@/lib/auth', () => ({
   requireUser: vi.fn(async () => ({ id: 'user-1' })),
 }))
 vi.mock('@/lib/db/client', () => ({
@@ -886,7 +886,7 @@ describe('POST /api/ai/advice', () => {
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { getAdvice } from '@/lib/ai/advisor'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { aiAdviceCache } from '@/lib/db/schema'
 
@@ -1071,7 +1071,7 @@ const sanitized = sanitizePlanPayload(input, result)
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { settings } from '@/lib/db/schema'
 
