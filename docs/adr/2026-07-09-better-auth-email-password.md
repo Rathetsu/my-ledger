@@ -7,7 +7,7 @@
 Authentication is **self-hosted Better Auth** (`better-auth`), not Stack Auth. Sign-in method is **email + password only**; no Google, no other social/OAuth providers. Auth data (user, session, account, verification tables) lives in **our own Neon Postgres** via Better Auth's Drizzle adapter, so it is covered by our normal drizzle-kit migrations. There is a **single auth configuration** used identically in local dev, Playwright E2E, and production (no prod/test project split). Open sign-up is **gated by an `ALLOW_SIGNUP` env flag** (default off): the single user registers once with `ALLOW_SIGNUP=true`, then it is turned off so the internet-exposed deployment will not accept new registrations.
 
 Shape:
-- `lib/auth.ts` - `export const auth = betterAuth({ database: drizzleAdapter(db, {provider:'pg'}), emailAndPassword: { enabled: true, disableSignUp: process.env.ALLOW_SIGNUP !== 'true' }, plugins: [nextCookies()] })`, plus `requireUser()` wrapping `auth.api.getSession({ headers: await headers() })` and redirecting to `/sign-in` when null.
+- `lib/auth.ts` - `export const auth = betterAuth({ database: drizzleAdapter(dbPool, {provider:'pg'}), emailAndPassword: { enabled: true, disableSignUp: process.env.ALLOW_SIGNUP !== 'true' }, plugins: [nextCookies()] })`, plus `requireUser()` wrapping `auth.api.getSession({ headers: await headers() })` and redirecting to `/sign-in` when null.
 - `lib/auth-client.ts` - `createAuthClient()` for the sign-in / sign-up forms.
 - `app/api/auth/[...all]/route.ts` - `toNextJsHandler(auth)`.
 - Our own `/sign-in` and `/sign-up` pages (outside the protected `(app)` group).

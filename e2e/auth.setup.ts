@@ -6,16 +6,14 @@ const PASSWORD = process.env.E2E_TEST_PASSWORD!
 
 setup('register (first run) then sign in', async ({ page }) => {
   // Best-effort registration: succeeds first run, errors harmlessly if the user exists.
+  // Wait on the sign-up API response itself (not a UI signal raced against a timer) so
+  // this is robust on a cold run where the first compile + first Neon connection is slow.
   await page.goto('/sign-up')
   await page.getByLabel('Email').fill(EMAIL)
   await page.getByLabel('Password').fill(PASSWORD)
-  await page.getByRole('button', { name: /create account/i }).click()
-  await Promise.race([
-    page.waitForURL('/').catch(() => {}),
-    page
-      .getByRole('alert')
-      .waitFor({ timeout: 5000 })
-      .catch(() => {}),
+  await Promise.all([
+    page.waitForResponse((r) => r.url().includes('/api/auth/sign-up/email')),
+    page.getByRole('button', { name: /create account/i }).click(),
   ])
 
   // Deterministic sign-in.
