@@ -21,7 +21,16 @@ export default async function TransactionsPage({
   const sp = await searchParams
 
   const conds: SQL[] = [eq(transactions.userId, user.id)]
-  if (sp.account) conds.push(eq(transactions.accountId, sp.account))
+  // accountId is a uuid column; guard the raw param so a malformed ?account=
+  // degrades to "no filter" instead of a Postgres cast error (like type/date below).
+  if (
+    sp.account &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      sp.account,
+    )
+  ) {
+    conds.push(eq(transactions.accountId, sp.account))
+  }
   if (sp.type && (TRANSACTION_TYPES as readonly string[]).includes(sp.type)) {
     conds.push(
       eq(transactions.type, sp.type as (typeof TRANSACTION_TYPES)[number]),

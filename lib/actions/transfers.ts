@@ -50,6 +50,8 @@ export async function createTransfer(
   const from = rows.find((a) => a.id === d.fromAccountId)
   const to = rows.find((a) => a.id === d.toAccountId)
   if (!from || !to) return { error: 'Account not found' }
+  // Archived accounts are write-frozen (mirrors postTransaction, spec §3).
+  if (from.archivedAt || to.archivedAt) return { error: 'Account is archived' }
 
   const cross = from.currency !== to.currency
   if (cross && !d.amountReceived) {
@@ -142,6 +144,18 @@ export async function updateTransferGroup(
   const d = parsed.data
   const group = await loadGroupLegs(user.id, d.groupId)
   if (!group) return { error: 'Transfer not found' }
+  // Editing a leg's amount writes to its account; block if either is archived.
+  const legAccounts = await db
+    .select({ archivedAt: accounts.archivedAt })
+    .from(accounts)
+    .where(
+      and(
+        inArray(accounts.id, [group.out.accountId, group.inn.accountId]),
+        eq(accounts.userId, user.id),
+      ),
+    )
+  if (legAccounts.some((a) => a.archivedAt))
+    return { error: 'Account is archived' }
   const cross = group.out.currency !== group.inn.currency
   if (cross && !d.amountReceived)
     return { error: 'Enter the actual amount received' }
@@ -204,6 +218,8 @@ export async function deleteTransferGroup(
     .object({ groupId: z.string().uuid() })
     .safeParse({ groupId: formData.get('groupId') })
   if (!parsed.success) return { error: 'Invalid transfer' }
+  const group = await loadGroupLegs(user.id, parsed.data.groupId)
+  if (!group) return { error: 'Transfer not found' }
 
   await dbPool.transaction(async (tx) => {
     await tx

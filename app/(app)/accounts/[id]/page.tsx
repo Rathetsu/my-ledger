@@ -30,6 +30,7 @@ export default async function AccountPage({
           amountMinor: balanceMinor,
           currency: account.currency,
         }),
+        archived: Boolean(account.archivedAt),
       }}
     />
   )

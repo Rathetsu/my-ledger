@@ -22,5 +22,7 @@ describe('directMutability (spec §3 Mutability)', () => {
   test('source-linked wins over transfer (defensive; should not co-occur)', () => {
     const r = directMutability({ sourceType: 'bill', transferGroupId: 'g-1' })
     expect(r.ok).toBe(false)
+    // Prove precedence: the source-linked branch must win, not the transfer one.
+    if (!r.ok) expect(r.reason).toMatch(/confirm flow/i)
   })
 })

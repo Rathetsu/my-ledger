@@ -76,3 +76,33 @@ test('reconciliation posts an adjustment for the delta', async ({ page }) => {
     page.getByRole('link', { name: new RegExp(name) }),
   ).toContainText('EGP 5,150.00')
 })
+
+test('rejects a non-positive amount', async ({ page }) => {
+  const name = `Zero EUR ${Date.now()}`
+  await createAccount(page, name, 'EUR', '50.00')
+
+  await page.goto('/transactions/new')
+  await page.getByLabel('Account').selectOption({ label: `${name} (EUR)` })
+  await page.getByLabel('Type').selectOption('expense')
+  await page.getByLabel('Amount').fill('0')
+  await page.getByRole('button', { name: 'Save' }).click()
+  await expect(page.getByText('Amount must be positive')).toBeVisible()
+  await expect(page).toHaveURL(/\/transactions\/new$/)
+})
+
+test('an archived account offers no reconcile form', async ({ page }) => {
+  const name = `Archived EUR ${Date.now()}`
+  await createAccount(page, name, 'EUR', '100.00')
+
+  // Open its settings and capture the account id from the URL.
+  await page.getByRole('link', { name: new RegExp(name) }).click()
+  await page.waitForURL(/\/accounts\/[0-9a-f-]{36}$/)
+  const settingsUrl = page.url()
+  await expect(page.getByLabel('Actual balance')).toBeVisible()
+
+  // Archive it, then revisit — reconcile must be gone (archived = write-frozen).
+  await page.getByRole('button', { name: 'Archive account' }).click()
+  await page.waitForURL(/\/accounts$/)
+  await page.goto(settingsUrl)
+  await expect(page.getByLabel('Actual balance')).toHaveCount(0)
+})

@@ -16,6 +16,7 @@ export function AccountSettingsForm({
     name: string
     currency: string
     balanceFormatted: string
+    archived: boolean
   }
 }) {
   const [renameState, renameAction] = useActionState<ActionState, FormData>(
@@ -54,27 +55,30 @@ export function AccountSettingsForm({
           Rename
         </button>
       </form>
-      <form action={reconcileAction} className="space-y-2">
-        <input type="hidden" name="accountId" value={account.id} />
-        <p className="text-sm text-gray-500">
-          Ledger balance: {account.balanceFormatted}
-        </p>
-        <label className="block">
-          <span className="text-sm">Actual balance</span>
-          <input
-            name="actualBalance"
-            inputMode="decimal"
-            required
-            className="mt-1 w-full rounded border p-3"
-          />
-        </label>
-        {reconcileState?.error && (
-          <p className="text-sm text-red-600">{reconcileState.error}</p>
-        )}
-        <button className="w-full rounded border py-3">
-          Set actual balance
-        </button>
-      </form>
+      {/* No reconciling an archived (write-frozen) account. */}
+      {!account.archived && (
+        <form action={reconcileAction} className="space-y-2">
+          <input type="hidden" name="accountId" value={account.id} />
+          <p className="text-sm text-gray-500">
+            Ledger balance: {account.balanceFormatted}
+          </p>
+          <label className="block">
+            <span className="text-sm">Actual balance</span>
+            <input
+              name="actualBalance"
+              inputMode="decimal"
+              required
+              className="mt-1 w-full rounded border p-3"
+            />
+          </label>
+          {reconcileState?.error && (
+            <p className="text-sm text-red-600">{reconcileState.error}</p>
+          )}
+          <button className="w-full rounded border py-3">
+            Set actual balance
+          </button>
+        </form>
+      )}
       <form action={archiveAction} className="space-y-2">
         <input type="hidden" name="accountId" value={account.id} />
         {archiveState?.error && (

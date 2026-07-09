@@ -161,6 +161,8 @@ export async function reconcileAccount(
       and(eq(accounts.id, parsed.data.accountId), eq(accounts.userId, user.id)),
     )
   if (!account) return { error: 'Account not found' }
+  // Archived accounts are write-frozen (mirrors postTransaction, spec §3).
+  if (account.archivedAt) return { error: 'Account is archived' }
 
   let actualMinor: number
   try {
