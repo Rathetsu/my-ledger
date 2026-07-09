@@ -9,6 +9,7 @@ import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { parseToMinor } from '@/lib/money/money'
 import { directMutability } from '@/lib/transactions/mutability'
+import { signedAmountForEdit } from '@/lib/transactions/sign'
 import type { ActionState } from './accounts'
 
 const postSchema = z.object({
@@ -116,13 +117,9 @@ export async function updateTransaction(
   } catch {
     return { error: 'Amount is not a valid number' }
   }
+  if (amountMinor <= 0) return { error: 'Amount must be positive' }
   // Re-apply the sign convention by type; opening/adjustment keep the raw sign.
-  const signed =
-    txn.type === 'expense'
-      ? -Math.abs(amountMinor)
-      : txn.type === 'income'
-        ? Math.abs(amountMinor)
-        : amountMinor
+  const signed = signedAmountForEdit(txn.type, txn.amountMinor, amountMinor)
 
   await db
     .update(transactions)
