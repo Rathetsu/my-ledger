@@ -101,3 +101,121 @@ export async function createTransfer(
   revalidatePath('/')
   redirect(`/transfers/${groupId}`)
 }
+
+const groupUpdateSchema = z.object({
+  groupId: z.string().uuid(),
+  amountSent: z.string().trim().min(1, 'Amount is required'),
+  amountReceived: z.string().trim().optional(),
+  occurredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date'),
+  note: z.string().trim().max(500).optional(),
+})
+
+async function loadGroupLegs(userId: string, groupId: string) {
+  const legs = await db
+    .select()
+    .from(transactions)
+    .where(
+      and(
+        eq(transactions.transferGroupId, groupId),
+        eq(transactions.userId, userId),
+      ),
+    )
+  const out = legs.find((l) => l.type === 'transfer_out')
+  const inn = legs.find((l) => l.type === 'transfer_in')
+  if (!out || !inn) return null
+  return { out, inn }
+}
+
+export async function updateTransferGroup(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const user = await requireUser()
+  const parsed = groupUpdateSchema.safeParse({
+    groupId: formData.get('groupId'),
+    amountSent: formData.get('amountSent'),
+    amountReceived: formData.get('amountReceived') || undefined,
+    occurredOn: formData.get('occurredOn'),
+    note: formData.get('note') || undefined,
+  })
+  if (!parsed.success) return { error: parsed.error.issues[0].message }
+  const d = parsed.data
+  const group = await loadGroupLegs(user.id, d.groupId)
+  if (!group) return { error: 'Transfer not found' }
+  const cross = group.out.currency !== group.inn.currency
+  if (cross && !d.amountReceived)
+    return { error: 'Enter the actual amount received' }
+
+  let sentMinor: number
+  let receivedMinor: number
+  try {
+    sentMinor = parseToMinor(d.amountSent, group.out.currency)
+    receivedMinor = cross
+      ? parseToMinor(d.amountReceived!, group.inn.currency)
+      : sentMinor
+  } catch {
+    return { error: 'Amounts must be valid numbers' }
+  }
+  if (sentMinor <= 0 || receivedMinor <= 0)
+    return { error: 'Amounts must be positive' }
+
+  // Legs mutate as a group, atomically (spec §3).
+  await dbPool.transaction(async (tx) => {
+    await tx
+      .update(transactions)
+      .set({
+        amountMinor: -sentMinor,
+        occurredOn: d.occurredOn,
+        note: d.note ?? null,
+      })
+      .where(
+        and(
+          eq(transactions.id, group.out.id),
+          eq(transactions.userId, user.id),
+        ),
+      )
+    await tx
+      .update(transactions)
+      .set({
+        amountMinor: receivedMinor,
+        occurredOn: d.occurredOn,
+        note: d.note ?? null,
+      })
+      .where(
+        and(
+          eq(transactions.id, group.inn.id),
+          eq(transactions.userId, user.id),
+        ),
+      )
+  })
+  revalidatePath('/transactions')
+  revalidatePath('/accounts')
+  revalidatePath('/')
+  redirect(`/transfers/${d.groupId}`)
+}
+
+export async function deleteTransferGroup(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const user = await requireUser()
+  const parsed = z
+    .object({ groupId: z.string().uuid() })
+    .safeParse({ groupId: formData.get('groupId') })
+  if (!parsed.success) return { error: 'Invalid transfer' }
+
+  await dbPool.transaction(async (tx) => {
+    await tx
+      .delete(transactions)
+      .where(
+        and(
+          eq(transactions.transferGroupId, parsed.data.groupId),
+          eq(transactions.userId, user.id),
+        ),
+      )
+  })
+  revalidatePath('/transactions')
+  revalidatePath('/accounts')
+  revalidatePath('/')
+  redirect('/transactions')
+}
