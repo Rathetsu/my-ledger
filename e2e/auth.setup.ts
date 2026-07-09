@@ -12,7 +12,10 @@ setup('register (first run) then sign in', async ({ page }) => {
   await page.getByRole('button', { name: /create account/i }).click()
   await Promise.race([
     page.waitForURL('/').catch(() => {}),
-    page.getByRole('alert').waitFor({ timeout: 5000 }).catch(() => {}),
+    page
+      .getByRole('alert')
+      .waitFor({ timeout: 5000 })
+      .catch(() => {}),
   ])
 
   // Deterministic sign-in.

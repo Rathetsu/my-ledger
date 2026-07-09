@@ -11,8 +11,16 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   projects: [
-    { name: 'setup', testMatch: /auth\.setup\.ts/, use: { ...devices['Pixel 7'] } },
-    { name: 'unauth', testMatch: /unauth\.spec\.ts/, use: { ...devices['Pixel 7'] } },
+    {
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+      use: { ...devices['Pixel 7'] },
+    },
+    {
+      name: 'unauth',
+      testMatch: /unauth\.spec\.ts/,
+      use: { ...devices['Pixel 7'] },
+    },
     {
       name: 'app',
       testIgnore: /unauth\.spec\.ts/,
