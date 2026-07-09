@@ -1,12 +1,12 @@
 # Status
 
-**Current state: P1 complete.** Accounts & currency engine (schema, Money, Cairo dates, convert, cached rates, accounts CRUD, settings, dashboard placeholder) are done and gated green by Vitest and Playwright.
+**Current state: P2 complete.** The ledger core is live: posting income/expense, guarded edit/delete, two-leg same- and cross-currency transfers with a derived effective rate, reconciliation adjustments, a filterable history screen, and dashboard v1 (net-worth headline, per-currency breakdown, recent activity). Built on P1's accounts & currency engine. Gated green by Vitest (43) and Playwright (full suite).
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Foundations: scaffold, tooling, Neon+Drizzle, Better Auth (email+password), protected shell | complete |
 | P1 | Accounts & currency engine (Money, rates, convert, settings) | complete |
-| P2 | Ledger core: transactions, transfers, reconciliation, dashboard v1 | not started |
+| P2 | Ledger core: transactions, transfers, reconciliation, dashboard v1 | complete |
 | P3 | Income sources + confirmation + housekeeping v1 + attention list | not started |
 | P4 | Recurring bills | not started |
 | P5 | Installments | not started |
