@@ -25,7 +25,7 @@ test('post an expense and see the balance drop', async ({ page }) => {
   await page.getByLabel('Note').fill('Groceries')
   await page.getByLabel('One-off').check()
   await page.getByRole('button', { name: 'Save' }).click()
-  await page.waitForURL(/\/transactions/)
+  await page.waitForURL(/\/transactions$/)
 
   await page.goto('/accounts')
   await expect(
@@ -69,6 +69,7 @@ test('reconciliation posts an adjustment for the delta', async ({ page }) => {
   await page.getByRole('link', { name: new RegExp(name) }).click()
   await page.getByLabel('Actual balance').fill('5150.00')
   await page.getByRole('button', { name: 'Set actual balance' }).click()
+  await expect(page.getByText(/Ledger balance:\s*EGP 5,150\.00/)).toBeVisible()
 
   await page.goto('/accounts')
   await expect(
