@@ -1,10 +1,10 @@
 # Status
 
-**Current state: planning complete, no app code yet.** The full doc set (spec, ADRs, phase plans) is authored and awaiting review before implementation begins.
+**Current state: P0 complete.** Foundations (scaffold, tooling, Neon+Drizzle, Better Auth email+password, protected shell) are done and gated green by Playwright.
 
 | Phase | Scope | Status |
 |---|---|---|
-| P0 | Foundations: scaffold, tooling, Neon+Drizzle, Better Auth (email+password), protected shell | tasks 1-4 done; auth (5-7) rewritten for Better Auth, in progress |
+| P0 | Foundations: scaffold, tooling, Neon+Drizzle, Better Auth (email+password), protected shell | complete |
 | P1 | Accounts & currency engine (Money, rates, convert, settings) | not started |
 | P2 | Ledger core: transactions, transfers, reconciliation, dashboard v1 | not started |
 | P3 | Income sources + confirmation + housekeeping v1 + attention list | not started |
