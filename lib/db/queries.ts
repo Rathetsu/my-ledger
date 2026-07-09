@@ -45,6 +45,9 @@ export async function getSettings(userId: string) {
     .onConflictDoNothing()
     .returning()
   if (inserted) return inserted
-  const [existing] = await db.select().from(settings).where(eq(settings.userId, userId))
+  const [existing] = await db
+    .select()
+    .from(settings)
+    .where(eq(settings.userId, userId))
   return existing
 }

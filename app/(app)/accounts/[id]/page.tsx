@@ -19,7 +19,11 @@ export default async function AccountPage({
   if (!account) notFound()
   return (
     <AccountSettingsForm
-      account={{ id: account.id, name: account.name, currency: account.currency }}
+      account={{
+        id: account.id,
+        name: account.name,
+        currency: account.currency,
+      }}
     />
   )
 }

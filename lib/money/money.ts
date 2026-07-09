@@ -25,6 +25,7 @@ export function parseToMinor(input: string, currency: Currency): number {
   }
   const negative = cleaned.startsWith('-')
   const [major, minorRaw = ''] = cleaned.replace('-', '').split('.')
-  const value = parseInt(major, 10) * 100 + parseInt((minorRaw + '00').slice(0, 2), 10)
+  const value =
+    parseInt(major, 10) * 100 + parseInt((minorRaw + '00').slice(0, 2), 10)
   return negative ? -value : value
 }

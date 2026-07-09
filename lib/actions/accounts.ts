@@ -34,7 +34,10 @@ export async function createAccount(
 
   let openingMinor: number
   try {
-    openingMinor = parseToMinor(parsed.data.openingBalance, parsed.data.currency)
+    openingMinor = parseToMinor(
+      parsed.data.openingBalance,
+      parsed.data.currency,
+    )
   } catch {
     return { error: 'Opening balance is not a valid amount' }
   }
@@ -83,7 +86,9 @@ export async function renameAccount(
   await db
     .update(accounts)
     .set({ name: parsed.data.name })
-    .where(and(eq(accounts.id, parsed.data.accountId), eq(accounts.userId, user.id)))
+    .where(
+      and(eq(accounts.id, parsed.data.accountId), eq(accounts.userId, user.id)),
+    )
   revalidatePath('/accounts')
   redirect('/accounts')
 }
@@ -107,7 +112,9 @@ export async function archiveAccount(
   await db
     .update(accounts)
     .set({ archivedAt: new Date() })
-    .where(and(eq(accounts.id, parsed.data.accountId), eq(accounts.userId, user.id)))
+    .where(
+      and(eq(accounts.id, parsed.data.accountId), eq(accounts.userId, user.id)),
+    )
   revalidatePath('/accounts')
   redirect('/accounts')
 }

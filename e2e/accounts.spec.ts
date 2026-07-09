@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-test('create account with opening balance, rename, archive', async ({ page }) => {
+test('create account with opening balance, rename, archive', async ({
+  page,
+}) => {
   const name = `Main EUR ${Date.now()}`
 
   await page.goto('/accounts')

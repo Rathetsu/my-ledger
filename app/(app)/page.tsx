@@ -6,6 +6,12 @@ import { CURRENCIES, formatMoney } from '@/lib/money/money'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
+// Kept out of the component body: eslint's react-hooks/purity rule flags
+// impure calls (Date.now()) made directly inside a component function.
+function isStale(fetchedAt: string): boolean {
+  return Date.now() - new Date(fetchedAt).getTime() > DAY_MS
+}
+
 export default async function HomePage() {
   const user = await requireUser()
   const [s, totals, rates] = await Promise.all([
@@ -19,7 +25,7 @@ export default async function HomePage() {
     (sum, c) => sum + convert(totals[c] ?? 0, c, home, rates),
     0,
   )
-  const stale = Date.now() - new Date(rates.fetchedAt).getTime() > DAY_MS
+  const stale = isStale(rates.fetchedAt)
 
   return (
     <div className="space-y-6">
@@ -31,7 +37,8 @@ export default async function HomePage() {
         </p>
         {stale && (
           <p className="text-xs text-amber-600">
-            Rates from {new Date(rates.fetchedAt).toLocaleDateString('en-GB')} (stale)
+            Rates from {new Date(rates.fetchedAt).toLocaleDateString('en-GB')}{' '}
+            (stale)
           </p>
         )}
       </section>

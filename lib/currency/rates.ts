@@ -30,7 +30,10 @@ export async function getRates(): Promise<Rates> {
       CURRENCIES.map((c) => [c, body.rates[c]]),
     ) as Record<Currency, number>
     const fetchedAt = new Date()
-    await db.update(exchangeRates).set({ rates, fetchedAt }).where(eq(exchangeRates.base, 'USD'))
+    await db
+      .update(exchangeRates)
+      .set({ rates, fetchedAt })
+      .where(eq(exchangeRates.base, 'USD'))
     return { base: 'USD', rates, fetchedAt: fetchedAt.toISOString() }
   } catch {
     // ponytail: last-good fallback; staleness surfaces as a UI label, not an error.

@@ -34,7 +34,11 @@ describe('getRates', () => {
   })
 
   test('cache-first: fresh row is returned without fetching', async () => {
-    mockDb.row = { base: 'USD', rates: { USD: 1, EUR: 0.92, EGP: 48.5 }, fetchedAt: new Date() }
+    mockDb.row = {
+      base: 'USD',
+      rates: { USD: 1, EUR: 0.92, EGP: 48.5 },
+      fetchedAt: new Date(),
+    }
     const fetchSpy = vi.spyOn(globalThis, 'fetch')
     const rates = await getRates()
     expect(rates).toEqual({
@@ -53,7 +57,10 @@ describe('getRates', () => {
     }
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(
-        JSON.stringify({ result: 'success', rates: { USD: 1, EUR: 0.9, EGP: 50.1, JPY: 155 } }),
+        JSON.stringify({
+          result: 'success',
+          rates: { USD: 1, EUR: 0.9, EGP: 50.1, JPY: 155 },
+        }),
       ),
     )
     const rates = await getRates()
@@ -63,7 +70,11 @@ describe('getRates', () => {
 
   test('fetch failure: falls back to the last-good cached row, persists nothing', async () => {
     const staleDate = new Date(Date.now() - 25 * HOURS)
-    mockDb.row = { base: 'USD', rates: { USD: 1, EUR: 0.92, EGP: 48.5 }, fetchedAt: staleDate }
+    mockDb.row = {
+      base: 'USD',
+      rates: { USD: 1, EUR: 0.92, EGP: 48.5 },
+      fetchedAt: staleDate,
+    }
     vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('network down'))
     const rates = await getRates()
     expect(rates.rates.EUR).toBe(0.92)
@@ -77,7 +88,9 @@ describe('getRates', () => {
       rates: { USD: 1, EUR: 0.92, EGP: 48.5 },
       fetchedAt: new Date(Date.now() - 25 * HOURS),
     }
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('oops', { status: 500 }))
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response('oops', { status: 500 }),
+    )
     const rates = await getRates()
     expect(rates.rates.EGP).toBe(48.5)
     expect(mockDb.updates).toHaveLength(0)

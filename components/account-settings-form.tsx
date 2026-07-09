@@ -40,7 +40,9 @@ export function AccountSettingsForm({
         {renameState?.error && (
           <p className="text-sm text-red-600">{renameState.error}</p>
         )}
-        <button className="w-full rounded bg-blue-600 py-3 text-white">Rename</button>
+        <button className="w-full rounded bg-blue-600 py-3 text-white">
+          Rename
+        </button>
       </form>
       <form action={archiveAction} className="space-y-2">
         <input type="hidden" name="accountId" value={account.id} />

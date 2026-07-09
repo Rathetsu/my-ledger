@@ -20,12 +20,20 @@ describe('convert', () => {
     expect(convert(10000, 'EUR', 'EGP', rates)).toBe(527174)
   })
   test('rounds half-up at exactly .5', () => {
-    const r: Rates = { base: 'USD', rates: { USD: 1, EUR: 0.5, EGP: 1 }, fetchedAt: rates.fetchedAt }
+    const r: Rates = {
+      base: 'USD',
+      rates: { USD: 1, EUR: 0.5, EGP: 1 },
+      fetchedAt: rates.fetchedAt,
+    }
     // 5 USD-minor * 0.5 = 2.5 -> 3
     expect(convert(5, 'USD', 'EUR', r)).toBe(3)
   })
   test('negative amounts round half away from zero', () => {
-    const r: Rates = { base: 'USD', rates: { USD: 1, EUR: 0.5, EGP: 1 }, fetchedAt: rates.fetchedAt }
+    const r: Rates = {
+      base: 'USD',
+      rates: { USD: 1, EUR: 0.5, EGP: 1 },
+      fetchedAt: rates.fetchedAt,
+    }
     expect(convert(-5, 'USD', 'EUR', r)).toBe(-3)
   })
   test('zero is zero', () => {

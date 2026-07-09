@@ -25,7 +25,9 @@ export function HomeCurrencyForm({ current }: { current: Currency }) {
         </select>
       </label>
       {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
-      <button className="w-full rounded bg-blue-600 py-3 text-white">Save</button>
+      <button className="w-full rounded bg-blue-600 py-3 text-white">
+        Save
+      </button>
     </form>
   )
 }

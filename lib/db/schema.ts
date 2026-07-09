@@ -37,7 +37,9 @@ export const accounts = pgTable('accounts', {
   name: text('name').notNull(),
   currency: currencyEnum('currency').notNull(),
   archivedAt: timestamp('archived_at', { withTimezone: true }),
-  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 })
 
 export const transactions = pgTable('transactions', {
@@ -57,13 +59,17 @@ export const transactions = pgTable('transactions', {
   sourceType: text('source_type'), // 'income' | 'bill' | 'installment' (P3+); null = plain row
   sourceId: uuid('source_id'),
   transferGroupId: uuid('transfer_group_id'),
-  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 })
 
 // Single row, base USD; getRates() refreshes it when older than 24h.
 export const exchangeRates = pgTable('exchange_rates', {
   base: text('base').primaryKey(),
-  rates: jsonb('rates').$type<Record<'EUR' | 'USD' | 'EGP', number>>().notNull(),
+  rates: jsonb('rates')
+    .$type<Record<'EUR' | 'USD' | 'EGP', number>>()
+    .notNull(),
   fetchedAt: timestamp('fetched_at', { withTimezone: true }).notNull(),
 })
 

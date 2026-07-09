@@ -5,13 +5,20 @@ import { createAccount, type ActionState } from '@/lib/actions/accounts'
 import { CURRENCIES } from '@/lib/money/money'
 
 export default function NewAccountPage() {
-  const [state, formAction] = useActionState<ActionState, FormData>(createAccount, null)
+  const [state, formAction] = useActionState<ActionState, FormData>(
+    createAccount,
+    null,
+  )
   return (
     <form action={formAction} className="space-y-4">
       <h1 className="text-xl font-semibold">New account</h1>
       <label className="block">
         <span className="text-sm">Name</span>
-        <input name="name" required className="mt-1 w-full rounded border p-3" />
+        <input
+          name="name"
+          required
+          className="mt-1 w-full rounded border p-3"
+        />
       </label>
       <label className="block">
         <span className="text-sm">Currency</span>

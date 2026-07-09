@@ -13,7 +13,9 @@ vi.mock('@/lib/db/client', () => ({
         where: () => {
           const p = Promise.resolve(mockDb.balanceRows) as Promise<
             { total: string | null }[]
-          > & { groupBy: () => Promise<{ currency: string; total: string | null }[]> }
+          > & {
+            groupBy: () => Promise<{ currency: string; total: string | null }[]>
+          }
           p.groupBy = () => Promise.resolve(mockDb.groupedRows)
           return p
         },

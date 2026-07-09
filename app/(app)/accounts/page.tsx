@@ -34,10 +34,14 @@ export default async function AccountsPage() {
               className="flex items-center justify-between p-3"
             >
               <span>
-                {a.name} <span className="text-xs text-gray-500">({a.currency})</span>
+                {a.name}{' '}
+                <span className="text-xs text-gray-500">({a.currency})</span>
               </span>
               <span className="font-mono">
-                {formatMoney({ amountMinor: balances[i], currency: a.currency })}
+                {formatMoney({
+                  amountMinor: balances[i],
+                  currency: a.currency,
+                })}
               </span>
             </Link>
           </li>
