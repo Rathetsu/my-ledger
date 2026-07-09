@@ -1,13 +1,13 @@
 # Status
 
-**Current state: P2 complete.** The ledger core is live: posting income/expense, guarded edit/delete, two-leg same- and cross-currency transfers with a derived effective rate, reconciliation adjustments, a filterable history screen, and dashboard v1 (net-worth headline, per-currency breakdown, recent activity). Built on P1's accounts & currency engine. Gated green by Vitest (43) and Playwright (full suite).
+**Current state: P3 complete.** Income sources generate confirmable occurrences: the shared `occurrences` table + idempotent `housekeeping()` (generation + overdue flip), the shared confirm/skip/un-confirm module (the rail P4/P5 reuse), income source CRUD + windfall, and the dashboard attention list with a pre-filled confirm sheet. Confirming posts the actual figures; the P2 archived-account write-freeze is now enforced across the income flow too. Built on the P2 ledger core. Gated green by Vitest (60, incl. DB-backed against the Neon dev branch) and Playwright (full suite).
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Foundations: scaffold, tooling, Neon+Drizzle, Better Auth (email+password), protected shell | complete |
 | P1 | Accounts & currency engine (Money, rates, convert, settings) | complete |
 | P2 | Ledger core: transactions, transfers, reconciliation, dashboard v1 | complete |
-| P3 | Income sources + confirmation + housekeeping v1 + attention list | not started |
+| P3 | Income sources + confirmation + housekeeping v1 + attention list | complete |
 | P4 | Recurring bills | not started |
 | P5 | Installments | not started |
 | P6 | Expenses & insights | not started |
