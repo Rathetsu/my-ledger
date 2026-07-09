@@ -4,34 +4,604 @@
   "graph": {},
   "nodes": [
     {
-      "label": "auth.setup.ts",
+      "label": "page.tsx",
       "file_type": "code",
-      "source_file": "e2e/auth.setup.ts",
+      "source_file": "app/(app)/accounts/[id]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "e2e_auth_setup",
-      "community": 50,
-      "norm_label": "auth.setup.ts"
+      "id": "app_app_accounts_id_page",
+      "community": 57,
+      "norm_label": "page.tsx"
     },
     {
-      "label": "shell.spec.ts",
+      "label": "AccountPage()",
       "file_type": "code",
-      "source_file": "e2e/shell.spec.ts",
-      "source_location": "L1",
+      "source_file": "app/(app)/accounts/[id]/page.tsx",
+      "source_location": "L8",
       "_origin": "ast",
-      "id": "e2e_shell_spec",
-      "community": 51,
-      "norm_label": "shell.spec.ts"
+      "id": "app_app_accounts_id_page_accountpage",
+      "community": 57,
+      "norm_label": "accountpage()"
     },
     {
-      "label": "unauth.spec.ts",
+      "label": "page.tsx",
       "file_type": "code",
-      "source_file": "e2e/unauth.spec.ts",
+      "source_file": "app/(app)/accounts/new/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "e2e_unauth_spec",
-      "community": 52,
-      "norm_label": "unauth.spec.ts"
+      "id": "app_app_accounts_new_page",
+      "community": 57,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "NewAccountPage()",
+      "file_type": "code",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_app_accounts_new_page_newaccountpage",
+      "community": 57,
+      "norm_label": "newaccountpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_app_accounts_page",
+      "community": 57,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AccountsPage()",
+      "file_type": "code",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_app_accounts_page_accountspage",
+      "community": 57,
+      "norm_label": "accountspage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_app_page",
+      "community": 57,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "isStale()",
+      "file_type": "code",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "app_app_page_isstale",
+      "community": 57,
+      "norm_label": "isstale()"
+    },
+    {
+      "label": "HomePage()",
+      "file_type": "code",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "app_app_page_homepage",
+      "community": 57,
+      "norm_label": "homepage()"
+    },
+    {
+      "label": "account-settings-form.tsx",
+      "file_type": "code",
+      "source_file": "components/account-settings-form.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_account_settings_form",
+      "community": 57,
+      "norm_label": "account-settings-form.tsx"
+    },
+    {
+      "label": "AccountSettingsForm()",
+      "file_type": "code",
+      "source_file": "components/account-settings-form.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "components_account_settings_form_accountsettingsform",
+      "community": 57,
+      "norm_label": "accountsettingsform()"
+    },
+    {
+      "label": "home-currency-form.tsx",
+      "file_type": "code",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_home_currency_form",
+      "community": 57,
+      "norm_label": "home-currency-form.tsx"
+    },
+    {
+      "label": "HomeCurrencyForm()",
+      "file_type": "code",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "components_home_currency_form_homecurrencyform",
+      "community": 57,
+      "norm_label": "homecurrencyform()"
+    },
+    {
+      "label": "accounts.spec.ts",
+      "file_type": "code",
+      "source_file": "e2e/accounts.spec.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "e2e_accounts_spec",
+      "community": 60,
+      "norm_label": "accounts.spec.ts"
+    },
+    {
+      "label": "accounts.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_actions_accounts",
+      "community": 57,
+      "norm_label": "accounts.ts"
+    },
+    {
+      "label": "ActionState",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_actionstate",
+      "community": 57,
+      "norm_label": "actionstate"
+    },
+    {
+      "label": "createAccountSchema",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_createaccountschema",
+      "community": 57,
+      "norm_label": "createaccountschema"
+    },
+    {
+      "label": "createAccount()",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_createaccount",
+      "community": 57,
+      "norm_label": "createaccount()"
+    },
+    {
+      "label": "renameSchema",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L71",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_renameschema",
+      "community": 57,
+      "norm_label": "renameschema"
+    },
+    {
+      "label": "renameAccount()",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_renameaccount",
+      "community": 57,
+      "norm_label": "renameaccount()"
+    },
+    {
+      "label": "archiveAccount()",
+      "file_type": "code",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L96",
+      "_origin": "ast",
+      "id": "lib_actions_accounts_archiveaccount",
+      "community": 57,
+      "norm_label": "archiveaccount()"
+    },
+    {
+      "label": "convert.test.ts",
+      "file_type": "code",
+      "source_file": "lib/currency/convert.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_currency_convert_test",
+      "community": 57,
+      "norm_label": "convert.test.ts"
+    },
+    {
+      "label": "rates",
+      "file_type": "code",
+      "source_file": "lib/currency/convert.test.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "lib_currency_convert_test_rates",
+      "community": 57,
+      "norm_label": "rates"
+    },
+    {
+      "label": "rates.test.ts",
+      "file_type": "code",
+      "source_file": "lib/currency/rates.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_currency_rates_test",
+      "community": 57,
+      "norm_label": "rates.test.ts"
+    },
+    {
+      "label": "mockDb",
+      "file_type": "code",
+      "source_file": "lib/currency/rates.test.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "lib_currency_rates_test_mockdb",
+      "community": 57,
+      "norm_label": "mockdb"
+    },
+    {
+      "label": "rates.ts",
+      "file_type": "code",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_currency_rates",
+      "community": 57,
+      "norm_label": "rates.ts"
+    },
+    {
+      "label": "Rates",
+      "file_type": "code",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "lib_currency_rates_rates",
+      "community": 57,
+      "norm_label": "rates"
+    },
+    {
+      "label": "getRates()",
+      "file_type": "code",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "lib_currency_rates_getrates",
+      "community": 57,
+      "norm_label": "getrates()"
+    },
+    {
+      "label": "cairo.test.ts",
+      "file_type": "code",
+      "source_file": "lib/dates/cairo.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_dates_cairo_test",
+      "community": 39,
+      "norm_label": "cairo.test.ts"
+    },
+    {
+      "label": "queries.test.ts",
+      "file_type": "code",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_db_queries_test",
+      "community": 57,
+      "norm_label": "queries.test.ts"
+    },
+    {
+      "label": "mockDb",
+      "file_type": "code",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "lib_db_queries_test_mockdb",
+      "community": 57,
+      "norm_label": "mockdb"
+    },
+    {
+      "label": "queries.ts",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_db_queries",
+      "community": 57,
+      "norm_label": "queries.ts"
+    },
+    {
+      "label": "accountBalanceMinor()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "lib_db_queries_accountbalanceminor",
+      "community": 57,
+      "norm_label": "accountbalanceminor()"
+    },
+    {
+      "label": "totalsByCurrency()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "lib_db_queries_totalsbycurrency",
+      "community": 57,
+      "norm_label": "totalsbycurrency()"
+    },
+    {
+      "label": "archiveBlockers()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "lib_db_queries_archiveblockers",
+      "community": 57,
+      "norm_label": "archiveblockers()"
+    },
+    {
+      "label": "getSettings()",
+      "file_type": "code",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "lib_db_queries_getsettings",
+      "community": 57,
+      "norm_label": "getsettings()"
+    },
+    {
+      "label": "schema.ts",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_db_schema",
+      "community": 57,
+      "norm_label": "schema.ts"
+    },
+    {
+      "label": "currencyEnum",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "lib_db_schema_currencyenum",
+      "community": 57,
+      "norm_label": "currencyenum"
+    },
+    {
+      "label": "TRANSACTION_TYPES",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "lib_db_schema_transaction_types",
+      "community": 57,
+      "norm_label": "transaction_types"
+    },
+    {
+      "label": "transactionTypeEnum",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "lib_db_schema_transactiontypeenum",
+      "community": 57,
+      "norm_label": "transactiontypeenum"
+    },
+    {
+      "label": "accounts",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "lib_db_schema_accounts",
+      "community": 57,
+      "norm_label": "accounts"
+    },
+    {
+      "label": "transactions",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "lib_db_schema_transactions",
+      "community": 57,
+      "norm_label": "transactions"
+    },
+    {
+      "label": "exchangeRates",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "lib_db_schema_exchangerates",
+      "community": 57,
+      "norm_label": "exchangerates"
+    },
+    {
+      "label": "settings",
+      "file_type": "code",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "lib_db_schema_settings",
+      "community": 57,
+      "norm_label": "settings"
+    },
+    {
+      "label": "money.test.ts",
+      "file_type": "code",
+      "source_file": "lib/money/money.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_money_money_test",
+      "community": 57,
+      "norm_label": "money.test.ts"
+    },
+    {
+      "label": "money.ts",
+      "file_type": "code",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_money_money",
+      "community": 57,
+      "norm_label": "money.ts"
+    },
+    {
+      "label": "Currency",
+      "file_type": "code",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_money_money_currency",
+      "community": 57,
+      "norm_label": "currency"
+    },
+    {
+      "label": "CURRENCIES",
+      "file_type": "code",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "lib_money_money_currencies",
+      "community": 57,
+      "norm_label": "currencies"
+    },
+    {
+      "label": "Money",
+      "file_type": "code",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "lib_money_money_money",
+      "community": 57,
+      "norm_label": "money"
+    },
+    {
+      "label": "PREFIX",
+      "file_type": "code",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "lib_money_money_prefix",
+      "community": 57,
+      "norm_label": "prefix"
+    },
+    {
+      "label": "formatMoney()",
+      "file_type": "code",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "lib_money_money_formatmoney",
+      "community": 57,
+      "norm_label": "formatmoney()"
+    },
+    {
+      "label": "parseToMinor()",
+      "file_type": "code",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "lib_money_money_parsetominor",
+      "community": 57,
+      "norm_label": "parsetominor()"
+    },
+    {
+      "label": "settings.spec.ts",
+      "file_type": "code",
+      "source_file": "e2e/settings.spec.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 54,
+      "norm_label": "settings.spec.ts",
+      "id": "e2e_settings_spec"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/(app)/more/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 44,
+      "norm_label": "page.tsx",
+      "id": "app_app_more_page"
+    },
+    {
+      "label": "LINKS",
+      "file_type": "code",
+      "source_file": "app/(app)/more/page.tsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "community": 44,
+      "norm_label": "links",
+      "id": "app_app_more_page_links"
+    },
+    {
+      "label": "MorePage()",
+      "file_type": "code",
+      "source_file": "app/(app)/more/page.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "community": 44,
+      "norm_label": "morepage()",
+      "id": "app_app_more_page_morepage"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "page.tsx",
+      "id": "app_app_settings_page"
+    },
+    {
+      "label": "SettingsPage()",
+      "file_type": "code",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "settingspage()",
+      "id": "app_app_settings_page_settingspage"
+    },
+    {
+      "label": "settings.ts",
+      "file_type": "code",
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "settings.ts",
+      "id": "lib_actions_settings"
+    },
+    {
+      "label": "setHomeCurrency()",
+      "file_type": "code",
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "sethomecurrency()",
+      "id": "lib_actions_settings_sethomecurrency"
     },
     {
       "label": "package.json",
@@ -39,9 +609,9 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "package",
       "community": 4,
-      "norm_label": "package.json"
+      "norm_label": "package.json",
+      "id": "package"
     },
     {
       "label": "name",
@@ -49,9 +619,9 @@
       "source_file": "package.json",
       "source_location": "L2",
       "_origin": "ast",
-      "id": "package_name",
       "community": 4,
-      "norm_label": "name"
+      "norm_label": "name",
+      "id": "package_name"
     },
     {
       "label": "version",
@@ -59,9 +629,9 @@
       "source_file": "package.json",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "package_version",
       "community": 4,
-      "norm_label": "version"
+      "norm_label": "version",
+      "id": "package_version"
     },
     {
       "label": "private",
@@ -69,9 +639,9 @@
       "source_file": "package.json",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "package_private",
       "community": 4,
-      "norm_label": "private"
+      "norm_label": "private",
+      "id": "package_private"
     },
     {
       "label": "scripts",
@@ -79,9 +649,9 @@
       "source_file": "package.json",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "package_scripts",
       "community": 4,
-      "norm_label": "scripts"
+      "norm_label": "scripts",
+      "id": "package_scripts"
     },
     {
       "label": "dev",
@@ -89,9 +659,9 @@
       "source_file": "package.json",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "package_scripts_dev",
       "community": 4,
-      "norm_label": "dev"
+      "norm_label": "dev",
+      "id": "package_scripts_dev"
     },
     {
       "label": "build",
@@ -99,9 +669,9 @@
       "source_file": "package.json",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "package_scripts_build",
       "community": 4,
-      "norm_label": "build"
+      "norm_label": "build",
+      "id": "package_scripts_build"
     },
     {
       "label": "start",
@@ -109,9 +679,9 @@
       "source_file": "package.json",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "package_scripts_start",
       "community": 4,
-      "norm_label": "start"
+      "norm_label": "start",
+      "id": "package_scripts_start"
     },
     {
       "label": "lint",
@@ -119,9 +689,9 @@
       "source_file": "package.json",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "package_scripts_lint",
       "community": 4,
-      "norm_label": "lint"
+      "norm_label": "lint",
+      "id": "package_scripts_lint"
     },
     {
       "label": "format",
@@ -129,9 +699,9 @@
       "source_file": "package.json",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "package_scripts_format",
       "community": 4,
-      "norm_label": "format"
+      "norm_label": "format",
+      "id": "package_scripts_format"
     },
     {
       "label": "format:check",
@@ -139,9 +709,9 @@
       "source_file": "package.json",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "package_scripts_format_check",
       "community": 4,
-      "norm_label": "format:check"
+      "norm_label": "format:check",
+      "id": "package_scripts_format_check"
     },
     {
       "label": "test",
@@ -149,9 +719,9 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "package_scripts_test",
       "community": 4,
-      "norm_label": "test"
+      "norm_label": "test",
+      "id": "package_scripts_test"
     },
     {
       "label": "test:watch",
@@ -159,9 +729,9 @@
       "source_file": "package.json",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "package_scripts_test_watch",
       "community": 4,
-      "norm_label": "test:watch"
+      "norm_label": "test:watch",
+      "id": "package_scripts_test_watch"
     },
     {
       "label": "db:generate",
@@ -169,9 +739,9 @@
       "source_file": "package.json",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "package_scripts_db_generate",
       "community": 4,
-      "norm_label": "db:generate"
+      "norm_label": "db:generate",
+      "id": "package_scripts_db_generate"
     },
     {
       "label": "db:migrate",
@@ -179,9 +749,9 @@
       "source_file": "package.json",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "package_scripts_db_migrate",
       "community": 4,
-      "norm_label": "db:migrate"
+      "norm_label": "db:migrate",
+      "id": "package_scripts_db_migrate"
     },
     {
       "label": "e2e",
@@ -189,9 +759,9 @@
       "source_file": "package.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "package_scripts_e2e",
       "community": 4,
-      "norm_label": "e2e"
+      "norm_label": "e2e",
+      "id": "package_scripts_e2e"
     },
     {
       "label": "dependencies",
@@ -199,9 +769,9 @@
       "source_file": "package.json",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "package_dependencies",
       "community": 4,
-      "norm_label": "dependencies"
+      "norm_label": "dependencies",
+      "id": "package_dependencies"
     },
     {
       "label": "@neondatabase/serverless",
@@ -209,9 +779,9 @@
       "source_file": "package.json",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "package_dependencies_neondatabase_serverless",
       "community": 4,
-      "norm_label": "@neondatabase/serverless"
+      "norm_label": "@neondatabase/serverless",
+      "id": "package_dependencies_neondatabase_serverless"
     },
     {
       "label": "better-auth",
@@ -219,9 +789,9 @@
       "source_file": "package.json",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "package_dependencies_better_auth",
       "community": 4,
-      "norm_label": "better-auth"
+      "norm_label": "better-auth",
+      "id": "package_dependencies_better_auth"
     },
     {
       "label": "drizzle-orm",
@@ -229,9 +799,9 @@
       "source_file": "package.json",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "package_dependencies_drizzle_orm",
       "community": 4,
-      "norm_label": "drizzle-orm"
+      "norm_label": "drizzle-orm",
+      "id": "package_dependencies_drizzle_orm"
     },
     {
       "label": "next",
@@ -239,9 +809,9 @@
       "source_file": "package.json",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "package_dependencies_next",
       "community": 4,
-      "norm_label": "next"
+      "norm_label": "next",
+      "id": "package_dependencies_next"
     },
     {
       "label": "react",
@@ -249,9 +819,9 @@
       "source_file": "package.json",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "package_dependencies_react",
       "community": 4,
-      "norm_label": "react"
+      "norm_label": "react",
+      "id": "package_dependencies_react"
     },
     {
       "label": "react-dom",
@@ -259,159 +829,399 @@
       "source_file": "package.json",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "package_dependencies_react_dom",
       "community": 4,
-      "norm_label": "react-dom"
+      "norm_label": "react-dom",
+      "id": "package_dependencies_react_dom"
+    },
+    {
+      "label": "zod",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L25",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "zod",
+      "id": "package_dependencies_zod"
     },
     {
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
-      "id": "package_devdependencies",
       "community": 38,
-      "norm_label": "devdependencies"
+      "norm_label": "devdependencies",
+      "id": "package_devdependencies"
     },
     {
       "label": "@playwright/test",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
-      "id": "package_devdependencies_playwright_test",
       "community": 38,
-      "norm_label": "@playwright/test"
+      "norm_label": "@playwright/test",
+      "id": "package_devdependencies_playwright_test"
     },
     {
       "label": "@tailwindcss/postcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
-      "id": "package_devdependencies_tailwindcss_postcss",
       "community": 38,
-      "norm_label": "@tailwindcss/postcss"
+      "norm_label": "@tailwindcss/postcss",
+      "id": "package_devdependencies_tailwindcss_postcss"
     },
     {
       "label": "@types/node",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
-      "id": "package_devdependencies_types_node",
       "community": 38,
-      "norm_label": "@types/node"
+      "norm_label": "@types/node",
+      "id": "package_devdependencies_types_node"
     },
     {
       "label": "@types/react",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
-      "id": "package_devdependencies_types_react",
       "community": 38,
-      "norm_label": "@types/react"
+      "norm_label": "@types/react",
+      "id": "package_devdependencies_types_react"
     },
     {
       "label": "@types/react-dom",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
-      "id": "package_devdependencies_types_react_dom",
       "community": 38,
-      "norm_label": "@types/react-dom"
+      "norm_label": "@types/react-dom",
+      "id": "package_devdependencies_types_react_dom"
     },
     {
       "label": "dotenv",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
-      "id": "package_devdependencies_dotenv",
       "community": 38,
-      "norm_label": "dotenv"
+      "norm_label": "dotenv",
+      "id": "package_devdependencies_dotenv"
     },
     {
       "label": "drizzle-kit",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
-      "id": "package_devdependencies_drizzle_kit",
       "community": 38,
-      "norm_label": "drizzle-kit"
+      "norm_label": "drizzle-kit",
+      "id": "package_devdependencies_drizzle_kit"
     },
     {
       "label": "eslint",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L34",
+      "source_location": "L35",
       "_origin": "ast",
-      "id": "package_devdependencies_eslint",
       "community": 38,
-      "norm_label": "eslint"
+      "norm_label": "eslint",
+      "id": "package_devdependencies_eslint"
     },
     {
       "label": "eslint-config-next",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "_origin": "ast",
-      "id": "package_devdependencies_eslint_config_next",
       "community": 38,
-      "norm_label": "eslint-config-next"
+      "norm_label": "eslint-config-next",
+      "id": "package_devdependencies_eslint_config_next"
     },
     {
       "label": "eslint-config-prettier",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "_origin": "ast",
-      "id": "package_devdependencies_eslint_config_prettier",
       "community": 38,
-      "norm_label": "eslint-config-prettier"
+      "norm_label": "eslint-config-prettier",
+      "id": "package_devdependencies_eslint_config_prettier"
     },
     {
       "label": "prettier",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L37",
+      "source_location": "L38",
       "_origin": "ast",
-      "id": "package_devdependencies_prettier",
       "community": 38,
-      "norm_label": "prettier"
+      "norm_label": "prettier",
+      "id": "package_devdependencies_prettier"
     },
     {
       "label": "tailwindcss",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L38",
+      "source_location": "L39",
       "_origin": "ast",
-      "id": "package_devdependencies_tailwindcss",
       "community": 38,
-      "norm_label": "tailwindcss"
+      "norm_label": "tailwindcss",
+      "id": "package_devdependencies_tailwindcss"
     },
     {
       "label": "typescript",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L39",
+      "source_location": "L40",
       "_origin": "ast",
-      "id": "package_devdependencies_typescript",
       "community": 38,
-      "norm_label": "typescript"
+      "norm_label": "typescript",
+      "id": "package_devdependencies_typescript"
     },
     {
       "label": "vitest",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L40",
+      "source_location": "L41",
       "_origin": "ast",
-      "id": "package_devdependencies_vitest",
       "community": 38,
-      "norm_label": "vitest"
+      "norm_label": "vitest",
+      "id": "package_devdependencies_vitest"
+    },
+    {
+      "label": "convert.ts",
+      "file_type": "code",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "convert.ts",
+      "id": "lib_currency_convert"
+    },
+    {
+      "label": "roundHalfUp()",
+      "file_type": "code",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "roundhalfup()",
+      "id": "lib_currency_convert_roundhalfup"
+    },
+    {
+      "label": "convert()",
+      "file_type": "code",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "convert()",
+      "id": "lib_currency_convert_convert"
+    },
+    {
+      "label": "cairo.ts",
+      "file_type": "code",
+      "source_file": "lib/dates/cairo.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 55,
+      "norm_label": "cairo.ts",
+      "id": "lib_dates_cairo"
+    },
+    {
+      "label": "todayCairo()",
+      "file_type": "code",
+      "source_file": "lib/dates/cairo.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "community": 55,
+      "norm_label": "todaycairo()",
+      "id": "lib_dates_cairo_todaycairo"
+    },
+    {
+      "label": "periodOf()",
+      "file_type": "code",
+      "source_file": "lib/dates/cairo.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "community": 55,
+      "norm_label": "periodof()",
+      "id": "lib_dates_cairo_periodof"
+    },
+    {
+      "label": "dueDateFor()",
+      "file_type": "code",
+      "source_file": "lib/dates/cairo.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "community": 55,
+      "norm_label": "duedatefor()",
+      "id": "lib_dates_cairo_duedatefor"
+    },
+    {
+      "label": "01-accounts-and-currency.md",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "01-accounts-and-currency.md",
+      "id": "docs_superpowers_plans_01_accounts_and_currency"
+    },
+    {
+      "label": "Phase 01: Accounts and Currency Implementation Plan",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "phase 01: accounts and currency implementation plan",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan"
+    },
+    {
+      "label": "Global Constraints",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L13",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "global constraints",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_global_constraints"
+    },
+    {
+      "label": "Task 1: Schema and migration (accounts, transactions, exchange_rates, settings) with seeded rates",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L25",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 1: schema and migration (accounts, transactions, exchange_rates, settings) with seeded rates",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_1_schema_and_migration_accounts_transactions_exchange_rates_settings_with_seeded_rates"
+    },
+    {
+      "label": "Task 2: Money primitives (lib/money/money.ts)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L139",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 2: money primitives (lib/money/money.ts)",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_2_money_primitives_lib_money_money_ts"
+    },
+    {
+      "label": "Task 3: Cairo dates (lib/dates/cairo.ts)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L234",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 3: cairo dates (lib/dates/cairo.ts)",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_3_cairo_dates_lib_dates_cairo_ts"
+    },
+    {
+      "label": "Task 4: convert() via USD cross-rates (lib/currency/convert.ts)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L308",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 4: convert() via usd cross-rates (lib/currency/convert.ts)",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_4_convert_via_usd_cross_rates_lib_currency_convert_ts"
+    },
+    {
+      "label": "Task 5: getRates() cache-first with last-good fallback (lib/currency/rates.ts)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L405",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 5: getrates() cache-first with last-good fallback (lib/currency/rates.ts)",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_5_getrates_cache_first_with_last_good_fallback_lib_currency_rates_ts"
+    },
+    {
+      "label": "Task 6: Derived balance queries (lib/db/queries.ts)",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L560",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 6: derived balance queries (lib/db/queries.ts)",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_6_derived_balance_queries_lib_db_queries_ts"
+    },
+    {
+      "label": "Task 7: Accounts server actions and screens",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L669",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 7: accounts server actions and screens",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_7_accounts_server_actions_and_screens"
+    },
+    {
+      "label": "Task 8: Settings lazy upsert and home-currency switch",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1035",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 8: settings lazy upsert and home-currency switch",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_8_settings_lazy_upsert_and_home_currency_switch"
+    },
+    {
+      "label": "Task 9: Dashboard placeholder with per-currency totals and combined at live rate",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1219",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "task 9: dashboard placeholder with per-currency totals and combined at live rate",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_task_9_dashboard_placeholder_with_per_currency_totals_and_combined_at_live_rate"
+    },
+    {
+      "label": "Phase done",
+      "file_type": "document",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1302",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "phase done",
+      "id": "docs_superpowers_plans_01_accounts_and_currency_phase_done"
+    },
+    {
+      "label": "auth.setup.ts",
+      "file_type": "code",
+      "source_file": "e2e/auth.setup.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 50,
+      "norm_label": "auth.setup.ts",
+      "id": "e2e_auth_setup"
+    },
+    {
+      "label": "shell.spec.ts",
+      "file_type": "code",
+      "source_file": "e2e/shell.spec.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 51,
+      "norm_label": "shell.spec.ts",
+      "id": "e2e_shell_spec"
+    },
+    {
+      "label": "unauth.spec.ts",
+      "file_type": "code",
+      "source_file": "e2e/unauth.spec.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 52,
+      "norm_label": "unauth.spec.ts",
+      "id": "e2e_unauth_spec"
     },
     {
       "label": "playwright.config.ts",
@@ -419,9 +1229,9 @@
       "source_file": "playwright.config.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "playwright_config",
       "community": 53,
-      "norm_label": "playwright.config.ts"
+      "norm_label": "playwright.config.ts",
+      "id": "playwright_config"
     },
     {
       "label": "layout.tsx",
@@ -442,46 +1252,6 @@
       "community": 33,
       "norm_label": "applayout()",
       "id": "app_app_layout_applayout"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "app/(app)/more/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "page.tsx",
-      "id": "app_app_more_page"
-    },
-    {
-      "label": "MorePage()",
-      "file_type": "code",
-      "source_file": "app/(app)/more/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "morepage()",
-      "id": "app_app_more_page_morepage"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "page.tsx",
-      "id": "app_app_page"
-    },
-    {
-      "label": "HomePage()",
-      "file_type": "code",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "homepage()",
-      "id": "app_app_page_homepage"
     },
     {
       "label": "page.tsx",
@@ -744,16 +1514,6 @@
       "id": "lib_db_auth_schema_accountrelations"
     },
     {
-      "label": "schema.ts",
-      "file_type": "code",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "schema.ts",
-      "id": "lib_db_schema"
-    },
-    {
       "label": "{ signIn, signUp, signOut, useSession }",
       "file_type": "code",
       "source_file": "lib/auth-client.ts",
@@ -992,136 +1752,6 @@
       "community": 37,
       "norm_label": "phase done",
       "id": "docs_superpowers_plans_00_foundations_phase_done"
-    },
-    {
-      "label": "01-accounts-and-currency.md",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "01-accounts-and-currency.md",
-      "id": "docs_superpowers_plans_01_accounts_and_currency"
-    },
-    {
-      "label": "Phase 01: Accounts and Currency Implementation Plan",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "phase 01: accounts and currency implementation plan",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan"
-    },
-    {
-      "label": "Global Constraints",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "global constraints",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_global_constraints"
-    },
-    {
-      "label": "Task 1: Schema and migration (accounts, transactions, exchange_rates, settings) with seeded rates",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 1: schema and migration (accounts, transactions, exchange_rates, settings) with seeded rates",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_1_schema_and_migration_accounts_transactions_exchange_rates_settings_with_seeded_rates"
-    },
-    {
-      "label": "Task 2: Money primitives (lib/money/money.ts)",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L135",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 2: money primitives (lib/money/money.ts)",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_2_money_primitives_lib_money_money_ts"
-    },
-    {
-      "label": "Task 3: Cairo dates (lib/dates/cairo.ts)",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L230",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 3: cairo dates (lib/dates/cairo.ts)",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_3_cairo_dates_lib_dates_cairo_ts"
-    },
-    {
-      "label": "Task 4: convert() via USD cross-rates (lib/currency/convert.ts)",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L304",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 4: convert() via usd cross-rates (lib/currency/convert.ts)",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_4_convert_via_usd_cross_rates_lib_currency_convert_ts"
-    },
-    {
-      "label": "Task 5: getRates() cache-first with last-good fallback (lib/currency/rates.ts)",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L401",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 5: getrates() cache-first with last-good fallback (lib/currency/rates.ts)",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_5_getrates_cache_first_with_last_good_fallback_lib_currency_rates_ts"
-    },
-    {
-      "label": "Task 6: Derived balance queries (lib/db/queries.ts)",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L556",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 6: derived balance queries (lib/db/queries.ts)",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_6_derived_balance_queries_lib_db_queries_ts"
-    },
-    {
-      "label": "Task 7: Accounts server actions and screens",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L665",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 7: accounts server actions and screens",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_7_accounts_server_actions_and_screens"
-    },
-    {
-      "label": "Task 8: Settings lazy upsert and home-currency switch",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1031",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 8: settings lazy upsert and home-currency switch",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_8_settings_lazy_upsert_and_home_currency_switch"
-    },
-    {
-      "label": "Task 9: Dashboard placeholder with per-currency totals and combined at live rate",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1215",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "task 9: dashboard placeholder with per-currency totals and combined at live rate",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_task_9_dashboard_placeholder_with_per_currency_totals_and_combined_at_live_rate"
-    },
-    {
-      "label": "Phase done",
-      "file_type": "document",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1298",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "phase done",
-      "id": "docs_superpowers_plans_01_accounts_and_currency_phase_done"
     },
     {
       "label": "02-transactions-and-balances.md",
@@ -2449,7 +3079,7 @@
       "source_file": "lib/db/client.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 25,
       "norm_label": "client.ts",
       "id": "lib_db_client"
     },
@@ -2459,7 +3089,7 @@
       "source_file": "lib/db/client.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 19,
+      "community": 25,
       "norm_label": "sql",
       "id": "lib_db_client_sql"
     },
@@ -2469,7 +3099,7 @@
       "source_file": "lib/db/client.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 19,
+      "community": 25,
       "norm_label": "db",
       "id": "lib_db_client_db"
     },
@@ -2479,7 +3109,7 @@
       "source_file": "lib/db/client.ts",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 19,
+      "community": 25,
       "norm_label": "pool",
       "id": "lib_db_client_pool"
     },
@@ -2489,7 +3119,7 @@
       "source_file": "lib/db/client.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 19,
+      "community": 25,
       "norm_label": "dbpool",
       "id": "lib_db_client_dbpool"
     },
@@ -2512,16 +3142,6 @@
       "community": 24,
       "norm_label": "buildcommand",
       "id": "vercel_buildcommand"
-    },
-    {
-      "label": "vitest-wiring.test.ts",
-      "file_type": "code",
-      "source_file": "tests/unit/vitest-wiring.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 39,
-      "norm_label": "vitest-wiring.test.ts",
-      "id": "tests_unit_vitest_wiring_test"
     },
     {
       "label": "layout.tsx",
@@ -3499,7 +4119,7 @@
       "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 0,
       "norm_label": "2026-07-07 - grilling session decisions + adversarial audit",
       "id": "docs_stream_2026_07_07_grilling_decisions_2026_07_07_grilling_session_decisions_adversarial_audit"
     },
@@ -3509,7 +4129,7 @@
       "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 25,
+      "community": 0,
       "norm_label": "grilling decisions",
       "id": "docs_stream_2026_07_07_grilling_decisions_grilling_decisions"
     },
@@ -3519,7 +4139,7 @@
       "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 25,
+      "community": 0,
       "norm_label": "adversarial audit (20 findings, all resolved into the spec)",
       "id": "docs_stream_2026_07_07_grilling_decisions_adversarial_audit_20_findings_all_resolved_into_the_spec"
     },
@@ -3529,7 +4149,7 @@
       "source_file": "docs/stream/2026-07-07-grilling-decisions.md",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 25,
+      "community": 0,
       "norm_label": "verified against current docs during planning",
       "id": "docs_stream_2026_07_07_grilling_decisions_verified_against_current_docs_during_planning"
     },
@@ -3738,282 +4358,1271 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/[id]/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "app_app_accounts_id_page",
+      "target": "app_app_accounts_id_page_accountpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/[id]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_app_accounts_id_page",
+      "target": "components_account_settings_form",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/[id]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_app_accounts_id_page",
+      "target": "components_account_settings_form_accountsettingsform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/[id]/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_accounts_id_page",
+      "target": "lib_db_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/[id]/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_accounts_id_page",
+      "target": "lib_db_schema_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "app_app_accounts_new_page_newaccountpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_actions_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_actions_accounts_actionstate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_actions_accounts_createaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/new/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_accounts_new_page",
+      "target": "lib_money_money_currencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "app_app_accounts_page_accountspage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_queries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_queries_accountbalanceminor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_db_schema_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/accounts/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_app_accounts_page",
+      "target": "lib_money_money_formatmoney",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "app_app_page_homepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "app_app_page_isstale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_currency_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_currency_rates_getrates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_db_queries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_db_queries_getsettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_db_queries_totalsbycurrency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_money_money_currencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_page",
+      "target": "lib_money_money_formatmoney",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "app_app_page_homepage",
+      "target": "app_app_page_isstale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "app_app_page_homepage",
+      "target": "lib_currency_rates_getrates"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "app_app_page_homepage",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "app_app_page_homepage",
+      "target": "lib_db_queries_totalsbycurrency"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/(app)/page.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "app_app_page_homepage",
+      "target": "lib_money_money_formatmoney"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/account-settings-form.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "components_account_settings_form",
+      "target": "components_account_settings_form_accountsettingsform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/account-settings-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_account_settings_form",
+      "target": "lib_actions_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/account-settings-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_account_settings_form",
+      "target": "lib_actions_accounts_actionstate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/account-settings-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_account_settings_form",
+      "target": "lib_actions_accounts_archiveaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/account-settings-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_account_settings_form",
+      "target": "lib_actions_accounts_renameaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_settings_page",
+      "target": "components_home_currency_form"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_home_currency_form",
+      "target": "components_home_currency_form_homecurrencyform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_home_currency_form",
+      "target": "lib_actions_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_home_currency_form",
+      "target": "lib_actions_accounts_actionstate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "components_home_currency_form",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "components_home_currency_form",
+      "target": "lib_money_money_currencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/home-currency-form.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "components_home_currency_form",
+      "target": "lib_money_money_currency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_settings_page",
+      "target": "components_home_currency_form_homecurrencyform"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_actionstate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_archiveaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_createaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_createaccountschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_renameaccount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_actions_accounts_renameschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_db_queries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_db_queries_archiveblockers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_db_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_db_schema_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_db_schema_transactions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "lib_actions_accounts",
+      "target": "lib_money_money_parsetominor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "lib_actions_accounts_createaccount",
+      "target": "lib_money_money_parsetominor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/actions/accounts.ts",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "lib_actions_accounts_archiveaccount",
+      "target": "lib_db_queries_archiveblockers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "lib_currency_convert_test",
+      "target": "lib_currency_convert_test_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_currency_convert_test",
+      "target": "lib_currency_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_currency_convert_test",
+      "target": "lib_currency_rates_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_currency_rates_test",
+      "target": "lib_currency_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_currency_rates_test",
+      "target": "lib_currency_rates_getrates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_currency_rates_test",
+      "target": "lib_currency_rates_test_mockdb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_currency_convert",
+      "target": "lib_currency_rates"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_currency_rates_getrates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_currency_rates_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_db_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_db_schema_exchangerates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_money_money_currencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_currency_rates",
+      "target": "lib_money_money_currency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_currency_convert",
+      "target": "lib_currency_rates_rates"
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/rates.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_currency_rates_rates",
+      "target": "lib_money_money_currency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_db_queries_test",
+      "target": "lib_db_queries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_db_queries_test",
+      "target": "lib_db_queries_accountbalanceminor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_db_queries_test",
+      "target": "lib_db_queries_test_mockdb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_db_queries_test",
+      "target": "lib_db_queries_totalsbycurrency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_settings_page",
+      "target": "lib_db_queries"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_settings",
+      "target": "lib_db_queries"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_accountbalanceminor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_archiveblockers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_getsettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_queries_totalsbycurrency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_schema_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_db_schema_transactions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/queries.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_db_queries",
+      "target": "lib_money_money_currency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_settings_page",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_app_settings_page_settingspage",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_settings",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "lib_actions_settings_sethomecurrency",
+      "target": "lib_db_queries_getsettings"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/client.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_db_client",
+      "target": "lib_db_schema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_currencyenum",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_exchangerates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_settings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_transaction_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_transactions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/db/schema.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "lib_db_schema",
+      "target": "lib_db_schema_transactiontypeenum",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_money_money_test",
+      "target": "lib_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_money_money_test",
+      "target": "lib_money_money_currencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_money_money_test",
+      "target": "lib_money_money_formatmoney",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_money_money_test",
+      "target": "lib_money_money_parsetominor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_money_money",
+      "target": "lib_money_money_currencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_money_money",
+      "target": "lib_money_money_currency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "lib_money_money",
+      "target": "lib_money_money_formatmoney",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "lib_money_money",
+      "target": "lib_money_money_money",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "lib_money_money",
+      "target": "lib_money_money_parsetominor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/money/money.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "lib_money_money",
+      "target": "lib_money_money_prefix",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/more/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_more_page",
+      "target": "app_app_more_page_links"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/more/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_more_page",
+      "target": "app_app_more_page_morepage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/(app)/settings/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_app_settings_page",
+      "target": "app_app_settings_page_settingspage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/actions/settings.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_actions_settings",
+      "target": "lib_actions_settings_sethomecurrency"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "package.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package",
-      "target": "package_dependencies",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "package",
-      "target": "package_devdependencies",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "package",
-      "target": "package_name",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "package",
-      "target": "package_private",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "package",
-      "target": "package_scripts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "package",
-      "target": "package_version",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_build",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_db_generate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_db_migrate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_dev",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_e2e",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_format",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_format_check",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_lint",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_start",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_test",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_test_watch",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_better_auth",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_drizzle_orm",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_neondatabase_serverless",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_next",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_react",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_react_dom",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L32",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_dotenv",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L33",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_drizzle_kit",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_eslint",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_eslint_config_next",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L36",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_eslint_config_prettier",
-      "confidence_score": 1.0
+      "target": "package_dependencies"
     },
     {
       "relation": "contains",
@@ -4021,9 +5630,269 @@
       "source_file": "package.json",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package",
+      "target": "package_devdependencies"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package",
+      "target": "package_name"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package",
+      "target": "package_private"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package",
+      "target": "package_scripts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package",
+      "target": "package_version"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_build"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_db_generate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_db_migrate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_dev"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_e2e"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_format"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_format_check"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_lint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_start"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_test"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_test_watch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_dependencies",
+      "target": "package_dependencies_better_auth"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_dependencies",
+      "target": "package_dependencies_drizzle_orm"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_dependencies",
+      "target": "package_dependencies_neondatabase_serverless"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_dependencies",
+      "target": "package_dependencies_next"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_dependencies",
+      "target": "package_dependencies_react"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_dependencies",
+      "target": "package_dependencies_react_dom"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_dependencies",
+      "target": "package_dependencies_zod"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L33",
+      "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_playwright_test",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_dotenv"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_drizzle_kit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_eslint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L36",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_eslint_config_next"
     },
     {
       "relation": "contains",
@@ -4031,19 +5900,9 @@
       "source_file": "package.json",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_prettier",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L38",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_tailwindcss",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_eslint_config_prettier"
     },
     {
       "relation": "contains",
@@ -4051,39 +5910,19 @@
       "source_file": "package.json",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_tailwindcss_postcss",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_playwright_test"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L29",
+      "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_types_node",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L30",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
-      "source_location": "L31",
-      "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react_dom",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_prettier"
     },
     {
       "relation": "contains",
@@ -4091,9 +5930,49 @@
       "source_file": "package.json",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_typescript",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_tailwindcss"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_tailwindcss_postcss"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_node"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_react"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_react_dom"
     },
     {
       "relation": "contains",
@@ -4101,9 +5980,210 @@
       "source_file": "package.json",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_vitest",
-      "confidence_score": 1.0
+      "target": "package_devdependencies_typescript"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_vitest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_currency_convert",
+      "target": "lib_currency_convert_convert"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_currency_convert",
+      "target": "lib_currency_convert_roundhalfup"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/currency/convert.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_currency_convert_convert",
+      "target": "lib_currency_convert_roundhalfup"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/dates/cairo.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_dates_cairo",
+      "target": "lib_dates_cairo_duedatefor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/dates/cairo.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_dates_cairo",
+      "target": "lib_dates_cairo_periodof"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/dates/cairo.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_dates_cairo",
+      "target": "lib_dates_cairo_todaycairo"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/00-foundations.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_00_foundations",
+      "target": "docs_superpowers_plans_01_accounts_and_currency"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_global_constraints"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1302",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_phase_done"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_1_schema_and_migration_accounts_transactions_exchange_rates_settings_with_seeded_rates"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L139",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_2_money_primitives_lib_money_money_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L234",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_3_cairo_dates_lib_dates_cairo_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L308",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_4_convert_via_usd_cross_rates_lib_currency_convert_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L405",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_5_getrates_cache_first_with_last_good_fallback_lib_currency_rates_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L560",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_6_derived_balance_queries_lib_db_queries_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L669",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_7_accounts_server_actions_and_screens"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1035",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_8_settings_lazy_upsert_and_home_currency_switch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
+      "source_location": "L1219",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
+      "target": "docs_superpowers_plans_01_accounts_and_currency_task_9_dashboard_placeholder_with_per_currency_totals_and_combined_at_live_rate"
     },
     {
       "relation": "contains",
@@ -4136,26 +6216,6 @@
       "confidence_score": 1.0,
       "source": "app_app_layout",
       "target": "components_bottom_tabs_bottomtabs"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/more/page.tsx",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_more_page",
-      "target": "app_app_more_page_morepage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/(app)/page.tsx",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_app_page",
-      "target": "app_app_page_homepage"
     },
     {
       "relation": "contains",
@@ -4350,28 +6410,6 @@
       "target": "lib_db_auth_schema_verification"
     },
     {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/schema.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_schema",
-      "target": "lib_db_auth_schema"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/db/client.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_db_client",
-      "target": "lib_db_schema"
-    },
-    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
@@ -4529,16 +6567,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "docs_superpowers_plans_00_foundations",
-      "target": "docs_superpowers_plans_01_accounts_and_currency"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/00-foundations.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_00_foundations",
       "target": "docs_superpowers_plans_readme"
     },
     {
@@ -4660,166 +6688,6 @@
       "confidence_score": 1.0,
       "source": "docs_superpowers_plans_00_foundations_phase_00_foundations_implementation_plan",
       "target": "docs_superpowers_plans_00_foundations_task_7_playwright_e2e_the_phase_gate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency",
-      "target": "docs_superpowers_plans_02_transactions_and_balances"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency",
-      "target": "docs_superpowers_plans_readme"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency",
-      "target": "docs_superpowers_specs_2026_07_07_my_ledger_design"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1302",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency",
-      "target": "docs_wiki_status"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_global_constraints"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1298",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_phase_done"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_1_schema_and_migration_accounts_transactions_exchange_rates_settings_with_seeded_rates"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L135",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_2_money_primitives_lib_money_money_ts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L230",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_3_cairo_dates_lib_dates_cairo_ts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L304",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_4_convert_via_usd_cross_rates_lib_currency_convert_ts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L401",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_5_getrates_cache_first_with_last_good_fallback_lib_currency_rates_ts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L556",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_6_derived_balance_queries_lib_db_queries_ts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L665",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_7_accounts_server_actions_and_screens"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1031",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_8_settings_lazy_upsert_and_home_currency_switch"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/superpowers/plans/01-accounts-and-currency.md",
-      "source_location": "L1215",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "docs_superpowers_plans_01_accounts_and_currency_phase_01_accounts_and_currency_implementation_plan",
-      "target": "docs_superpowers_plans_01_accounts_and_currency_task_9_dashboard_placeholder_with_per_currency_totals_and_combined_at_live_rate"
     },
     {
       "relation": "contains",
@@ -7493,5 +9361,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1f9b172e1e6cb7179ad9fe1190ec2ab83609299f"
+  "built_at_commit": "99fcd926e309010f5859a2f35e2b1a87cb545e5b"
 }

@@ -1,16 +1,16 @@
 # Graph Report - my-ledger  (2026-07-09)
 
 ## Corpus Check
-- 63 files · ~71,980 words
+- 84 files · ~76,765 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 373 nodes · 375 edges · 54 communities (44 shown, 10 thin omitted)
+- 435 nodes · 492 edges · 57 communities (46 shown, 11 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1f9b172e`
+- Built from commit: `99fcd926`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -57,6 +57,8 @@
 - [[_COMMUNITY_Community 41|Community 41]]
 - [[_COMMUNITY_Community 42|Community 42]]
 - [[_COMMUNITY_Community 43|Community 43]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 57|Community 57]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Phase 07: Debts and Planner Implementation Plan` - 16 edges
@@ -71,16 +73,25 @@
 10. `Interfaces consumed from P3 (do not copy, extend in place)` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
-- None detected - all connections are within the same source files.
+- `SettingsPage()` --calls--> `getSettings()`  [EXTRACTED]
+  app/(app)/settings/page.tsx → lib/db/queries.ts
+- `HomePage()` --calls--> `getRates()`  [EXTRACTED]
+  app/(app)/page.tsx → lib/currency/rates.ts
+- `HomePage()` --calls--> `getSettings()`  [EXTRACTED]
+  app/(app)/page.tsx → lib/db/queries.ts
+- `HomePage()` --calls--> `totalsByCurrency()`  [EXTRACTED]
+  app/(app)/page.tsx → lib/db/queries.ts
+- `HomePage()` --calls--> `formatMoney()`  [EXTRACTED]
+  app/(app)/page.tsx → lib/money/money.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (54 total, 10 thin omitted)
+## Communities (57 total, 11 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.17
-Nodes (7): Domain rules (invariants), Glossary, My Ledger - Domain Context, Conventions, Docs Index - My Ledger, Layers, Status
+Cohesion: 0.14
+Nodes (11): Domain rules (invariants), Glossary, My Ledger - Domain Context, Conventions, Docs Index - My Ledger, Layers, 2026-07-07 - Grilling session decisions + adversarial audit, Adversarial audit (20 findings, all resolved into the spec) (+3 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.10
@@ -91,12 +102,12 @@ Cohesion: 0.12
 Nodes (16): Phase 07: Debts and Planner Implementation Plan, Task 10: engine core - surplus, avalanche, minimums, payoff reporting, Task 11: engine - deadline just-in-time payments and deadline slack, Task 12: engine - currency-aware funding gaps, flags, passthroughs, Task 13: plan input assembler, Task 14: plan screen, Task 15: Playwright flow, Task 1: flexible_debts table and migration (+8 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.17
+Cohesion: 0.15
 Nodes (12): Global Constraints, Phase 01: Accounts and Currency Implementation Plan, Phase done, Task 1: Schema and migration (accounts, transactions, exchange_rates, settings) with seeded rates, Task 2: Money primitives (lib/money/money.ts), Task 3: Cairo dates (lib/dates/cairo.ts), Task 4: convert() via USD cross-rates (lib/currency/convert.ts), Task 5: getRates() cache-first with last-good fallback (lib/currency/rates.ts) (+4 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.09
-Nodes (22): dependencies, better-auth, drizzle-orm, @neondatabase/serverless, next, react, react-dom, name (+14 more)
+Cohesion: 0.08
+Nodes (23): dependencies, better-auth, drizzle-orm, @neondatabase/serverless, next, react, react-dom, zod (+15 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.18
@@ -155,8 +166,8 @@ Cohesion: 0.40
 Nodes (4): ADR: Per-currency accounts; transactions never convert; transfers carry two explicit legs, Decision, Rejected, Why
 
 ### Community 19 - "Community 19"
-Cohesion: 0.14
-Nodes (11): account, accountRelations, session, sessionRelations, user, userRelations, verification, db (+3 more)
+Cohesion: 0.25
+Nodes (7): account, accountRelations, session, sessionRelations, user, userRelations, verification
 
 ### Community 20 - "Community 20"
 Cohesion: 0.40
@@ -175,8 +186,8 @@ Cohesion: 0.29
 Nodes (5): ADR: Next.js + Neon Postgres + Drizzle + Stack Auth (Google-only prod, email+password test project), Decision, Rejected, Why, 2026-07-09 - Auth pivot: Stack Auth to self-hosted Better Auth (email+password)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.50
-Nodes (4): 2026-07-07 - Grilling session decisions + adversarial audit, Adversarial audit (20 findings, all resolved into the spec), Grilling decisions, Verified against current docs during planning
+Cohesion: 0.40
+Nodes (4): db, dbPool, pool, sql
 
 ### Community 26 - "Community 26"
 Cohesion: 0.25
@@ -206,25 +217,29 @@ Nodes (11): Auth: self-hosted Better Auth, email + password (read this before Ta
 Cohesion: 0.13
 Nodes (15): devDependencies, dotenv, drizzle-kit, eslint, eslint-config-next, eslint-config-prettier, @playwright/test, prettier (+7 more)
 
+### Community 57 - "Community 57"
+Cohesion: 0.07
+Nodes (36): HomePage(), isStale(), SettingsPage(), AccountSettingsForm(), HomeCurrencyForm(), ActionState, archiveAccount(), createAccount() (+28 more)
+
 ## Knowledge Gaps
-- **263 isolated node(s):** `name`, `version`, `private`, `dev`, `build` (+258 more)
+- **275 isolated node(s):** `createAccountSchema`, `renameSchema`, `rates`, `mockDb`, `mockDb` (+270 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `My Ledger - Design Spec` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.055) - this node is a cross-community bridge._
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
 - **Why does `Phase 07: Debts and Planner Implementation Plan` connect `Community 2` to `Community 0`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
-- **What connects `name`, `version`, `private` to the rest of the system?**
-  _263 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+- **What connects `createAccountSchema`, `renameSchema`, `rates` to the rest of the system?**
+  _275 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.13793103448275862 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.125 - nodes in this community are weakly interconnected._
 - **Should `Community 4` be split into smaller, more focused modules?**
-  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
-- **Should `Community 19` be split into smaller, more focused modules?**
-  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
