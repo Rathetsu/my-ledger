@@ -1,11 +1,11 @@
 # Status
 
-**Current state: P0 complete.** Foundations (scaffold, tooling, Neon+Drizzle, Better Auth email+password, protected shell) are done and gated green by Playwright.
+**Current state: P1 complete.** Accounts & currency engine (schema, Money, Cairo dates, convert, cached rates, accounts CRUD, settings, dashboard placeholder) are done and gated green by Vitest and Playwright.
 
 | Phase | Scope | Status |
 |---|---|---|
 | P0 | Foundations: scaffold, tooling, Neon+Drizzle, Better Auth (email+password), protected shell | complete |
-| P1 | Accounts & currency engine (Money, rates, convert, settings) | not started |
+| P1 | Accounts & currency engine (Money, rates, convert, settings) | complete |
 | P2 | Ledger core: transactions, transfers, reconciliation, dashboard v1 | not started |
 | P3 | Income sources + confirmation + housekeeping v1 + attention list | not started |
 | P4 | Recurring bills | not started |
