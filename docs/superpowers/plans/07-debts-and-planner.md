@@ -226,7 +226,7 @@ import { and, eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db/client'
 import { flexibleDebts, transactions } from '@/lib/db/schema'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 
 export const debtSchema = z.object({
   name: z.string().trim().min(1).max(80),
@@ -575,7 +575,7 @@ import Link from 'next/link'
 import { and, eq, isNull } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { accounts, flexibleDebts } from '@/lib/db/schema'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { debtBalanceMinor } from '@/lib/debts/balance'
 import { formatMoney, type Currency } from '@/lib/money/money'
 import { DebtPaySheet } from '@/components/debts/debt-pay-sheet'
@@ -650,7 +650,7 @@ import { notFound } from 'next/navigation'
 import { and, desc, eq } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { flexibleDebts, transactions } from '@/lib/db/schema'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { deleteDebtPayment } from '@/lib/actions/debts'
 import { DebtForm } from '@/components/debts/debt-form'
 import { formatMoney, type Currency } from '@/lib/money/money'
@@ -1588,7 +1588,7 @@ export function PlanTimeline({
 - [ ] Create `app/(app)/plan/page.tsx`:
 
 ```tsx
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { buildPlanInput } from '@/lib/planner/input'
 import { buildPlan } from '@/lib/planner/engine'
 import { AiAdvisorSlot } from '@/components/plan/ai-advisor-slot'

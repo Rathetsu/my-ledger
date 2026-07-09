@@ -8,7 +8,7 @@
 
 **Architecture:** Pure primitives (`lib/money`, `lib/dates`, `lib/currency`) carry all the numeric rules and are unit-tested in isolation; thin Drizzle queries derive balances by summing transactions; zod-validated server actions are the only write path. The `transactions` table is created in this phase because creating an account posts an `opening` transaction.
 
-**Tech Stack:** Next.js App Router server actions + zod, Drizzle (pgTable/pgEnum) on Neon, Stack Auth (`requireUser()`), Vitest, Playwright, Tailwind (mobile-first).
+**Tech Stack:** Next.js App Router server actions + zod, Drizzle (pgTable/pgEnum) on Neon, Better Auth (`requireUser()`), Vitest, Playwright, Tailwind (mobile-first).
 
 ## Global Constraints
 
@@ -720,7 +720,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { and, eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { archiveBlockers } from '@/lib/db/queries'
@@ -834,7 +834,7 @@ export async function archiveAccount(
 ```tsx
 import Link from 'next/link'
 import { and, asc, eq, isNull } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
 import { accountBalanceMinor } from '@/lib/db/queries'
@@ -934,7 +934,7 @@ export default function NewAccountPage() {
 ```tsx
 import { notFound } from 'next/navigation'
 import { and, eq } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
 import { AccountSettingsForm } from '@/components/account-settings-form'
@@ -1096,7 +1096,7 @@ Note: `getSettings` writes through `db` (neon-http). Single-statement upserts do
 import { revalidatePath } from 'next/cache'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { settings } from '@/lib/db/schema'
 import { getSettings } from '@/lib/db/queries'
@@ -1161,7 +1161,7 @@ export function HomeCurrencyForm({ current }: { current: Currency }) {
 - [ ] Create `app/(app)/settings/page.tsx`:
 
 ```tsx
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { getSettings } from '@/lib/db/queries'
 import { HomeCurrencyForm } from '@/components/home-currency-form'
 
@@ -1226,7 +1226,7 @@ git commit -m "feat(settings): lazy-upserted settings row and home-currency swit
 - [ ] Replace `app/(app)/page.tsx`:
 
 ```tsx
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { convert } from '@/lib/currency/convert'
 import { getRates } from '@/lib/currency/rates'
 import { getSettings, totalsByCurrency } from '@/lib/db/queries'

@@ -1,6 +1,6 @@
 # ADR: Next.js + Neon Postgres + Drizzle + Stack Auth (Google-only prod, email+password test project)
 
-**Status:** accepted 2026-07-07
+**Status:** accepted 2026-07-07. **Auth portion superseded 2026-07-09 by [2026-07-09-better-auth-email-password.md](2026-07-09-better-auth-email-password.md)** (Neon Auth is now Better Auth, not Stack Auth; we use self-hosted Better Auth with email+password only). The Next.js / Neon / Drizzle / server-actions / build-time-migrations decisions below still stand; ignore only the Stack Auth specifics.
 
 ## Decision
 

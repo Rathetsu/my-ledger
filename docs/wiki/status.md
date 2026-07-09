@@ -4,7 +4,7 @@
 
 | Phase | Scope | Status |
 |---|---|---|
-| P0 | Foundations: scaffold, tooling, Neon+Drizzle, Stack Auth (Google prod / email+password test project), protected shell | not started |
+| P0 | Foundations: scaffold, tooling, Neon+Drizzle, Better Auth (email+password), protected shell | tasks 1-4 done; auth (5-7) rewritten for Better Auth, in progress |
 | P1 | Accounts & currency engine (Money, rates, convert, settings) | not started |
 | P2 | Ledger core: transactions, transfers, reconciliation, dashboard v1 | not started |
 | P3 | Income sources + confirmation + housekeeping v1 + attention list | not started |

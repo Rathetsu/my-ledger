@@ -8,7 +8,7 @@
 
 **Architecture:** Definitions (income sources) generate one `occurrence` per period via the idempotent `housekeeping(userId, today)` routine, called at the top of the dashboard server component. Confirming an occurrence runs one `dbPool` transaction: guard-update the occurrence, insert an `income` transaction with the actual figures, link them. The confirm machinery lives in `lib/occurrences/confirm.ts` and is the shared rail P4 (bills) and P5 (installments) extend, not copy.
 
-**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Neon Postgres + Drizzle (`db` neon-http reads, `dbPool` neon-serverless transactions), drizzle-kit migrations, Stack Auth, zod server actions, Vitest + Playwright.
+**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Neon Postgres + Drizzle (`db` neon-http reads, `dbPool` neon-serverless transactions), drizzle-kit migrations, Better Auth, zod server actions, Vitest + Playwright.
 
 ## Global Constraints (from the plans README, verbatim)
 
@@ -28,7 +28,7 @@ Clarification (spec §5.3): `overdue` is a pending occurrence past its due date 
 - `Currency`, `CURRENCIES`, `formatMoney(m: Money): string`, `parseToMinor(input: string, currency: Currency): number` from `lib/money/money.ts`.
 - `db` (neon-http, reads and single-statement writes) and `dbPool` (neon-serverless Pool, multi-step transactions) from `lib/db/client.ts`; `accounts` and `transactions` tables from `lib/db/schema.ts` per spec §4. Drizzle properties are the spec's snake_case columns camelCased (`amountMinor`, `occurredOn`, `oneOff`, `sourceType`, `sourceId`).
 - `transactions.amount_minor` is signed: inflows positive, outflows negative, so `accountBalanceMinor(accountId)` is a plain SUM.
-- `requireUser()` from `lib/auth/stack.ts` (redirects unauthenticated requests).
+- `requireUser()` from `lib/auth.ts` (redirects unauthenticated requests).
 - DB-backed Vitest tests run against `DATABASE_URL` (the dev Neon branch, same one drizzle-kit uses). Every test seeds a fresh random `user_id`, so runs never collide and cleanup is unnecessary.
 
 ---
@@ -740,7 +740,7 @@ Expected: PASS.
 
 import { and, eq, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { dueDateFor } from '@/lib/dates/cairo'
 import { db } from '@/lib/db/client'
 import { accounts, incomeSources, occurrences, transactions } from '@/lib/db/schema'
@@ -889,7 +889,7 @@ export async function addWindfall(input: unknown): Promise<ActionResult> {
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
 import { confirmOccurrence, skipOccurrence, unconfirmOccurrence } from '@/lib/occurrences/confirm'
@@ -981,7 +981,7 @@ git add lib/actions && git commit -m "feat(income): income source crud, windfall
 import Link from 'next/link'
 import { and, eq, isNull } from 'drizzle-orm'
 import { WindfallForm } from '@/components/income/windfall-form'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, incomeSources } from '@/lib/db/schema'
 import { formatMoney } from '@/lib/money/money'
@@ -1146,7 +1146,7 @@ export function IncomeSourceForm({ accounts, source }: { accounts: AccountOption
 // app/(app)/income/new/page.tsx
 import { and, eq, isNull } from 'drizzle-orm'
 import { IncomeSourceForm } from '@/components/income/income-source-form'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
 
@@ -1170,7 +1170,7 @@ export default async function NewIncomeSourcePage() {
 import { notFound } from 'next/navigation'
 import { and, eq, isNull } from 'drizzle-orm'
 import { IncomeSourceForm } from '@/components/income/income-source-form'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, incomeSources } from '@/lib/db/schema'
 
@@ -1486,7 +1486,7 @@ export function AttentionList({ items }: { items: AttentionItem[] }) {
 ```tsx
 // app/(app)/page.tsx, additions to the existing server component
 import { AttentionList } from '@/components/dashboard/attention-list'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { todayCairo } from '@/lib/dates/cairo'
 import { housekeeping } from '@/lib/housekeeping'
 import { getAttentionItems } from '@/lib/occurrences/attention'
@@ -1520,7 +1520,7 @@ git add lib/occurrences/attention.ts components/dashboard components/occurrences
 - Test: `tests/e2e/income.spec.ts`
 
 **Interfaces:**
-- Consumes: the running app against the Stack Auth test project (email+password), `E2E_EMAIL` / `E2E_PASSWORD` env vars. If P0 ships a shared sign-in helper in `tests/e2e/`, import it instead of the inline one below.
+- Consumes: the running app with email+password auth, `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` env vars. If P0 ships a shared sign-in helper in `tests/e2e/`, import it instead of the inline one below.
 
 **Steps:**
 
@@ -1531,7 +1531,7 @@ git add lib/occurrences/attention.ts components/dashboard components/occurrences
 import { expect, test, type Page } from '@playwright/test'
 
 async function signIn(page: Page) {
-  await page.goto('/handler/sign-in')
+  await page.goto('/sign-in')
   await page.getByLabel(/email/i).fill(process.env.E2E_EMAIL!)
   await page.getByLabel(/password/i).fill(process.env.E2E_PASSWORD!)
   await page.getByRole('button', { name: /sign in/i }).click()

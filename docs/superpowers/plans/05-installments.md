@@ -8,7 +8,7 @@
 
 **Architecture:** Installments are the third and last occurrence kind. Everything rides P3/P4 machinery: `housekeeping(userId, today)` gains an installment generation block, `lib/occurrences/confirm.ts` gains an installment source lookup plus a count decrement/increment inside the existing `dbPool` transaction, and `rewritePendingOccurrences` gains its installment case. The only new invariant: the countdown and the payment move together or not at all, and generation stops the moment the countdown hits zero.
 
-**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Neon Postgres + Drizzle (`db` neon-http reads, `dbPool` neon-serverless transactions), drizzle-kit migrations, Stack Auth, zod server actions, Vitest + Playwright.
+**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Neon Postgres + Drizzle (`db` neon-http reads, `dbPool` neon-serverless transactions), drizzle-kit migrations, Better Auth, zod server actions, Vitest + Playwright.
 
 ## Global Constraints (from the plans README, verbatim)
 
@@ -680,7 +680,7 @@ Expected: PASS.
 
 import { and, eq, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, installments } from '@/lib/db/schema'
 import { rewritePendingOccurrences } from '@/lib/housekeeping'
@@ -872,7 +872,7 @@ git add lib/occurrences/attention.ts && git commit -m "feat(dashboard): installm
 // app/(app)/installments/page.tsx
 import Link from 'next/link'
 import { and, asc, eq, inArray } from 'drizzle-orm'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { installments, occurrences } from '@/lib/db/schema'
 import { formatMoney } from '@/lib/money/money'
@@ -1105,7 +1105,7 @@ export function InstallmentForm({
 // app/(app)/installments/new/page.tsx
 import { and, eq, isNull } from 'drizzle-orm'
 import { InstallmentForm } from '@/components/installments/installment-form'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
 
@@ -1129,7 +1129,7 @@ export default async function NewInstallmentPage() {
 import { notFound } from 'next/navigation'
 import { and, eq, isNull } from 'drizzle-orm'
 import { InstallmentForm } from '@/components/installments/installment-form'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, installments } from '@/lib/db/schema'
 

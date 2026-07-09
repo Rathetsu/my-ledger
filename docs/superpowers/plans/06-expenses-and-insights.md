@@ -112,7 +112,7 @@ export function addPeriods(period: string, n: number): string {
 
 **Interfaces:**
 - Produces: server actions `createCategory(raw: unknown): Promise<void>`, `updateCategory(raw: unknown): Promise<void>`, `deleteCategory(raw: unknown): Promise<void>`; exported `categorySchema` (zod).
-- Consumes: `requireUser()` from `lib/auth/stack` (P0), `db`/`dbPool` from `lib/db/client` (P0), `expenseCategories` (Task 1).
+- Consumes: `requireUser()` from `lib/auth` (P0), `db`/`dbPool` from `lib/db/client` (P0), `expenseCategories` (Task 1).
 
 **Steps:**
 
@@ -143,7 +143,7 @@ import { and, eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { db, dbPool } from '@/lib/db/client'
 import { expenseCategories, transactions } from '@/lib/db/schema'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 
 export const categorySchema = z.object({
   name: z.string().trim().min(1).max(60),
@@ -240,7 +240,7 @@ export function CategoryForm({ existing }: { existing?: { id: string; name: stri
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { expenseCategories } from '@/lib/db/schema'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { deleteCategory } from '@/lib/actions/expense-categories'
 import { CategoryForm } from '@/components/expenses/category-form'
 
@@ -382,7 +382,7 @@ import Link from 'next/link'
 import { and, desc, eq, gte, lt } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { expenseCategories, transactions } from '@/lib/db/schema'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { formatMoney } from '@/lib/money/money'
 import { addPeriods, periodOf, todayCairo } from '@/lib/dates/cairo'
 
@@ -841,7 +841,7 @@ export function TrendChart({ data, currency }: { data: { period: string; totalMi
 import { CURRENCIES } from '@/lib/money/money'
 import { formatMoney } from '@/lib/money/money'
 import { addPeriods, periodOf, todayCairo } from '@/lib/dates/cairo'
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { expensesByCategoryAndPeriod } from '@/lib/insights/category-spend'
 import { pivotByCategory, trendSeries } from '@/lib/insights/chart-data'
 import { SpendByCategoryChart } from '@/components/insights/spend-by-category-chart'

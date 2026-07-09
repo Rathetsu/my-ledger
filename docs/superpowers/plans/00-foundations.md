@@ -4,11 +4,11 @@
 
 **Backlinks:** [Master index](README.md) | [Spec](../specs/2026-07-07-my-ledger-design.md) | Prev: none (this is the first phase) | Next: [01-accounts-and-currency.md](01-accounts-and-currency.md)
 
-**Goal:** A running, deployable Next.js skeleton in this repo: tooling (Prettier, Vitest, Playwright), Drizzle wired to Neon, Stack Auth, and a protected mobile bottom-tab shell, with the sign-in gate proven green by Playwright.
+**Goal:** A running, deployable Next.js skeleton in this repo: tooling (Prettier, Vitest, Playwright), Drizzle wired to Neon, Better Auth (email+password), and a protected mobile bottom-tab shell, with the sign-in gate proven green by Playwright.
 
-**Architecture:** Next.js App Router serves everything; Stack Auth guards an `(app)` route group that holds the four-tab mobile shell (Home, Ledger, Plan, More). Drizzle talks to Neon over `neon-http` for reads and a `neon-serverless` Pool for multi-step writes; migrations run inside the Vercel build command. No domain tables exist yet: P1 creates them, so the schema here is an empty baseline.
+**Architecture:** Next.js App Router serves everything; self-hosted Better Auth (email+password) guards an `(app)` route group that holds the four-tab mobile shell (Home, Ledger, Plan, More). Drizzle talks to Neon over `neon-http` for reads and a `neon-serverless` Pool for multi-step writes (Better Auth's adapter uses the Pool); migrations run inside the Vercel build command. No domain tables exist yet beyond Better Auth's own: P1 creates the rest, so the app schema here is an empty baseline.
 
-**Tech Stack:** Next.js (App Router, TypeScript, Tailwind, ESLint), Prettier, Vitest, Playwright, Drizzle ORM + drizzle-kit, `@neondatabase/serverless`, Stack Auth (`@stackframe/stack`), Vercel.
+**Tech Stack:** Next.js (App Router, TypeScript, Tailwind, ESLint), Prettier, Vitest, Playwright, Drizzle ORM + drizzle-kit, `@neondatabase/serverless`, Better Auth (`better-auth`), Vercel.
 
 ## Global Constraints
 
@@ -20,24 +20,19 @@
 - TDD: failing test → minimal code → pass → commit. Frequent small commits.
 - The deterministic engine owns all numbers; the AI only quotes.
 
-## The two Stack Auth projects (read this before anything else)
+## Auth: self-hosted Better Auth, email + password (read this before Task 5)
 
-Per the [auth ADR](../../adr/2026-07-07-nextjs-neon-drizzle-stackauth.md) there are **two** Stack Auth projects:
+Per the [auth ADR](../../adr/2026-07-09-better-auth-email-password.md), auth is **self-hosted Better Auth** with **email + password only** (no Google, no Stack Auth). There is ONE auth configuration for local dev, Playwright, and production; auth tables live in our own Neon DB via Drizzle. Open sign-up is gated by `ALLOW_SIGNUP` (default off): register the single user once with `ALLOW_SIGNUP=true`, then turn it off in production.
 
-| Project | Sign-in methods | Used by |
-|---|---|---|
-| **prod** | Google **only** (toggle in the Stack dashboard) | Vercel production deployment |
-| **test** | Email + password | Local dev and every Playwright run (Google blocks OAuth in automated browsers) |
-
-The same three env vars select which project the app talks to. Local `.env.local` and CI carry the **test** project's keys; Vercel production env vars carry the **prod** project's keys:
+Env vars (already in `.env.example`; local `.env.local` has real values):
 
 ```
-NEXT_PUBLIC_STACK_PROJECT_ID
-NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY
-STACK_SECRET_SERVER_KEY
+BETTER_AUTH_SECRET      # openssl rand -base64 32
+BETTER_AUTH_URL         # http://localhost:3000 locally; deployed origin in prod
+ALLOW_SIGNUP            # true to allow registration (dev + E2E); unset/false in prod
 ```
 
-The Playwright suite signs in with `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD`, a user created once in the **test** project (Task 6 has the setup step). Never point Playwright at the prod project.
+The Playwright suite registers then signs in `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` against the app's own `/sign-up` and `/sign-in` pages (Task 7). No third-party auth service, no prod/test project split.
 
 ## Task 1: Scaffold Next.js into the existing repo
 
@@ -300,14 +295,11 @@ export const dbPool = drizzlePool(pool, { schema })
 # Pooled connection string from the Neon dashboard. Use a dev branch locally.
 DATABASE_URL=
 
-# --- Stack Auth ---
-# TWO Stack projects exist (see the auth ADR):
-#   prod: Google sign-in ONLY  -> keys live in Vercel production env vars
-#   test: email + password     -> keys live here and in CI (dev + Playwright)
-# These three vars select which project the app talks to.
-NEXT_PUBLIC_STACK_PROJECT_ID=
-NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=
-STACK_SECRET_SERVER_KEY=
+# --- Better Auth (self-hosted, email + password only) ---
+BETTER_AUTH_SECRET=          # openssl rand -base64 32
+BETTER_AUTH_URL=http://localhost:3000
+# Gate open sign-up: true to register the single user (dev + E2E); unset/false in prod.
+ALLOW_SIGNUP=false
 
 # --- Cron (P10) ---
 # Random secret; /api/cron/daily requires "Authorization: Bearer $CRON_SECRET".
@@ -317,7 +309,7 @@ CRON_SECRET=
 GEMINI_API_KEY=
 GEMINI_MODEL=gemini-3-flash-preview
 
-# --- Playwright E2E (a user created once in the TEST Stack project) ---
+# --- Playwright E2E (email+password user; the E2E setup registers it when ALLOW_SIGNUP=true) ---
 E2E_TEST_EMAIL=
 E2E_TEST_PASSWORD=
 ```
@@ -356,108 +348,259 @@ git add -A
 git commit -m "chore: wire drizzle + neon (empty schema), env template, vercel build command"
 ```
 
-## Task 5: Stack Auth wiring
+## Task 5: Better Auth wiring (email + password)
 
 **Files:**
-- Create: `lib/auth/stack.ts`, `app/handler/[...stack]/page.tsx`
-- Modify: `app/layout.tsx`, `package.json` (dependencies)
+- Create: `lib/auth.ts`, `lib/auth-client.ts`, `app/api/auth/[...all]/route.ts`, `lib/db/auth-schema.ts` (generated by the Better Auth CLI)
+- Modify: `lib/db/schema.ts` (re-export the generated auth tables), `package.json` (dependency), the `drizzle/` migration output
 
 **Interfaces:**
-- Consumes: the three `*STACK*` env vars (test project locally).
-- Produces: `stackServerApp` and `requireUser()` from `lib/auth/stack.ts`; every P1+ server action and protected page calls `requireUser()` and uses `user.id` as `user_id`.
+- Consumes: `db`/`dbPool` from `lib/db/client.ts` (Task 4); the `BETTER_AUTH_*` and `ALLOW_SIGNUP` env vars.
+- Produces: `auth` (the Better Auth server instance) and `requireUser()` from `lib/auth.ts`; `authClient` (+ `signIn`/`signUp`/`signOut`/`useSession`) from `lib/auth-client.ts`. Every P1+ server action and protected page calls `requireUser()` and uses `user.id` as `user_id`.
 
 **Steps:**
 
 - [ ] Install:
 
 ```bash
-npm i @stackframe/stack server-only
+npm i better-auth
 ```
 
-- [ ] Manual setup: in the Stack dashboard create the two projects if they do not exist yet: **prod** with Google as the only enabled sign-in method, **test** with email+password enabled. Copy the **test** project's three keys into `.env.local`.
-- [ ] Create `lib/auth/stack.ts`:
+- [ ] Create `lib/auth.ts`. Better Auth may run multi-statement operations, so back its Drizzle adapter with the WebSocket pool (`dbPool`, which supports transactions) rather than the neon-http client. `nextCookies()` must be the last plugin so it can set cookies from server actions:
 
 ```ts
-import 'server-only'
-import { StackServerApp } from '@stackframe/stack'
+import { betterAuth } from 'better-auth'
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { nextCookies } from 'better-auth/next-js'
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { dbPool } from '@/lib/db/client'
 
-export const stackServerApp = new StackServerApp({
-  tokenStore: 'nextjs-cookie',
+export const auth = betterAuth({
+  database: drizzleAdapter(dbPool, { provider: 'pg' }),
+  emailAndPassword: {
+    enabled: true,
+    // Single-user app: open sign-up only when ALLOW_SIGNUP=true (dev + E2E).
+    disableSignUp: process.env.ALLOW_SIGNUP !== 'true',
+  },
+  plugins: [nextCookies()],
 })
 
-// Redirects to /handler/sign-in when unauthenticated.
+// Server-side gate: redirects to /sign-in when unauthenticated, else returns the user.
 export async function requireUser() {
-  return stackServerApp.getUser({ or: 'redirect' })
+  const session = await auth.api.getSession({ headers: await headers() })
+  if (!session) redirect('/sign-in')
+  return session.user
 }
 ```
 
-- [ ] Create `app/handler/[...stack]/page.tsx` (Stack renders sign-in, sign-up, account settings, etc. under /handler/*):
+- [ ] Create `lib/auth-client.ts`:
 
-```tsx
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { StackHandler } from '@stackframe/stack'
-import { stackServerApp } from '@/lib/auth/stack'
+```ts
+import { createAuthClient } from 'better-auth/react'
 
-export default function Handler(props: any) {
-  return <StackHandler fullPage app={stackServerApp} routeProps={props} />
-}
+export const authClient = createAuthClient()
+export const { signIn, signUp, signOut, useSession } = authClient
 ```
 
-- [ ] Modify `app/layout.tsx` to wrap the app in StackProvider + StackTheme (keep the scaffold's font setup; full file shown):
+- [ ] Create `app/api/auth/[...all]/route.ts`:
 
-```tsx
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { StackProvider, StackTheme } from '@stackframe/stack'
-import { stackServerApp } from '@/lib/auth/stack'
-import './globals.css'
+```ts
+import { toNextJsHandler } from 'better-auth/next-js'
+import { auth } from '@/lib/auth'
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'My Ledger',
-  description: 'Personal money ledger',
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <StackProvider app={stackServerApp}>
-          <StackTheme>{children}</StackTheme>
-        </StackProvider>
-      </body>
-    </html>
-  )
-}
+export const { GET, POST } = toNextJsHandler(auth)
 ```
 
-- [ ] Verify manually: `npm run dev`, open `http://localhost:3000/handler/sign-in`. Expected: Stack's sign-in page with email and password fields (test project). No Google button here; that is the prod project's config.
+- [ ] Generate the auth tables into a Drizzle schema file, then wire them into the schema barrel so drizzle-kit migrates them:
+
+```bash
+npx @better-auth/cli@latest generate --output lib/db/auth-schema.ts -y
+```
+
+Then replace `lib/db/schema.ts` so the generated tables are part of the schema:
+
+```ts
+// Drizzle schema barrel. Better Auth tables live in auth-schema.ts (generated
+// by `npx @better-auth/cli generate`). P1 adds accounts, transactions,
+// exchange_rates, settings; P3+ add the rest (spec §4).
+export * from './auth-schema'
+```
+
+- [ ] Create and apply the migration for the auth tables against the Neon dev DB:
+
+```bash
+npm run db:generate
+# expected: a new migration file in drizzle/ creating user/session/account/verification tables
+npm run db:migrate
+# expected: applied to Neon, exit 0
+```
+
+- [ ] Update `.env.example` if it still lists the old Stack vars: it must list `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `ALLOW_SIGNUP` (not `NEXT_PUBLIC_STACK_*`). (Already done in the repo; verify.)
+- [ ] Verify the build compiles: `npm run build` (expected: success).
 - [ ] Commit:
 
 ```bash
 git add -A
-git commit -m "feat: stack auth wiring (server singleton, provider, handler route)"
+git commit -m "feat: better auth wiring (email+password, drizzle adapter, next handler)"
 ```
 
-## Task 6: Protected (app) route group with bottom-tab shell
+## Task 6: Sign-in / sign-up pages + protected (app) shell
 
 **Files:**
-- Create: `app/(app)/layout.tsx`, `app/(app)/page.tsx`, `app/(app)/transactions/page.tsx`, `app/(app)/plan/page.tsx`, `app/(app)/more/page.tsx`, `components/bottom-tabs.tsx`
+- Create: `app/sign-in/page.tsx`, `app/sign-up/page.tsx`, `app/(app)/layout.tsx`, `app/(app)/page.tsx`, `app/(app)/transactions/page.tsx`, `app/(app)/plan/page.tsx`, `app/(app)/more/page.tsx`, `components/bottom-tabs.tsx`
 - Delete: `app/page.tsx` (the scaffold landing page; the Home placeholder replaces it inside the group)
 
 **Interfaces:**
-- Consumes: `requireUser()` from Task 5.
-- Produces: the `(app)` route group every later screen lives in; tab routes `/` (Home), `/transactions` (Ledger), `/plan` (Plan), `/more` (More).
+- Consumes: `requireUser()` from `lib/auth.ts`; `signIn`/`signUp` from `lib/auth-client.ts`.
+- Produces: the `(app)` route group every later screen lives in; tab routes `/` (Home), `/transactions` (Ledger), `/plan` (Plan), `/more` (More); the `/sign-in` and `/sign-up` pages the Playwright setup drives.
 
 **Steps:**
 
-- [ ] Delete the scaffold landing page: `rm app/page.tsx` (route groups do not change URLs, so `app/(app)/page.tsx` will serve `/`).
+- [ ] Delete the scaffold landing page: `rm app/page.tsx` (route groups do not change URLs, so `app/(app)/page.tsx` serves `/`).
+- [ ] Create `app/sign-in/page.tsx` (labels are stable Playwright selectors):
+
+```tsx
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { signIn } from '@/lib/auth-client'
+
+export default function SignInPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState<string | null>(null)
+  const [pending, setPending] = useState(false)
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setPending(true)
+    const res = await signIn.email({ email, password })
+    setPending(false)
+    if (res.error) {
+      setError(res.error.message ?? 'Sign in failed')
+      return
+    }
+    router.push('/')
+  }
+
+  return (
+    <main className="mx-auto max-w-md p-4">
+      <h1 className="mb-4 text-xl font-semibold">Sign in</h1>
+      <form onSubmit={onSubmit} className="space-y-4">
+        <label className="block">
+          <span className="text-sm">Email</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 w-full rounded border p-2"
+            required
+          />
+        </label>
+        <label className="block">
+          <span className="text-sm">Password</span>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="mt-1 w-full rounded border p-2"
+            required
+          />
+        </label>
+        {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
+        <button
+          type="submit"
+          disabled={pending}
+          className="w-full rounded bg-blue-600 py-3 font-semibold text-white disabled:opacity-50"
+        >
+          Sign in
+        </button>
+      </form>
+      <p className="mt-4 text-sm text-gray-500">
+        No account? <Link href="/sign-up" className="text-blue-600">Sign up</Link>
+      </p>
+    </main>
+  )
+}
+```
+
+- [ ] Create `app/sign-up/page.tsx` (Better Auth email sign-up needs a `name`; default it to the email). When `ALLOW_SIGNUP` is off the server rejects sign-up and the error surfaces here:
+
+```tsx
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { signUp } from '@/lib/auth-client'
+
+export default function SignUpPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState<string | null>(null)
+  const [pending, setPending] = useState(false)
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setPending(true)
+    const res = await signUp.email({ email, password, name: email })
+    setPending(false)
+    if (res.error) {
+      setError(res.error.message ?? 'Sign up failed')
+      return
+    }
+    router.push('/')
+  }
+
+  return (
+    <main className="mx-auto max-w-md p-4">
+      <h1 className="mb-4 text-xl font-semibold">Create account</h1>
+      <form onSubmit={onSubmit} className="space-y-4">
+        <label className="block">
+          <span className="text-sm">Email</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 w-full rounded border p-2"
+            required
+          />
+        </label>
+        <label className="block">
+          <span className="text-sm">Password</span>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="mt-1 w-full rounded border p-2"
+            minLength={8}
+            required
+          />
+        </label>
+        {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
+        <button
+          type="submit"
+          disabled={pending}
+          className="w-full rounded bg-blue-600 py-3 font-semibold text-white disabled:opacity-50"
+        >
+          Create account
+        </button>
+      </form>
+      <p className="mt-4 text-sm text-gray-500">
+        Have an account? <Link href="/sign-in" className="text-blue-600">Sign in</Link>
+      </p>
+    </main>
+  )
+}
+```
+
 - [ ] Create `components/bottom-tabs.tsx`:
 
 ```tsx
@@ -503,7 +646,7 @@ export function BottomTabs() {
 - [ ] Create `app/(app)/layout.tsx` (the auth gate: every page in the group sits behind `requireUser()`):
 
 ```tsx
-import { requireUser } from '@/lib/auth/stack'
+import { requireUser } from '@/lib/auth'
 import { BottomTabs } from '@/components/bottom-tabs'
 
 export default async function AppLayout({
@@ -553,13 +696,12 @@ export default function MorePage() {
 }
 ```
 
-- [ ] Manual setup for E2E (once): open `http://localhost:3000/handler/sign-up` against the test project and register the E2E user; put the same credentials in `.env.local` as `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD`.
-- [ ] Verify manually: in a private browser window, `http://localhost:3000/` redirects to `/handler/sign-in`; after signing in with the E2E user, `/` shows "My Ledger" plus the four tabs, and tapping each tab navigates.
+- [ ] Verify manually (`.env.local` has `ALLOW_SIGNUP=true`): `npm run dev`, then in a private window open `http://localhost:3000/` -> redirects to `/sign-in`. Go to `/sign-up`, register `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD`, land on `/` showing "My Ledger" and the four tabs; tapping each tab navigates.
 - [ ] Commit:
 
 ```bash
 git add -A
-git commit -m "feat: protected (app) route group with bottom-tab shell"
+git commit -m "feat: sign-in/up pages + protected (app) route group with bottom-tab shell"
 ```
 
 ## Task 7: Playwright E2E (the phase gate)
@@ -569,8 +711,8 @@ git commit -m "feat: protected (app) route group with bottom-tab shell"
 - Modify: `package.json` (scripts, devDependencies), `.gitignore`
 
 **Interfaces:**
-- Consumes: the shell from Task 6; `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` from `.env.local` (test Stack project).
-- Produces: `npm run e2e`; the `setup` project + `storageState` login helper every later phase's specs reuse (authenticated specs just start at `page.goto('/...')`).
+- Consumes: the sign-in/up pages + shell from Task 6; `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` and `ALLOW_SIGNUP=true` from `.env.local`.
+- Produces: `npm run e2e`; the `setup` project + `storageState` login helper every later phase's specs reuse (authenticated specs just `page.goto('/...')`).
 
 **Steps:**
 
@@ -597,16 +739,8 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   projects: [
-    {
-      name: 'setup',
-      testMatch: /auth\.setup\.ts/,
-      use: { ...devices['Pixel 7'] },
-    },
-    {
-      name: 'unauth',
-      testMatch: /unauth\.spec\.ts/,
-      use: { ...devices['Pixel 7'] },
-    },
+    { name: 'setup', testMatch: /auth\.setup\.ts/, use: { ...devices['Pixel 7'] } },
+    { name: 'unauth', testMatch: /unauth\.spec\.ts/, use: { ...devices['Pixel 7'] } },
     {
       name: 'app',
       testIgnore: /unauth\.spec\.ts/,
@@ -622,27 +756,37 @@ export default defineConfig({
 })
 ```
 
-- [ ] Create the login helper `e2e/auth.setup.ts` (signs in once against the TEST Stack project, saves cookies as storageState for the whole `app` project):
+- [ ] Create `e2e/auth.setup.ts`. It registers the E2E user (first run, `ALLOW_SIGNUP=true`) then signs in deterministically, and saves cookies as storageState for the whole `app` project. Sign-up is best-effort: on reruns the user already exists, so the sign-in step is what must succeed:
 
 ```ts
 import { expect, test as setup } from '@playwright/test'
 
 const authFile = 'e2e/.auth/user.json'
+const EMAIL = process.env.E2E_TEST_EMAIL!
+const PASSWORD = process.env.E2E_TEST_PASSWORD!
 
-setup('authenticate with the test Stack project', async ({ page }) => {
-  await page.goto('/handler/sign-in')
-  await page.locator('input[type="email"]').fill(process.env.E2E_TEST_EMAIL!)
-  await page
-    .locator('input[type="password"]')
-    .fill(process.env.E2E_TEST_PASSWORD!)
+setup('register (first run) then sign in', async ({ page }) => {
+  // Best-effort registration: succeeds first run, errors harmlessly if the user exists.
+  await page.goto('/sign-up')
+  await page.getByLabel('Email').fill(EMAIL)
+  await page.getByLabel('Password').fill(PASSWORD)
+  await page.getByRole('button', { name: /create account/i }).click()
+  await Promise.race([
+    page.waitForURL('/').catch(() => {}),
+    page.getByRole('alert').waitFor({ timeout: 5000 }).catch(() => {}),
+  ])
+
+  // Deterministic sign-in.
+  await page.goto('/sign-in')
+  await page.getByLabel('Email').fill(EMAIL)
+  await page.getByLabel('Password').fill(PASSWORD)
   await page.getByRole('button', { name: /sign in/i }).click()
   await page.waitForURL('/')
-  await expect(page.getByRole('link', { name: 'Home' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'My Ledger' })).toBeVisible()
+
   await page.context().storageState({ path: authFile })
 })
 ```
-
-If Stack's sign-in DOM differs from these selectors (it is a third-party page), run `npx playwright codegen http://localhost:3000/handler/sign-in` once and fix the two locators; everything else stays.
 
 - [ ] Create `e2e/unauth.spec.ts`:
 
@@ -651,8 +795,8 @@ import { expect, test } from '@playwright/test'
 
 test('unauthenticated visitor is redirected to sign-in', async ({ page }) => {
   await page.goto('/')
-  await page.waitForURL(/\/handler\/sign-in/)
-  await expect(page.locator('input[type="email"]')).toBeVisible()
+  await page.waitForURL(/\/sign-in/)
+  await expect(page.getByLabel('Email')).toBeVisible()
 })
 ```
 
@@ -685,19 +829,19 @@ test('authenticated user sees the bottom-tab shell', async ({ page }) => {
 "e2e": "playwright test"
 ```
 
-- [ ] Run the gate: `npm run e2e`. Expected PASS: `3 passed` (setup + unauth redirect + authenticated shell). These specs come after their implementation tasks on purpose: they are the phase gate, not the unit-level red-green loop.
+- [ ] Run the gate: `npm run e2e`. Expected PASS: `3 passed` (setup registers+signs in, unauth redirect, authenticated shell). These specs come after their implementation tasks on purpose: they are the phase gate, not the unit-level red-green loop.
 - [ ] Commit:
 
 ```bash
 git add -A
-git commit -m "test: playwright e2e gate (sign-in redirect, authenticated shell)"
+git commit -m "test: playwright e2e gate (email+password sign-in redirect, authenticated shell)"
 ```
 
 ## Phase done
 
 - [ ] `npm run lint && npm run format:check && npm run test && npm run build && npm run e2e` all green; paste the output as evidence.
 - [ ] Manual mobile-viewport walkthrough: sign in, tap all four tabs.
-- [ ] Deployment note (no code): on Vercel the committed `vercel.json` sets the build command (`drizzle-kit migrate && next build`); set production env vars to the **prod** Stack project keys + production `DATABASE_URL` + `CRON_SECRET`. Dev and Playwright keep the **test** project keys.
+- [ ] Deployment note (no code): on Vercel the committed `vercel.json` sets the build command (`drizzle-kit migrate && next build`). Set production env vars: `DATABASE_URL` (prod branch), `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` (the deployed origin), `CRON_SECRET`. Register the single user once with `ALLOW_SIGNUP=true`, then remove it (or set false) so production rejects new sign-ups.
 - [ ] Update [docs/wiki/status.md](../../wiki/status.md): P0 complete.
 
 **Backlinks:** [Master index](README.md) | [Spec](../specs/2026-07-07-my-ledger-design.md) | Prev: none (first phase) | Next: [01-accounts-and-currency.md](01-accounts-and-currency.md)

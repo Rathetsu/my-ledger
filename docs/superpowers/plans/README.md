@@ -6,7 +6,7 @@
 
 **Architecture:** One ledger; every money movement is a single-currency transaction in a per-currency account; definitions generate confirmable occurrences that post transactions; deterministic planner + AI second opinion. See [wiki/architecture.md](../../wiki/architecture.md) and [ADRs](../../adr/).
 
-**Tech stack:** Next.js App Router + TS + Tailwind, Neon + Drizzle, Stack Auth, Vitest + Playwright, Vercel (+cron), Gemini free tier.
+**Tech stack:** Next.js App Router + TS + Tailwind, Neon + Drizzle, Better Auth (email+password), Vitest + Playwright, Vercel (+cron), Gemini free tier.
 
 ## Global constraints (every task inherits these)
 
@@ -22,7 +22,7 @@
 
 | Phase | File | Delivers |
 |---|---|---|
-| P0 | [00-foundations.md](00-foundations.md) | Scaffold, tooling, DB, auth (prod Google / test email+password), protected shell |
+| P0 | [00-foundations.md](00-foundations.md) | Scaffold, tooling, DB, Better Auth (email+password), protected shell |
 | P1 | [01-accounts-and-currency.md](01-accounts-and-currency.md) | Money, cairo dates, rates+convert, accounts CRUD, settings |
 | P2 | [02-transactions-and-balances.md](02-transactions-and-balances.md) | Ledger core, transfers, reconciliation, history, dashboard v1 |
 | P3 | [03-income.md](03-income.md) | Income sources, occurrences, confirm flow, housekeeping v1, attention list |
