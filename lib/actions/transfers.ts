@@ -191,6 +191,7 @@ export async function updateTransferGroup(
   revalidatePath('/transactions')
   revalidatePath('/accounts')
   revalidatePath('/')
+  revalidatePath(`/transfers/${d.groupId}`)
   redirect(`/transfers/${d.groupId}`)
 }
 
