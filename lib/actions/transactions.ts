@@ -7,6 +7,8 @@ import { z } from 'zod'
 import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
+import { accountBalanceMinor } from '@/lib/db/queries'
+import { todayCairo } from '@/lib/dates/cairo'
 import { parseToMinor } from '@/lib/money/money'
 import { directMutability } from '@/lib/transactions/mutability'
 import { signedAmountForEdit } from '@/lib/transactions/sign'
@@ -134,6 +136,58 @@ export async function updateTransaction(
   revalidatePath('/accounts')
   revalidatePath('/')
   redirect('/transactions')
+}
+
+export async function reconcileAccount(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const user = await requireUser()
+  const parsed = z
+    .object({
+      accountId: z.string().uuid(),
+      actualBalance: z.string().trim().min(1, 'Actual balance is required'),
+    })
+    .safeParse({
+      accountId: formData.get('accountId'),
+      actualBalance: formData.get('actualBalance'),
+    })
+  if (!parsed.success) return { error: parsed.error.issues[0].message }
+
+  const [account] = await db
+    .select()
+    .from(accounts)
+    .where(
+      and(eq(accounts.id, parsed.data.accountId), eq(accounts.userId, user.id)),
+    )
+  if (!account) return { error: 'Account not found' }
+
+  let actualMinor: number
+  try {
+    // Negative allowed: the ledger records reality (ADR: negative balances).
+    actualMinor = parseToMinor(parsed.data.actualBalance, account.currency)
+  } catch {
+    return { error: 'Actual balance is not a valid amount' }
+  }
+
+  // ponytail: read-then-insert without a lock; single user, no concurrent writers.
+  const currentMinor = await accountBalanceMinor(account.id)
+  const delta = actualMinor - currentMinor
+  if (delta !== 0) {
+    await db.insert(transactions).values({
+      userId: user.id,
+      accountId: account.id,
+      type: 'adjustment',
+      amountMinor: delta,
+      currency: account.currency,
+      occurredOn: todayCairo(),
+      note: 'Reconciliation',
+    })
+  }
+  revalidatePath('/transactions')
+  revalidatePath('/accounts')
+  revalidatePath('/')
+  redirect(`/accounts/${account.id}`)
 }
 
 export async function deleteTransaction(

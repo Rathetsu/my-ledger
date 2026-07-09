@@ -61,3 +61,17 @@ test('cross-currency transfer with both explicit legs', async ({ page }) => {
     'EGP 5,200.00',
   )
 })
+
+test('reconciliation posts an adjustment for the delta', async ({ page }) => {
+  const name = `Recon EGP ${Date.now()}`
+  await createAccount(page, name, 'EGP', '5200.00')
+
+  await page.getByRole('link', { name: new RegExp(name) }).click()
+  await page.getByLabel('Actual balance').fill('5150.00')
+  await page.getByRole('button', { name: 'Set actual balance' }).click()
+
+  await page.goto('/accounts')
+  await expect(
+    page.getByRole('link', { name: new RegExp(name) }),
+  ).toContainText('EGP 5,150.00')
+})
