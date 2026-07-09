@@ -1,0 +1,18 @@
+.next/
+node_modules/
+drizzle/
+playwright-report/
+test-results/
+
+# ponytail: pre-existing repo content outside the Next.js app scope this
+# plan governs (docs, domain context, project tooling caches/config).
+# Broadened from the plan's stock list because this repo isn't scaffold-only.
+docs/
+CLAUDE.md
+CONTEXT.md
+INDEX.md
+intial-prompt.txt
+.vscode/
+.impeccable/
+.superpowers/
+graphify-out/
