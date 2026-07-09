@@ -15,6 +15,13 @@
       "when": 1783589916792,
       "tag": "0001_overconfident_james_howlett",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783610834731,
+      "tag": "0002_p3-income-occurrences",
+      "breakpoints": true
     }
   ]
 }

@@ -7,6 +7,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core'
 
@@ -81,3 +82,52 @@ export const settings = pgTable('settings', {
   >(),
   aiEnabled: boolean('ai_enabled').notNull().default(true),
 })
+
+export const occurrenceKind = pgEnum('occurrence_kind', [
+  'income',
+  'bill',
+  'installment',
+])
+export const occurrenceStatus = pgEnum('occurrence_status', [
+  'pending',
+  'confirmed',
+  'skipped',
+  'overdue',
+])
+
+export const incomeSources = pgTable('income_sources', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  amountMinor: integer('amount_minor').notNull(),
+  currency: currencyEnum('currency').notNull(),
+  dayOfMonth: integer('day_of_month').notNull(),
+  accountId: uuid('account_id')
+    .notNull()
+    .references(() => accounts.id),
+  recurring: boolean('recurring').notNull().default(true),
+  active: boolean('active').notNull().default(true),
+})
+
+export const occurrences = pgTable(
+  'occurrences',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: text('user_id').notNull(),
+    kind: occurrenceKind('kind').notNull(),
+    sourceId: uuid('source_id').notNull(),
+    period: text('period').notNull(), // 'YYYY-MM'
+    dueDate: date('due_date', { mode: 'string' }).notNull(),
+    expectedAmountMinor: integer('expected_amount_minor').notNull(),
+    status: occurrenceStatus('status').notNull().default('pending'),
+    transactionId: uuid('transaction_id').references(() => transactions.id),
+  },
+  (t) => [
+    uniqueIndex('occurrences_user_kind_source_period').on(
+      t.userId,
+      t.kind,
+      t.sourceId,
+      t.period,
+    ),
+  ],
+)
