@@ -170,3 +170,10 @@ export const occurrences = pgTable(
     index('occurrences_user_status_due').on(t.userId, t.status, t.dueDate),
   ],
 )
+
+export const expenseCategories = pgTable('expense_categories', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  icon: text('icon'),
+})
