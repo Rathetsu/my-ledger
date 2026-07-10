@@ -1,4 +1,33 @@
 import { expect, test } from '@playwright/test'
+import { createAccount } from './helpers'
+
+test('cannot archive an account still targeted by an active bill', async ({
+  page,
+}) => {
+  const stamp = Date.now()
+  const accountName = `Blocked EGP ${stamp}`
+  const billName = `Rent ${stamp}`
+  await createAccount(page, accountName, 'EGP', '5000.00')
+
+  // Active bill on the account.
+  await page.goto('/bills/new')
+  await page.getByLabel('Name').fill(billName)
+  await page.getByLabel('Amount').fill('1500.00')
+  await page
+    .getByLabel('Account')
+    .selectOption({ label: `${accountName} (EGP)` })
+  await page.getByLabel('Due day').fill('1')
+  await page.getByRole('button', { name: 'Create' }).click()
+  await page.waitForURL('/bills')
+
+  // Archival is blocked and names the offending bill; the account stays active.
+  await page.goto('/accounts')
+  await page.getByRole('link', { name: new RegExp(accountName) }).click()
+  await page.getByRole('button', { name: 'Archive account' }).click()
+  await expect(
+    page.getByText(new RegExp(`Cannot archive: still targeted by .*${billName}`)),
+  ).toBeVisible()
+})
 
 test('create account with opening balance, rename, archive', async ({
   page,

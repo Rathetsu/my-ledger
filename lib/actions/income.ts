@@ -1,17 +1,15 @@
 'use server'
 
-import { and, eq, gt, isNull } from 'drizzle-orm'
+import { and, eq, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
 import { isAccountArchived } from '@/lib/db/queries'
+import { accounts, incomeSources, transactions } from '@/lib/db/schema'
 import {
-  accounts,
-  incomeSources,
-  occurrences,
-  transactions,
-} from '@/lib/db/schema'
-import { rewritePendingOccurrences } from '@/lib/housekeeping'
+  retractSurplusPendingOccurrences,
+  rewritePendingOccurrences,
+} from '@/lib/housekeeping'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
 import { incomeSourceInput, isUuid, windfallInput } from './schemas'
@@ -122,38 +120,9 @@ export async function updateIncomeSource(
       // Definition edits rewrite pending occurrences only (spec §3).
       await rewritePendingOccurrences('income', id, tx)
 
-      // recurring true->false: a non-recurring source keeps at most one pending
-      // occurrence. Housekeeping seeds current + next; drop everything after the
-      // earliest period (string min works on 'YYYY-MM'). Deterministic, no "today".
-      // Re-derive `pending` (the rewrite above only changes amount/dueDate, not
-      // which rows are pending).
-      const pending = await tx
-        .select({ period: occurrences.period })
-        .from(occurrences)
-        .where(
-          and(
-            eq(occurrences.userId, user.id),
-            eq(occurrences.kind, 'income'),
-            eq(occurrences.sourceId, id),
-            eq(occurrences.status, 'pending'),
-          ),
-        )
-      if (!parsed.data.recurring && pending.length >= 2) {
-        const minPeriod = pending.reduce(
-          (m, o) => (o.period < m ? o.period : m),
-          pending[0].period,
-        )
-        await tx
-          .delete(occurrences)
-          .where(
-            and(
-              eq(occurrences.userId, user.id),
-              eq(occurrences.kind, 'income'),
-              eq(occurrences.sourceId, id),
-              eq(occurrences.status, 'pending'),
-              gt(occurrences.period, minPeriod),
-            ),
-          )
+      // A non-recurring source keeps at most one pending occurrence.
+      if (!parsed.data.recurring) {
+        await retractSurplusPendingOccurrences(id, tx)
       }
     })
   } catch (e) {

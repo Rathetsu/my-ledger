@@ -195,6 +195,42 @@ export async function rewritePendingOccurrences(
   }
 }
 
+// recurring true->false: a non-recurring income source keeps at most one pending
+// occurrence (the earliest). Housekeeping seeds current + next; drop everything
+// after the earliest period. String min works on 'YYYY-MM' — deterministic, no
+// "today". Never touches confirmed/skipped rows. Callers inside updateIncomeSource
+// pass their tx to stay atomic with the source update.
+export async function retractSurplusPendingOccurrences(
+  sourceId: string,
+  executor: Executor = db,
+): Promise<void> {
+  const pending = await executor
+    .select({ period: occurrences.period })
+    .from(occurrences)
+    .where(
+      and(
+        eq(occurrences.kind, 'income'),
+        eq(occurrences.sourceId, sourceId),
+        eq(occurrences.status, 'pending'),
+      ),
+    )
+  if (pending.length < 2) return
+  const minPeriod = pending.reduce(
+    (m, o) => (o.period < m ? o.period : m),
+    pending[0].period,
+  )
+  await executor
+    .delete(occurrences)
+    .where(
+      and(
+        eq(occurrences.kind, 'income'),
+        eq(occurrences.sourceId, sourceId),
+        eq(occurrences.status, 'pending'),
+        gt(occurrences.period, minPeriod),
+      ),
+    )
+}
+
 // When an installment is completed (countdown hits 0, via confirm or an edit),
 // no unsettled occurrence may survive — once remaining_count is 0 it can never be
 // confirmed again and would linger in Attention. Shared by the confirm-completion
