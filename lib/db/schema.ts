@@ -109,6 +109,20 @@ export const incomeSources = pgTable('income_sources', {
   active: boolean('active').notNull().default(true),
 })
 
+export const bills = pgTable('bills', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  amountMinor: integer('amount_minor').notNull(),
+  currency: currencyEnum('currency').notNull(),
+  dueDay: integer('due_day').notNull(),
+  accountId: uuid('account_id')
+    .notNull()
+    .references(() => accounts.id),
+  categoryId: uuid('category_id'), // FK to expense_categories added in P6 when that table exists
+  active: boolean('active').notNull().default(true),
+})
+
 export const occurrences = pgTable(
   'occurrences',
   {
