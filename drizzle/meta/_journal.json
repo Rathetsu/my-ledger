@@ -22,6 +22,13 @@
       "when": 1783610834731,
       "tag": "0002_p3-income-occurrences",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783679011558,
+      "tag": "0003_p4-bills",
+      "breakpoints": true
     }
   ]
 }

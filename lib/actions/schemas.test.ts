@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { confirmInput, incomeSourceInput, windfallInput } from './schemas'
+import {
+  billInput,
+  confirmInput,
+  incomeSourceInput,
+  windfallInput,
+} from './schemas'
 
 describe('incomeSourceInput', () => {
   it('accepts a valid source', () => {
@@ -64,5 +69,22 @@ describe('confirmInput', () => {
     expect(
       confirmInput.safeParse({ ...base, date: '25/07/2026' }).success,
     ).toBe(false)
+  })
+})
+
+describe('billInput', () => {
+  it('accepts a valid bill and rejects out-of-range due days', () => {
+    const base = {
+      name: 'Rent',
+      amount: '15000.00',
+      currency: 'EGP',
+      dueDay: 1,
+      accountId: '4f3c2b1a-0000-4000-8000-000000000001',
+      active: true,
+    }
+    expect(billInput.safeParse(base).success).toBe(true)
+    expect(billInput.safeParse({ ...base, dueDay: 0 }).success).toBe(false)
+    expect(billInput.safeParse({ ...base, dueDay: 32 }).success).toBe(false)
+    expect(billInput.safeParse({ ...base, name: '' }).success).toBe(false)
   })
 })

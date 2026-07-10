@@ -1,18 +1,5 @@
-import { expect, test, type Page } from '@playwright/test'
-
-async function createAccount(
-  page: Page,
-  name: string,
-  currency: string,
-  opening: string,
-) {
-  await page.goto('/accounts/new')
-  await page.getByLabel('Name').fill(name)
-  await page.getByLabel('Currency').selectOption(currency)
-  await page.getByLabel('Opening balance').fill(opening)
-  await page.getByRole('button', { name: 'Create account' }).click()
-  await page.waitForURL('/accounts')
-}
+import { expect, test } from '@playwright/test'
+import { createAccount } from './helpers'
 
 test('salary: create source, occurrence appears, confirm with edited amount, balance reflects actual', async ({
   page,

@@ -29,3 +29,12 @@ export const confirmInput = z.object({
 })
 
 export const idInput = z.object({ occurrenceId: z.string().uuid() })
+
+export const billInput = z.object({
+  name: z.string().trim().min(1).max(100),
+  amount: z.string().min(1),
+  currency: currencySchema,
+  dueDay: z.coerce.number().int().min(1).max(31),
+  accountId: z.string().uuid(),
+  active: z.boolean().default(true),
+})
