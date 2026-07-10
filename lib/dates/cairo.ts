@@ -22,3 +22,11 @@ export function dueDateFor(period: string, dueDay: number): string {
   const day = Math.min(dueDay, lastDay)
   return `${period}-${String(day).padStart(2, '0')}`
 }
+
+export function addPeriods(period: string, n: number): string {
+  const [y, m] = period.split('-').map(Number)
+  const total = y * 12 + (m - 1) + n
+  const yy = Math.floor(total / 12)
+  const mm = (total % 12) + 1
+  return `${yy}-${String(mm).padStart(2, '0')}`
+}
