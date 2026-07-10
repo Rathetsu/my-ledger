@@ -2,6 +2,7 @@ import { and, eq, inArray } from 'drizzle-orm'
 import { db, dbPool } from '@/lib/db/client'
 import {
   accounts,
+  bills,
   incomeSources,
   occurrences,
   transactions,
@@ -61,8 +62,23 @@ async function loadSource(
       if (s.archivedAt) throw new ConfirmError('Account is archived')
       return { accountId: s.accountId, currency: s.currency, name: s.name }
     }
+    case 'bill': {
+      const [b] = await tx
+        .select({
+          accountId: bills.accountId,
+          currency: bills.currency,
+          name: bills.name,
+          archivedAt: accounts.archivedAt,
+        })
+        .from(bills)
+        .innerJoin(accounts, eq(bills.accountId, accounts.id))
+        .where(and(eq(bills.id, sourceId), eq(bills.userId, userId)))
+      if (!b) throw new ConfirmError('Bill not found')
+      if (b.archivedAt) throw new ConfirmError('Account is archived')
+      return { accountId: b.accountId, currency: b.currency, name: b.name }
+    }
     default:
-      // 'bill' is added in P4, 'installment' in P5
+      // 'installment' is added in P5
       throw new ConfirmError(`Unsupported occurrence kind: ${kind}`)
   }
 }
