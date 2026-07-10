@@ -4,6 +4,7 @@ import { and, eq, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
+import { isAccountArchived } from '@/lib/db/queries'
 import { accounts, bills } from '@/lib/db/schema'
 import { rewritePendingOccurrences } from '@/lib/housekeeping'
 import { parseToMinor } from '@/lib/money/money'
@@ -121,6 +122,17 @@ export async function setBillActive(
   active: boolean,
 ): Promise<ActionResult> {
   const user = await requireUser()
+  // Reactivating onto an archived account would re-arm housekeeping to seed
+  // unconfirmable occurrences against a write-frozen account (spec §3).
+  if (active) {
+    const [bill] = await db
+      .select({ accountId: bills.accountId })
+      .from(bills)
+      .where(and(eq(bills.id, id), eq(bills.userId, user.id)))
+    if (!bill) return { ok: false, error: 'Bill not found' }
+    if (await isAccountArchived(user.id, bill.accountId))
+      return { ok: false, error: 'Account is archived' }
+  }
   const updated = await db
     .update(bills)
     .set({ active })

@@ -4,6 +4,7 @@ import { and, eq, gt, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
+import { isAccountArchived } from '@/lib/db/queries'
 import {
   accounts,
   incomeSources,
@@ -162,6 +163,17 @@ export async function setIncomeSourceActive(
   active: boolean,
 ): Promise<ActionResult> {
   const user = await requireUser()
+  // Reactivating onto an archived account would re-arm housekeeping to seed
+  // unconfirmable occurrences against a write-frozen account (spec §3).
+  if (active) {
+    const [source] = await db
+      .select({ accountId: incomeSources.accountId })
+      .from(incomeSources)
+      .where(and(eq(incomeSources.id, id), eq(incomeSources.userId, user.id)))
+    if (!source) return { ok: false, error: 'Income source not found' }
+    if (await isAccountArchived(user.id, source.accountId))
+      return { ok: false, error: 'Account is archived' }
+  }
   const updated = await db
     .update(incomeSources)
     .set({ active })

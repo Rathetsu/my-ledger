@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto'
+import { eq } from 'drizzle-orm'
 import { describe, expect, it } from 'vitest'
 import { db } from '@/lib/db/client'
 import {
@@ -7,7 +8,7 @@ import {
   incomeSources,
   installments,
 } from '@/lib/db/schema'
-import { archiveBlockers } from './queries'
+import { archiveBlockers, isAccountArchived } from './queries'
 
 async function seedAccount(userId: string) {
   const [account] = await db
@@ -112,5 +113,30 @@ describe('archiveBlockers', () => {
     const userId = `test-${randomUUID()}`
     const account = await seedAccount(userId)
     expect(await archiveBlockers(account.id, userId)).toEqual([])
+  })
+})
+
+describe('isAccountArchived', () => {
+  it('is false for an active account, true after archival', async () => {
+    const userId = `test-${randomUUID()}`
+    const account = await seedAccount(userId)
+    expect(await isAccountArchived(userId, account.id)).toBe(false)
+    await db
+      .update(accounts)
+      .set({ archivedAt: new Date() })
+      .where(eq(accounts.id, account.id))
+    expect(await isAccountArchived(userId, account.id)).toBe(true)
+  })
+
+  it('is scoped by user: an archived account is not "archived" for a different user', async () => {
+    const owner = `test-${randomUUID()}`
+    const account = await seedAccount(owner)
+    await db
+      .update(accounts)
+      .set({ archivedAt: new Date() })
+      .where(eq(accounts.id, account.id))
+    expect(await isAccountArchived(`test-${randomUUID()}`, account.id)).toBe(
+      false,
+    )
   })
 })

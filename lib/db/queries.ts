@@ -1,6 +1,7 @@
 import { and, eq, sql } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import {
+  accounts,
   bills,
   incomeSources,
   installments,
@@ -8,6 +9,20 @@ import {
   transactions,
 } from '@/lib/db/schema'
 import type { Currency } from '@/lib/money/money'
+
+// The archived-account write-freeze primitive (spec §3, invariant #3): true when
+// the user's account is archived. Every money-write path (edit/delete/reverse/
+// reactivate) guards on this, mirroring the inline checks on the insert paths.
+export async function isAccountArchived(
+  userId: string,
+  accountId: string,
+): Promise<boolean> {
+  const [a] = await db
+    .select({ archivedAt: accounts.archivedAt })
+    .from(accounts)
+    .where(and(eq(accounts.id, accountId), eq(accounts.userId, userId)))
+  return a?.archivedAt != null
+}
 
 // Balances are always derived by summing transactions (spec §3).
 // Postgres SUM comes back as string, or null over zero rows.

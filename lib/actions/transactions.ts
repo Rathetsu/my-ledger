@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
-import { accountBalanceMinor } from '@/lib/db/queries'
+import { accountBalanceMinor, isAccountArchived } from '@/lib/db/queries'
 import { todayCairo } from '@/lib/dates/cairo'
 import { parseToMinor } from '@/lib/money/money'
 import { directMutability } from '@/lib/transactions/mutability'
@@ -94,6 +94,12 @@ async function loadOwnedPlainRow(
   if (!txn) return { error: 'Entry not found' as const }
   const m = directMutability(txn)
   if (!m.ok) return { error: m.reason }
+  // Editing/deleting a plain row changes its account's derived balance, so it is
+  // a write into that account — refuse if archived (write-freeze, mirrors
+  // postTransaction). Covers both updateTransaction and deleteTransaction.
+  if (await isAccountArchived(userId, txn.accountId)) {
+    return { error: 'Account is archived' }
+  }
   return { txn }
 }
 

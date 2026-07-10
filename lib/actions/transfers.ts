@@ -7,9 +7,23 @@ import { and, eq, inArray } from 'drizzle-orm'
 import { z } from 'zod'
 import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
+import { isAccountArchived } from '@/lib/db/queries'
 import { accounts, transactions } from '@/lib/db/schema'
 import { parseToMinor } from '@/lib/money/money'
 import type { ActionState } from './accounts'
+
+// A group edit or delete writes to BOTH legs' accounts, so refuse if either is
+// archived (write-freeze, spec §3). Shared by updateTransferGroup + deleteTransferGroup.
+async function eitherLegArchived(
+  userId: string,
+  outAccountId: string,
+  innAccountId: string,
+): Promise<boolean> {
+  return (
+    (await isAccountArchived(userId, outAccountId)) ||
+    (await isAccountArchived(userId, innAccountId))
+  )
+}
 
 const transferSchema = z.object({
   fromAccountId: z.string().uuid(),
@@ -145,16 +159,7 @@ export async function updateTransferGroup(
   const group = await loadGroupLegs(user.id, d.groupId)
   if (!group) return { error: 'Transfer not found' }
   // Editing a leg's amount writes to its account; block if either is archived.
-  const legAccounts = await db
-    .select({ archivedAt: accounts.archivedAt })
-    .from(accounts)
-    .where(
-      and(
-        inArray(accounts.id, [group.out.accountId, group.inn.accountId]),
-        eq(accounts.userId, user.id),
-      ),
-    )
-  if (legAccounts.some((a) => a.archivedAt))
+  if (await eitherLegArchived(user.id, group.out.accountId, group.inn.accountId))
     return { error: 'Account is archived' }
   const cross = group.out.currency !== group.inn.currency
   if (cross && !d.amountReceived)
@@ -220,6 +225,9 @@ export async function deleteTransferGroup(
   if (!parsed.success) return { error: 'Invalid transfer' }
   const group = await loadGroupLegs(user.id, parsed.data.groupId)
   if (!group) return { error: 'Transfer not found' }
+  // Deleting a leg removes money from its account; block if either is archived.
+  if (await eitherLegArchived(user.id, group.out.accountId, group.inn.accountId))
+    return { error: 'Account is archived' }
 
   await dbPool.transaction(async (tx) => {
     await tx
