@@ -29,6 +29,13 @@
       "when": 1783679011558,
       "tag": "0003_p4-bills",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1783692130426,
+      "tag": "0004_p5-installments",
+      "breakpoints": true
     }
   ]
 }

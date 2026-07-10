@@ -1,6 +1,7 @@
 import {
   boolean,
   date,
+  doublePrecision,
   integer,
   jsonb,
   pgEnum,
@@ -120,6 +121,23 @@ export const bills = pgTable('bills', {
     .notNull()
     .references(() => accounts.id),
   categoryId: uuid('category_id'), // FK to expense_categories added in P6 when that table exists
+  active: boolean('active').notNull().default(true),
+})
+
+export const installments = pgTable('installments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  monthlyAmountMinor: integer('monthly_amount_minor').notNull(),
+  currency: currencyEnum('currency').notNull(),
+  dueDay: integer('due_day').notNull(),
+  totalCount: integer('total_count').notNull(),
+  remainingCount: integer('remaining_count').notNull(),
+  startDate: date('start_date', { mode: 'string' }).notNull(),
+  accountId: uuid('account_id')
+    .notNull()
+    .references(() => accounts.id),
+  apr: doublePrecision('apr'), // nullable; a rate, not money, so float is fine
   active: boolean('active').notNull().default(true),
 })
 
