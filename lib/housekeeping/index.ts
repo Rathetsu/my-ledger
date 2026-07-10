@@ -1,12 +1,14 @@
 import { and, eq, lt } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
-import { incomeSources, occurrences } from '@/lib/db/schema'
+import { bills, incomeSources, occurrences } from '@/lib/db/schema'
 import { dueDateFor, periodOf } from '@/lib/dates/cairo'
 
 export function nextPeriod(period: string): string {
   const [y, m] = period.split('-').map(Number)
   return m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, '0')}`
 }
+
+type NewOccurrence = typeof occurrences.$inferInsert
 
 export async function housekeeping(
   userId: string,
@@ -29,7 +31,7 @@ export async function housekeeping(
     .where(and(eq(occurrences.userId, userId), eq(occurrences.kind, 'income')))
   const hasOccurrence = new Set(existing.map((r) => r.sourceId))
 
-  const rows = sources.flatMap((s) => {
+  const rows: NewOccurrence[] = sources.flatMap((s) => {
     const target = s.recurring
       ? periods
       : hasOccurrence.has(s.id)
@@ -45,6 +47,26 @@ export async function housekeeping(
       status: 'pending' as const,
     }))
   })
+
+  // bills (P4): always recurring
+  const activeBills = await db
+    .select()
+    .from(bills)
+    .where(and(eq(bills.userId, userId), eq(bills.active, true)))
+
+  rows.push(
+    ...activeBills.flatMap((b) =>
+      periods.map((period) => ({
+        userId,
+        kind: 'bill' as const,
+        sourceId: b.id,
+        period,
+        dueDate: dueDateFor(period, b.dueDay),
+        expectedAmountMinor: b.amountMinor,
+        status: 'pending' as const,
+      })),
+    ),
+  )
 
   if (rows.length > 0) {
     await db
