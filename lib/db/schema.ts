@@ -2,6 +2,7 @@ import {
   boolean,
   date,
   doublePrecision,
+  index,
   integer,
   jsonb,
   pgEnum,
@@ -58,13 +59,17 @@ export const transactions = pgTable('transactions', {
   occurredOn: date('occurred_on').notNull(),
   note: text('note'),
   oneOff: boolean('one_off').notNull().default(false),
-  sourceType: text('source_type'), // 'income' | 'bill' | 'installment' (P3+); null = plain row
+  sourceType: text('source_type'), // 'income_occurrence' | 'bill_occurrence' | 'installment_occurrence' (P3+); null = plain row
   sourceId: uuid('source_id'),
   transferGroupId: uuid('transfer_group_id'),
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()
     .defaultNow(),
-})
+}, (t) => [
+  // Balance derivation sums by account; totalsByCurrency groups by (user, currency).
+  index('transactions_account_id').on(t.accountId),
+  index('transactions_user_currency').on(t.userId, t.currency),
+])
 
 // Single row, base USD; getRates() refreshes it when older than 24h.
 export const exchangeRates = pgTable('exchange_rates', {
@@ -161,5 +166,7 @@ export const occurrences = pgTable(
       t.sourceId,
       t.period,
     ),
+    // Housekeeping overdue-flip + attention-window scans filter on these.
+    index('occurrences_user_status_due').on(t.userId, t.status, t.dueDate),
   ],
 )

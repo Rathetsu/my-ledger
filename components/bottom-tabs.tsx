@@ -25,6 +25,7 @@ export function BottomTabs() {
             <li key={t.href} className="flex-1">
               <Link
                 href={t.href}
+                aria-current={active ? 'page' : undefined}
                 className={`block py-3 text-center text-sm ${
                   active ? 'font-semibold text-blue-600' : 'text-gray-500'
                 }`}

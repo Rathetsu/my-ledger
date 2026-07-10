@@ -1,45 +1,23 @@
 'use server'
 
-import { and, eq, isNull } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
 import { isAccountArchived } from '@/lib/db/queries'
-import { accounts, installments } from '@/lib/db/schema'
+import { installments } from '@/lib/db/schema'
 import {
   clearUnsettledInstallmentOccurrences,
   rewritePendingOccurrences,
 } from '@/lib/housekeeping'
-import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
+import {
+  type ActionResult,
+  NotFoundError,
+  ownedActiveAccount,
+  parseAmount,
+} from './definitions'
 import { installmentInput, installmentUpdateInput, isUuid } from './schemas'
-
-export type ActionResult = { ok: true } | { ok: false; error: string }
-
-class UpdateInstallmentError extends Error {}
-
-async function ownedActiveAccount(userId: string, accountId: string) {
-  const [account] = await db
-    .select()
-    .from(accounts)
-    .where(
-      and(
-        eq(accounts.id, accountId),
-        eq(accounts.userId, userId),
-        isNull(accounts.archivedAt),
-      ),
-    )
-  return account ?? null
-}
-
-function parseAmount(amount: string, currency: Currency): number | null {
-  try {
-    const minor = parseToMinor(amount, currency)
-    return minor > 0 ? minor : null
-  } catch {
-    return null
-  }
-}
 
 function revalidateInstallmentScreens() {
   revalidatePath('/installments')
@@ -124,7 +102,7 @@ export async function updateInstallment(
         .where(and(eq(installments.id, id), eq(installments.userId, user.id)))
         .returning({ id: installments.id })
       if (updated.length !== 1)
-        throw new UpdateInstallmentError('Installment not found')
+        throw new NotFoundError('Installment not found')
 
       // prepay / skip / policy change = definition edit; pending occurrences rewrite (spec §5.5, §3)
       await rewritePendingOccurrences('installment', id, tx)
@@ -136,8 +114,7 @@ export async function updateInstallment(
       }
     })
   } catch (e) {
-    if (e instanceof UpdateInstallmentError)
-      return { ok: false, error: e.message }
+    if (e instanceof NotFoundError) return { ok: false, error: e.message }
     throw e
   }
 

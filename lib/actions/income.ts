@@ -1,45 +1,23 @@
 'use server'
 
-import { and, eq, isNull } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
 import { isAccountArchived } from '@/lib/db/queries'
-import { accounts, incomeSources, transactions } from '@/lib/db/schema'
+import { incomeSources, transactions } from '@/lib/db/schema'
 import {
   retractSurplusPendingOccurrences,
   rewritePendingOccurrences,
 } from '@/lib/housekeeping'
-import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
+import {
+  type ActionResult,
+  NotFoundError,
+  ownedActiveAccount,
+  parseAmount,
+} from './definitions'
 import { incomeSourceInput, isUuid, windfallInput } from './schemas'
-
-export type ActionResult = { ok: true } | { ok: false; error: string }
-
-class UpdateIncomeSourceError extends Error {}
-
-async function ownedActiveAccount(userId: string, accountId: string) {
-  const [account] = await db
-    .select()
-    .from(accounts)
-    .where(
-      and(
-        eq(accounts.id, accountId),
-        eq(accounts.userId, userId),
-        isNull(accounts.archivedAt),
-      ),
-    )
-  return account ?? null
-}
-
-function parseAmount(amount: string, currency: Currency): number | null {
-  try {
-    const minor = parseToMinor(amount, currency)
-    return minor > 0 ? minor : null
-  } catch {
-    return null
-  }
-}
 
 export async function createIncomeSource(
   input: unknown,
@@ -115,7 +93,7 @@ export async function updateIncomeSource(
         .where(and(eq(incomeSources.id, id), eq(incomeSources.userId, user.id)))
         .returning({ id: incomeSources.id })
       if (updated.length !== 1)
-        throw new UpdateIncomeSourceError('Income source not found')
+        throw new NotFoundError('Income source not found')
 
       // Definition edits rewrite pending occurrences only (spec §3).
       await rewritePendingOccurrences('income', id, tx)
@@ -126,8 +104,7 @@ export async function updateIncomeSource(
       }
     })
   } catch (e) {
-    if (e instanceof UpdateIncomeSourceError)
-      return { ok: false, error: e.message }
+    if (e instanceof NotFoundError) return { ok: false, error: e.message }
     throw e
   }
 

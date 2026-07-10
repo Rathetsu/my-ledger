@@ -17,7 +17,7 @@ export type OccurrenceKind = 'income' | 'bill' | 'installment'
 
 class ConfirmError extends Error {}
 
-// Per-kind constants come straight from spec §4. bill/installment source lookups land in P4/P5.
+// Per-kind constants come straight from spec §4.
 const TXN_TYPE = {
   income: 'income',
   bill: 'bill_payment',
