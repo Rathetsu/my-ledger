@@ -1,6 +1,6 @@
 # Architecture
 
-Current truth of the system design. Terms per [/CONTEXT.md](../../CONTEXT.md); requirements per [the spec](../superpowers/specs/2026-07-07-my-ledger-design.md); rationale in [ADRs](../adr/). P0–P3 are implemented (foundations, accounts & currency, ledger core, income & the shared occurrence rails); see [status.md](status.md) for phase status. This page describes the full target design, including modules that later phases (P4+) still build.
+Current truth of the system design. Terms per [/CONTEXT.md](../../CONTEXT.md); requirements per [the spec](../superpowers/specs/2026-07-07-my-ledger-design.md); rationale in [ADRs](../adr/). P0–P4 are implemented (foundations, accounts & currency, ledger core, income & the shared occurrence rails, recurring bills); see [status.md](status.md) for phase status. This page describes the full target design, including modules that later phases (P5+) still build.
 
 ## Core model
 
