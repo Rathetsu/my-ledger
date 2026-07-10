@@ -104,7 +104,7 @@ export async function archiveAccount(
   if (!parsed.success) return { error: 'Invalid account' }
 
   // Archiving is blocked while any active definition targets the account
-  // (spec §3). archiveBlockers returns active income sources; P4/P5 extend it.
+  // (spec §3). archiveBlockers returns active income sources and bills; P5 extends it.
   const blockers = await archiveBlockers(parsed.data.accountId, user.id)
   if (blockers.length > 0) {
     return { error: `Cannot archive: still targeted by ${blockers.join(', ')}` }
