@@ -1,6 +1,11 @@
-import { and, eq, lt } from 'drizzle-orm'
+import { and, eq, gt, lt } from 'drizzle-orm'
 import { db, dbPool } from '@/lib/db/client'
-import { bills, incomeSources, occurrences } from '@/lib/db/schema'
+import {
+  bills,
+  incomeSources,
+  installments,
+  occurrences,
+} from '@/lib/db/schema'
 import { dueDateFor, periodOf } from '@/lib/dates/cairo'
 
 export function nextPeriod(period: string): string {
@@ -68,6 +73,38 @@ export async function housekeeping(
     ),
   )
 
+  // installments (P5): only while active and payments remain, never before start_date,
+  // and never more future occurrences than payments left
+  const activeInstallments = await db
+    .select()
+    .from(installments)
+    .where(
+      and(
+        eq(installments.userId, userId),
+        eq(installments.active, true),
+        gt(installments.remainingCount, 0),
+      ),
+    )
+  for (const inst of activeInstallments) {
+    const startPeriod = periodOf(inst.startDate)
+    // ponytail: slice caps NEW periods per run, not total unsettled rows; with a 2-period
+    // horizon and confirm cleaning up at zero (Task 3) that is exact for this app
+    const target = periods
+      .filter((p) => p >= startPeriod)
+      .slice(0, inst.remainingCount)
+    for (const period of target) {
+      rows.push({
+        userId,
+        kind: 'installment',
+        sourceId: inst.id,
+        period,
+        dueDate: dueDateFor(period, inst.dueDay),
+        expectedAmountMinor: inst.monthlyAmountMinor,
+        status: 'pending',
+      })
+    }
+  }
+
   if (rows.length > 0) {
     await db
       .insert(occurrences)
@@ -120,8 +157,13 @@ async function loadDefinition(
         .where(eq(bills.id, sourceId))
       return b ? { amountMinor: b.amountMinor, dueDay: b.dueDay } : null
     }
-    default:
-      return null // installment case lands in P5; unknown definition = no-op
+    case 'installment': {
+      const [i] = await executor
+        .select()
+        .from(installments)
+        .where(eq(installments.id, sourceId))
+      return i ? { amountMinor: i.monthlyAmountMinor, dueDay: i.dueDay } : null
+    }
   }
 }
 

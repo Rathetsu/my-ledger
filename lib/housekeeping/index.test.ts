@@ -2,7 +2,13 @@ import { randomUUID } from 'node:crypto'
 import { and, eq } from 'drizzle-orm'
 import { describe, expect, it } from 'vitest'
 import { db } from '@/lib/db/client'
-import { accounts, bills, incomeSources, occurrences } from '@/lib/db/schema'
+import {
+  accounts,
+  bills,
+  incomeSources,
+  installments,
+  occurrences,
+} from '@/lib/db/schema'
 import { housekeeping, nextPeriod, rewritePendingOccurrences } from './index'
 
 async function seedIncomeSource(
@@ -161,6 +167,100 @@ describe('housekeeping bill generation', () => {
   })
 })
 
+async function seedInstallment(
+  userId: string,
+  overrides: Partial<typeof installments.$inferInsert> = {},
+) {
+  const [account] = await db
+    .insert(accounts)
+    .values({ userId, name: 'Main USD', currency: 'USD' })
+    .returning()
+  const [inst] = await db
+    .insert(installments)
+    .values({
+      userId,
+      name: 'Phone',
+      monthlyAmountMinor: 50000,
+      currency: 'USD',
+      dueDay: 15,
+      totalCount: 12,
+      remainingCount: 12,
+      startDate: '2026-01-01',
+      accountId: account.id,
+      apr: null,
+      active: true,
+      ...overrides,
+    })
+    .returning()
+  return inst
+}
+
+function installmentOccurrencesFor(userId: string) {
+  return db
+    .select()
+    .from(occurrences)
+    .where(
+      and(eq(occurrences.userId, userId), eq(occurrences.kind, 'installment')),
+    )
+}
+
+describe('housekeeping installment generation', () => {
+  it('generates current + next period while plenty of payments remain', async () => {
+    const userId = `test-${randomUUID()}`
+    const inst = await seedInstallment(userId)
+    await housekeeping(userId, '2026-07-10')
+    const rows = await installmentOccurrencesFor(userId)
+    expect(rows).toHaveLength(2)
+    const byPeriod = Object.fromEntries(rows.map((r) => [r.period, r]))
+    expect(byPeriod['2026-07']).toMatchObject({
+      sourceId: inst.id,
+      dueDate: '2026-07-15',
+      expectedAmountMinor: 50000,
+      status: 'pending',
+    })
+    expect(byPeriod['2026-08']).toMatchObject({
+      dueDate: '2026-08-15',
+      status: 'pending',
+    })
+  })
+
+  it('clamps due_day 31 to the end of February', async () => {
+    const userId = `test-${randomUUID()}`
+    await seedInstallment(userId, { dueDay: 31 })
+    await housekeeping(userId, '2026-02-10')
+    const rows = await installmentOccurrencesFor(userId)
+    const byPeriod = Object.fromEntries(rows.map((r) => [r.period, r]))
+    expect(byPeriod['2026-02'].dueDate).toBe('2026-02-28') // 2026 is not a leap year
+    expect(byPeriod['2026-03'].dueDate).toBe('2026-03-31')
+  })
+
+  it('generates only ONE occurrence when a single payment remains', async () => {
+    const userId = `test-${randomUUID()}`
+    await seedInstallment(userId, { remainingCount: 1 })
+    await housekeeping(userId, '2026-07-10')
+    const rows = await installmentOccurrencesFor(userId)
+    expect(rows).toHaveLength(1)
+    expect(rows[0].period).toBe('2026-07')
+  })
+
+  it('generates nothing at remaining_count = 0 or when inactive', async () => {
+    const userId = `test-${randomUUID()}`
+    await seedInstallment(userId, { remainingCount: 0, active: false })
+    await seedInstallment(userId, { name: 'Laptop', active: false })
+    await housekeeping(userId, '2026-07-10')
+    expect(await installmentOccurrencesFor(userId)).toHaveLength(0)
+  })
+
+  it('does not generate before the start_date period', async () => {
+    const userId = `test-${randomUUID()}`
+    await seedInstallment(userId, { startDate: '2026-08-01' })
+    await housekeeping(userId, '2026-07-10') // current period 2026-07 is before the start
+    const rows = await installmentOccurrencesFor(userId)
+    expect(rows).toHaveLength(1)
+    expect(rows[0].period).toBe('2026-08')
+  })
+})
+
 describe('rewritePendingOccurrences', () => {
   it('rewrites pending occurrences to the new amount and clamped due day', async () => {
     const userId = `test-${randomUUID()}`
@@ -216,6 +316,23 @@ describe('rewritePendingOccurrences', () => {
     await rewritePendingOccurrences('income', source.id)
     const rows = await occurrencesFor(userId)
     expect(rows.every((r) => r.expectedAmountMinor === 300000)).toBe(true)
+    expect(rows.map((r) => r.dueDate).sort()).toEqual([
+      '2026-07-01',
+      '2026-08-01',
+    ])
+  })
+
+  it('rewrites pending installment occurrences after a definition edit', async () => {
+    const userId = `test-${randomUUID()}`
+    const inst = await seedInstallment(userId)
+    await housekeeping(userId, '2026-07-10')
+    await db
+      .update(installments)
+      .set({ monthlyAmountMinor: 60000, dueDay: 1 })
+      .where(eq(installments.id, inst.id))
+    await rewritePendingOccurrences('installment', inst.id)
+    const rows = await installmentOccurrencesFor(userId)
+    expect(rows.every((r) => r.expectedAmountMinor === 60000)).toBe(true)
     expect(rows.map((r) => r.dueDate).sort()).toEqual([
       '2026-07-01',
       '2026-08-01',
