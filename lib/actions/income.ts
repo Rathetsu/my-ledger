@@ -14,7 +14,7 @@ import {
 import { rewritePendingOccurrences } from '@/lib/housekeeping'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
-import { incomeSourceInput, windfallInput } from './schemas'
+import { incomeSourceInput, isUuid, windfallInput } from './schemas'
 
 export type ActionResult = { ok: true } | { ok: false; error: string }
 
@@ -79,6 +79,7 @@ export async function updateIncomeSource(
   input: unknown,
 ): Promise<ActionResult> {
   const user = await requireUser()
+  if (!isUuid(id)) return { ok: false, error: 'Income source not found' }
   const parsed = incomeSourceInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
@@ -163,6 +164,7 @@ export async function setIncomeSourceActive(
   active: boolean,
 ): Promise<ActionResult> {
   const user = await requireUser()
+  if (!isUuid(id)) return { ok: false, error: 'Income source not found' }
   // Reactivating onto an archived account would re-arm housekeeping to seed
   // unconfirmable occurrences against a write-frozen account (spec §3).
   if (active) {

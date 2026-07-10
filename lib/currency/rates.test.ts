@@ -95,4 +95,53 @@ describe('getRates', () => {
     expect(rates.rates.EGP).toBe(48.5)
     expect(mockDb.updates).toHaveLength(0)
   })
+
+  test('partial payload (a supported currency missing) is rejected, not persisted', async () => {
+    const staleDate = new Date(Date.now() - 25 * HOURS)
+    mockDb.row = {
+      base: 'USD',
+      rates: { USD: 1, EUR: 0.92, EGP: 48.5 },
+      fetchedAt: staleDate,
+    }
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ result: 'success', rates: { USD: 1, EUR: 0.9 } })), // EGP missing
+    )
+    const rates = await getRates()
+    expect(rates.rates.EGP).toBe(48.5) // last-good, not NaN
+    expect(mockDb.updates).toHaveLength(0)
+  })
+
+  test('non-numeric / non-positive rate is rejected (no NaN poisoning)', async () => {
+    const staleDate = new Date(Date.now() - 25 * HOURS)
+    mockDb.row = {
+      base: 'USD',
+      rates: { USD: 1, EUR: 0.92, EGP: 48.5 },
+      fetchedAt: staleDate,
+    }
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({ result: 'success', rates: { USD: 1, EUR: 0.9, EGP: null } }),
+      ),
+    )
+    const rates = await getRates()
+    expect(rates.rates.EGP).toBe(48.5)
+    expect(mockDb.updates).toHaveLength(0)
+  })
+
+  test('result !== "success" is rejected even with all rates present', async () => {
+    const staleDate = new Date(Date.now() - 25 * HOURS)
+    mockDb.row = {
+      base: 'USD',
+      rates: { USD: 1, EUR: 0.92, EGP: 48.5 },
+      fetchedAt: staleDate,
+    }
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({ result: 'error', rates: { USD: 1, EUR: 0.9, EGP: 50 } }),
+      ),
+    )
+    const rates = await getRates()
+    expect(rates.rates.EGP).toBe(48.5)
+    expect(mockDb.updates).toHaveLength(0)
+  })
 })

@@ -42,4 +42,19 @@ describe('parseToMinor', () => {
   test('throws on garbage', () =>
     expect(() => parseToMinor('abc', 'EUR')).toThrow())
   test('throws on empty', () => expect(() => parseToMinor('', 'EUR')).toThrow())
+
+  test('valid thousands grouping still parses', () => {
+    expect(parseToMinor('1,234,567.89', 'EGP')).toBe(123456789)
+    expect(parseToMinor('52,300', 'EGP')).toBe(5230000)
+  })
+  test('throws on ambiguous comma-as-decimal (not 3-digit grouping)', () => {
+    expect(() => parseToMinor('1,5', 'EUR')).toThrow() // was silently 15.00
+    expect(() => parseToMinor('12,3', 'EUR')).toThrow()
+    expect(() => parseToMinor('1,2345', 'EUR')).toThrow()
+  })
+  test('accepts the int4 boundary, throws just above it', () => {
+    expect(parseToMinor('21474836.47', 'USD')).toBe(2147483647) // int4 max
+    expect(() => parseToMinor('21474836.48', 'USD')).toThrow()
+    expect(() => parseToMinor('25000000', 'EGP')).toThrow() // realistic price, overflows int4
+  })
 })

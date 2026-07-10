@@ -9,7 +9,7 @@ import { accounts, bills } from '@/lib/db/schema'
 import { rewritePendingOccurrences } from '@/lib/housekeeping'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
-import { billInput } from './schemas'
+import { billInput, isUuid } from './schemas'
 
 export type ActionResult = { ok: true } | { ok: false; error: string }
 
@@ -75,6 +75,7 @@ export async function updateBill(
   input: unknown,
 ): Promise<ActionResult> {
   const user = await requireUser()
+  if (!isUuid(id)) return { ok: false, error: 'Bill not found' }
   const parsed = billInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
@@ -122,6 +123,7 @@ export async function setBillActive(
   active: boolean,
 ): Promise<ActionResult> {
   const user = await requireUser()
+  if (!isUuid(id)) return { ok: false, error: 'Bill not found' }
   // Reactivating onto an archived account would re-arm housekeeping to seed
   // unconfirmable occurrences against a write-frozen account (spec §3).
   if (active) {

@@ -8,7 +8,7 @@ import { accounts, installments } from '@/lib/db/schema'
 import { rewritePendingOccurrences } from '@/lib/housekeeping'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
-import { installmentInput, installmentUpdateInput } from './schemas'
+import { installmentInput, installmentUpdateInput, isUuid } from './schemas'
 
 export type ActionResult = { ok: true } | { ok: false; error: string }
 
@@ -78,6 +78,7 @@ export async function updateInstallment(
   input: unknown,
 ): Promise<ActionResult> {
   const user = await requireUser()
+  if (!isUuid(id)) return { ok: false, error: 'Installment not found' }
   const parsed = installmentUpdateInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)

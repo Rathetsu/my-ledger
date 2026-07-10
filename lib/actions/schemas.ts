@@ -3,10 +3,18 @@ import { CURRENCIES } from '@/lib/money/money'
 
 const currencySchema = z.enum(CURRENCIES as unknown as [string, ...string[]])
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
+// A decimal money string; bounded so an unbounded payload can't reach parseToMinor.
+const amountString = z.string().trim().min(1).max(20)
+
+// Guards positional `id` args before they hit a uuid column (a non-uuid string
+// otherwise 500s on the Postgres cast). Returns true when `id` is a valid uuid.
+export function isUuid(id: string): boolean {
+  return z.string().uuid().safeParse(id).success
+}
 
 export const incomeSourceInput = z.object({
   name: z.string().trim().min(1).max(100),
-  amount: z.string().min(1),
+  amount: amountString,
   currency: currencySchema,
   dayOfMonth: z.coerce.number().int().min(1).max(31),
   accountId: z.string().uuid(),
@@ -16,14 +24,14 @@ export const incomeSourceInput = z.object({
 
 export const windfallInput = z.object({
   accountId: z.string().uuid(),
-  amount: z.string().min(1),
+  amount: amountString,
   date: isoDate,
   note: z.string().trim().max(200).default(''),
 })
 
 export const confirmInput = z.object({
   occurrenceId: z.string().uuid(),
-  amount: z.string().min(1),
+  amount: amountString,
   currency: currencySchema,
   date: isoDate,
 })
@@ -32,7 +40,7 @@ export const idInput = z.object({ occurrenceId: z.string().uuid() })
 
 export const billInput = z.object({
   name: z.string().trim().min(1).max(100),
-  amount: z.string().min(1),
+  amount: amountString,
   currency: currencySchema,
   dueDay: z.coerce.number().int().min(1).max(31),
   accountId: z.string().uuid(),
@@ -41,7 +49,7 @@ export const billInput = z.object({
 
 export const installmentInput = z.object({
   name: z.string().trim().min(1).max(100),
-  amount: z.string().min(1), // monthly amount, decimal string
+  amount: amountString, // monthly amount, decimal string
   currency: currencySchema,
   dueDay: z.coerce.number().int().min(1).max(31),
   totalCount: z.coerce.number().int().min(1).max(240),
@@ -52,7 +60,12 @@ export const installmentInput = z.object({
 
 export const installmentUpdateInput = installmentInput
   .extend({
-    remainingCount: z.coerce.number().int().min(0),
+    // Reject a blank field rather than coercing '' to 0 (which would silently
+    // complete the installment). An explicit 0 is still a valid "mark complete".
+    remainingCount: z.preprocess(
+      (v) => (typeof v === 'string' && v.trim() === '' ? undefined : v),
+      z.coerce.number().int().min(0),
+    ),
     active: z.boolean(),
   })
   .refine((v) => v.remainingCount <= v.totalCount, {

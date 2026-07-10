@@ -15,6 +15,7 @@ const MAX_AGE_MS = 24 * 60 * 60 * 1000
 // migration) is the cache AND the last-good fallback.
 export async function getRates(): Promise<Rates> {
   const [row] = await db.select().from(exchangeRates)
+  if (!row) throw new Error('exchange_rates row is not seeded')
   const cached: Rates = {
     base: 'USD',
     rates: row.rates,
@@ -25,10 +26,24 @@ export async function getRates(): Promise<Rates> {
   try {
     const res = await fetch('https://open.er-api.com/v6/latest/USD')
     if (!res.ok) throw new Error(`rates fetch failed: ${res.status}`)
-    const body = (await res.json()) as { rates: Record<string, number> }
+    const body = (await res.json()) as {
+      result?: string
+      rates?: Record<string, number>
+    }
+    // Validate before persisting: a partial/malformed payload must NOT be written
+    // (it would NaN-poison every conversion for 24h). Fall back to last-good instead.
+    if (body.result !== 'success' || !body.rates) {
+      throw new Error('rates payload not usable')
+    }
+    const fetched = body.rates
     const rates = Object.fromEntries(
-      CURRENCIES.map((c) => [c, body.rates[c]]),
+      CURRENCIES.map((c) => [c, fetched[c]]),
     ) as Record<Currency, number>
+    for (const c of CURRENCIES) {
+      if (!Number.isFinite(rates[c]) || rates[c] <= 0) {
+        throw new Error(`rates payload missing or invalid ${c}`)
+      }
+    }
     const fetchedAt = new Date()
     await db
       .update(exchangeRates)

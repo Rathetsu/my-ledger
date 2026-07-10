@@ -128,4 +128,21 @@ describe('installmentInput', () => {
       installmentUpdateInput.safeParse({ ...upd, remainingCount: 13 }).success,
     ).toBe(false)
   })
+
+  it('rejects a blank remainingCount instead of coercing it to 0', () => {
+    const upd = { ...base, active: true }
+    expect(
+      installmentUpdateInput.safeParse({ ...upd, remainingCount: '' }).success,
+    ).toBe(false)
+    // an explicit 0 is still valid (marks the installment complete)
+    expect(
+      installmentUpdateInput.safeParse({ ...upd, remainingCount: 0 }).success,
+    ).toBe(true)
+  })
+
+  it('rejects an over-long amount string', () => {
+    expect(
+      installmentInput.safeParse({ ...base, amount: '1'.repeat(25) }).success,
+    ).toBe(false)
+  })
 })
