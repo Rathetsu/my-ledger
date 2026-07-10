@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto'
+import { eq } from 'drizzle-orm'
 import { describe, expect, it } from 'vitest'
 import { db } from '@/lib/db/client'
 import { accounts, bills, incomeSources, occurrences } from '@/lib/db/schema'
@@ -126,5 +127,41 @@ describe('getAttentionItems', () => {
       kind: 'bill',
       dueDate: '2026-01-01',
     })
+  })
+
+  it('excludes occurrences whose account is archived (confirm would be a dead action)', async () => {
+    const userId = `test-${randomUUID()}`
+    const [account] = await db
+      .insert(accounts)
+      .values({ userId, name: 'Frozen EGP', currency: 'EGP' })
+      .returning()
+    const [bill] = await db
+      .insert(bills)
+      .values({
+        userId,
+        name: 'Frozen',
+        amountMinor: 100000,
+        currency: 'EGP',
+        dueDay: 1,
+        accountId: account.id,
+        active: true,
+      })
+      .returning()
+    await db.insert(occurrences).values({
+      userId,
+      kind: 'bill',
+      sourceId: bill.id,
+      period: '2026-07',
+      dueDate: '2026-07-01',
+      expectedAmountMinor: 100000,
+      status: 'overdue',
+    })
+    await db
+      .update(accounts)
+      .set({ archivedAt: new Date() })
+      .where(eq(accounts.id, account.id))
+
+    const items = await getAttentionItems(userId, '2026-07-15')
+    expect(items).toHaveLength(0)
   })
 })

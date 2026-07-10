@@ -1,4 +1,4 @@
-import { and, eq, gt, lt } from 'drizzle-orm'
+import { and, eq, gt, inArray, lt } from 'drizzle-orm'
 import { db, dbPool } from '@/lib/db/client'
 import {
   bills,
@@ -193,4 +193,23 @@ export async function rewritePendingOccurrences(
       })
       .where(eq(occurrences.id, occ.id))
   }
+}
+
+// When an installment is completed (countdown hits 0, via confirm or an edit),
+// no unsettled occurrence may survive — once remaining_count is 0 it can never be
+// confirmed again and would linger in Attention. Shared by the confirm-completion
+// path (pass its tx) and updateInstallment.
+export async function clearUnsettledInstallmentOccurrences(
+  sourceId: string,
+  executor: Executor = db,
+): Promise<void> {
+  await executor
+    .delete(occurrences)
+    .where(
+      and(
+        eq(occurrences.kind, 'installment'),
+        eq(occurrences.sourceId, sourceId),
+        inArray(occurrences.status, ['pending', 'overdue']),
+      ),
+    )
 }

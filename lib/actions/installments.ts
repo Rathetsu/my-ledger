@@ -4,8 +4,12 @@ import { and, eq, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
 import { db, dbPool } from '@/lib/db/client'
+import { isAccountArchived } from '@/lib/db/queries'
 import { accounts, installments } from '@/lib/db/schema'
-import { rewritePendingOccurrences } from '@/lib/housekeeping'
+import {
+  clearUnsettledInstallmentOccurrences,
+  rewritePendingOccurrences,
+} from '@/lib/housekeeping'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
 import { installmentInput, installmentUpdateInput, isUuid } from './schemas'
@@ -47,7 +51,11 @@ export async function createInstallment(input: unknown): Promise<ActionResult> {
   const parsed = installmentInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
-  if (!account) return { ok: false, error: 'Account not found' }
+  if (!account) {
+    if (await isAccountArchived(user.id, parsed.data.accountId))
+      return { ok: false, error: 'Account is archived — choose an active account' }
+    return { ok: false, error: 'Account not found' }
+  }
   if (account.currency !== parsed.data.currency)
     return { ok: false, error: 'Account currency must match' }
   const monthlyAmountMinor = parseAmount(
@@ -82,7 +90,11 @@ export async function updateInstallment(
   const parsed = installmentUpdateInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
-  if (!account) return { ok: false, error: 'Account not found' }
+  if (!account) {
+    if (await isAccountArchived(user.id, parsed.data.accountId))
+      return { ok: false, error: 'Account is archived — choose an active account' }
+    return { ok: false, error: 'Account not found' }
+  }
   if (account.currency !== parsed.data.currency)
     return { ok: false, error: 'Account currency must match' }
   const monthlyAmountMinor = parseAmount(
@@ -116,6 +128,12 @@ export async function updateInstallment(
 
       // prepay / skip / policy change = definition edit; pending occurrences rewrite (spec §5.5, §3)
       await rewritePendingOccurrences('installment', id, tx)
+      // Paid off via edit (0 remaining) = complete: clear leftover unsettled
+      // occurrences so they don't linger unconfirmable in Attention (same as the
+      // confirm-completion path).
+      if (parsed.data.remainingCount === 0) {
+        await clearUnsettledInstallmentOccurrences(id, tx)
+      }
     })
   } catch (e) {
     if (e instanceof UpdateInstallmentError)

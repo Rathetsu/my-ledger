@@ -48,7 +48,11 @@ export async function createBill(input: unknown): Promise<ActionResult> {
   const parsed = billInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
-  if (!account) return { ok: false, error: 'Account not found' }
+  if (!account) {
+    if (await isAccountArchived(user.id, parsed.data.accountId))
+      return { ok: false, error: 'Account is archived — choose an active account' }
+    return { ok: false, error: 'Account not found' }
+  }
   if (account.currency !== parsed.data.currency)
     return { ok: false, error: 'Account currency must match' }
   const amountMinor = parseAmount(
@@ -79,7 +83,11 @@ export async function updateBill(
   const parsed = billInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
-  if (!account) return { ok: false, error: 'Account not found' }
+  if (!account) {
+    if (await isAccountArchived(user.id, parsed.data.accountId))
+      return { ok: false, error: 'Account is archived — choose an active account' }
+    return { ok: false, error: 'Account not found' }
+  }
   if (account.currency !== parsed.data.currency)
     return { ok: false, error: 'Account currency must match' }
   const amountMinor = parseAmount(

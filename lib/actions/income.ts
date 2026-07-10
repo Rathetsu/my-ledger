@@ -50,7 +50,11 @@ export async function createIncomeSource(
   const parsed = incomeSourceInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
-  if (!account) return { ok: false, error: 'Account not found' }
+  if (!account) {
+    if (await isAccountArchived(user.id, parsed.data.accountId))
+      return { ok: false, error: 'Account is archived — choose an active account' }
+    return { ok: false, error: 'Account not found' }
+  }
   if (account.currency !== parsed.data.currency)
     return { ok: false, error: 'Account currency must match' }
   const amountMinor = parseAmount(
@@ -83,7 +87,11 @@ export async function updateIncomeSource(
   const parsed = incomeSourceInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
-  if (!account) return { ok: false, error: 'Account not found' }
+  if (!account) {
+    if (await isAccountArchived(user.id, parsed.data.accountId))
+      return { ok: false, error: 'Account is archived — choose an active account' }
+    return { ok: false, error: 'Account not found' }
+  }
   if (account.currency !== parsed.data.currency)
     return { ok: false, error: 'Account currency must match' }
   const amountMinor = parseAmount(
@@ -193,7 +201,11 @@ export async function addWindfall(input: unknown): Promise<ActionResult> {
   const parsed = windfallInput.safeParse(input)
   if (!parsed.success) return { ok: false, error: 'Invalid input' }
   const account = await ownedActiveAccount(user.id, parsed.data.accountId)
-  if (!account) return { ok: false, error: 'Account not found' }
+  if (!account) {
+    if (await isAccountArchived(user.id, parsed.data.accountId))
+      return { ok: false, error: 'Account is archived — choose an active account' }
+    return { ok: false, error: 'Account not found' }
+  }
   const amountMinor = parseAmount(
     parsed.data.amount,
     account.currency as Currency,

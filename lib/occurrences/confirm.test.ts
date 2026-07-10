@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, inArray } from 'drizzle-orm'
 import { describe, expect, it } from 'vitest'
 import { db } from '@/lib/db/client'
 import {
@@ -448,6 +448,40 @@ describe('installment confirm', () => {
         and(
           eq(occurrences.sourceId, inst.id),
           eq(occurrences.status, 'pending'),
+        ),
+      )
+    expect(leftovers).toHaveLength(0)
+  })
+
+  it('completion clears an OVERDUE leftover sibling, not just pending ones', async () => {
+    const { userId, inst, occ } = await seedInstallmentOccurrence(1)
+    // A missed earlier period that housekeeping flipped to overdue while a newer
+    // pending period was generated (total unsettled can exceed remaining_count).
+    await db.insert(occurrences).values({
+      userId,
+      kind: 'installment',
+      sourceId: inst.id,
+      period: '2026-06',
+      dueDate: '2026-06-15',
+      expectedAmountMinor: 50000,
+      status: 'overdue',
+    })
+    const result = await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    expect(result).toEqual({ ok: true })
+    // No unsettled occurrence may survive: the overdue one would otherwise be a
+    // permanent phantom (unconfirmable once remaining_count is 0, but still shown).
+    const leftovers = await db
+      .select()
+      .from(occurrences)
+      .where(
+        and(
+          eq(occurrences.sourceId, inst.id),
+          inArray(occurrences.status, ['pending', 'overdue']),
         ),
       )
     expect(leftovers).toHaveLength(0)

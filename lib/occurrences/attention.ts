@@ -1,6 +1,7 @@
-import { and, eq, inArray, lte, or } from 'drizzle-orm'
+import { and, eq, inArray, isNull, lte, or } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import {
+  accounts,
   bills,
   incomeSources,
   installments,
@@ -42,10 +43,12 @@ export async function getAttentionItems(
     })
     .from(occurrences)
     .innerJoin(incomeSources, eq(occurrences.sourceId, incomeSources.id))
+    .innerJoin(accounts, eq(incomeSources.accountId, accounts.id))
     .where(
       and(
         eq(occurrences.userId, userId),
         eq(occurrences.kind, 'income'),
+        isNull(accounts.archivedAt), // archived = confirm is a dead action
         inArray(occurrences.status, ['pending', 'overdue']),
       ),
     )
@@ -62,10 +65,12 @@ export async function getAttentionItems(
     })
     .from(occurrences)
     .innerJoin(bills, eq(occurrences.sourceId, bills.id))
+    .innerJoin(accounts, eq(bills.accountId, accounts.id))
     .where(
       and(
         eq(occurrences.userId, userId),
         eq(occurrences.kind, 'bill'),
+        isNull(accounts.archivedAt),
         or(
           eq(occurrences.status, 'overdue'),
           and(
@@ -88,10 +93,12 @@ export async function getAttentionItems(
     })
     .from(occurrences)
     .innerJoin(installments, eq(occurrences.sourceId, installments.id))
+    .innerJoin(accounts, eq(installments.accountId, accounts.id))
     .where(
       and(
         eq(occurrences.userId, userId),
         eq(occurrences.kind, 'installment'),
+        isNull(accounts.archivedAt),
         or(
           eq(occurrences.status, 'overdue'),
           and(

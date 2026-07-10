@@ -8,6 +8,7 @@ import {
   occurrences,
   transactions,
 } from '@/lib/db/schema'
+import { clearUnsettledInstallmentOccurrences } from '@/lib/housekeeping'
 import type { Currency } from '@/lib/money/money'
 
 export type ConfirmResult = { ok: true } | { ok: false; error: string }
@@ -160,15 +161,9 @@ export async function confirmOccurrence(params: {
             .update(installments)
             .set({ active: false })
             .where(eq(installments.id, occ.sourceId))
-          await tx
-            .delete(occurrences)
-            .where(
-              and(
-                eq(occurrences.kind, 'installment'),
-                eq(occurrences.sourceId, occ.sourceId),
-                eq(occurrences.status, 'pending'),
-              ),
-            )
+          // Clear ALL unsettled siblings (pending AND overdue): once remaining is
+          // 0 they can never be confirmed and would linger in Attention forever.
+          await clearUnsettledInstallmentOccurrences(occ.sourceId, tx)
         }
       }
     })

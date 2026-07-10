@@ -9,7 +9,12 @@ import {
   installments,
   occurrences,
 } from '@/lib/db/schema'
-import { housekeeping, nextPeriod, rewritePendingOccurrences } from './index'
+import {
+  clearUnsettledInstallmentOccurrences,
+  housekeeping,
+  nextPeriod,
+  rewritePendingOccurrences,
+} from './index'
 
 async function seedIncomeSource(
   userId: string,
@@ -258,6 +263,22 @@ describe('housekeeping installment generation', () => {
     const rows = await installmentOccurrencesFor(userId)
     expect(rows).toHaveLength(1)
     expect(rows[0].period).toBe('2026-08')
+  })
+})
+
+describe('clearUnsettledInstallmentOccurrences', () => {
+  it('deletes pending and overdue occurrences, leaving settled ones', async () => {
+    const userId = `test-${randomUUID()}`
+    const inst = await seedInstallment(userId)
+    await db.insert(occurrences).values([
+      { userId, kind: 'installment', sourceId: inst.id, period: '2026-06', dueDate: '2026-06-15', expectedAmountMinor: 50000, status: 'overdue' },
+      { userId, kind: 'installment', sourceId: inst.id, period: '2026-07', dueDate: '2026-07-15', expectedAmountMinor: 50000, status: 'pending' },
+      { userId, kind: 'installment', sourceId: inst.id, period: '2026-05', dueDate: '2026-05-15', expectedAmountMinor: 50000, status: 'confirmed' },
+      { userId, kind: 'installment', sourceId: inst.id, period: '2026-04', dueDate: '2026-04-15', expectedAmountMinor: 50000, status: 'skipped' },
+    ])
+    await clearUnsettledInstallmentOccurrences(inst.id)
+    const rows = await installmentOccurrencesFor(userId)
+    expect(rows.map((r) => r.status).sort()).toEqual(['confirmed', 'skipped'])
   })
 })
 
