@@ -14,6 +14,15 @@ export default async function ExpensesPage({
   const params = await searchParams
   const user = await requireUser()
   const period = /^\d{4}-\d{2}$/.test(params.month ?? '') ? params.month! : periodOf(todayCairo())
+  // categoryId is a uuid column; guard the raw param so a malformed ?category=
+  // degrades to "no filter" instead of a Postgres cast error (like month above).
+  const categoryFilter =
+    params.category &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+      params.category,
+    )
+      ? params.category
+      : undefined
   const categories = await db
     .select()
     .from(expenseCategories)
@@ -38,7 +47,7 @@ export default async function ExpensesPage({
         eq(transactions.type, 'expense'),
         gte(transactions.occurredOn, `${period}-01`),
         lt(transactions.occurredOn, `${addPeriods(period, 1)}-01`),
-        params.category ? eq(transactions.categoryId, params.category) : undefined,
+        categoryFilter ? eq(transactions.categoryId, categoryFilter) : undefined,
       ),
     )
     .orderBy(desc(transactions.occurredOn))
