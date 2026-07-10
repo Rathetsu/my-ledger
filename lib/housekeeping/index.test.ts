@@ -166,12 +166,21 @@ describe('rewritePendingOccurrences', () => {
     const userId = `test-${randomUUID()}`
     const bill = await seedBill(userId, 10)
     await housekeeping(userId, '2026-02-05')
-    await db.update(bills).set({ amountMinor: 1600000, dueDay: 31 }).where(eq(bills.id, bill.id))
+    await db
+      .update(bills)
+      .set({ amountMinor: 1600000, dueDay: 31 })
+      .where(eq(bills.id, bill.id))
     await rewritePendingOccurrences('bill', bill.id)
     const rows = await billOccurrencesFor(userId)
     const byPeriod = Object.fromEntries(rows.map((r) => [r.period, r]))
-    expect(byPeriod['2026-02']).toMatchObject({ expectedAmountMinor: 1600000, dueDate: '2026-02-28' })
-    expect(byPeriod['2026-03']).toMatchObject({ expectedAmountMinor: 1600000, dueDate: '2026-03-31' })
+    expect(byPeriod['2026-02']).toMatchObject({
+      expectedAmountMinor: 1600000,
+      dueDate: '2026-02-28',
+    })
+    expect(byPeriod['2026-03']).toMatchObject({
+      expectedAmountMinor: 1600000,
+      dueDate: '2026-03-31',
+    })
   })
 
   it('never touches confirmed occurrences', async () => {
@@ -180,10 +189,19 @@ describe('rewritePendingOccurrences', () => {
     await housekeeping(userId, '2026-02-05')
     const rows = await billOccurrencesFor(userId)
     const feb = rows.find((r) => r.period === '2026-02')!
-    await db.update(occurrences).set({ status: 'confirmed' }).where(eq(occurrences.id, feb.id))
-    await db.update(bills).set({ amountMinor: 9999 }).where(eq(bills.id, bill.id))
+    await db
+      .update(occurrences)
+      .set({ status: 'confirmed' })
+      .where(eq(occurrences.id, feb.id))
+    await db
+      .update(bills)
+      .set({ amountMinor: 9999 })
+      .where(eq(bills.id, bill.id))
     await rewritePendingOccurrences('bill', bill.id)
-    const [after] = await db.select().from(occurrences).where(eq(occurrences.id, feb.id))
+    const [after] = await db
+      .select()
+      .from(occurrences)
+      .where(eq(occurrences.id, feb.id))
     expect(after.expectedAmountMinor).toBe(1500000) // untouched
   })
 
@@ -191,10 +209,16 @@ describe('rewritePendingOccurrences', () => {
     const userId = `test-${randomUUID()}`
     const source = await seedIncomeSource(userId, 25)
     await housekeeping(userId, '2026-07-10')
-    await db.update(incomeSources).set({ amountMinor: 300000, dayOfMonth: 1 }).where(eq(incomeSources.id, source.id))
+    await db
+      .update(incomeSources)
+      .set({ amountMinor: 300000, dayOfMonth: 1 })
+      .where(eq(incomeSources.id, source.id))
     await rewritePendingOccurrences('income', source.id)
     const rows = await occurrencesFor(userId)
     expect(rows.every((r) => r.expectedAmountMinor === 300000)).toBe(true)
-    expect(rows.map((r) => r.dueDate).sort()).toEqual(['2026-07-01', '2026-08-01'])
+    expect(rows.map((r) => r.dueDate).sort()).toEqual([
+      '2026-07-01',
+      '2026-08-01',
+    ])
   })
 })

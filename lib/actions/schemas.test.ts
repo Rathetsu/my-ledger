@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { billInput, confirmInput, incomeSourceInput, windfallInput } from './schemas'
+import {
+  billInput,
+  confirmInput,
+  incomeSourceInput,
+  windfallInput,
+} from './schemas'
 
 describe('incomeSourceInput', () => {
   it('accepts a valid source', () => {

@@ -114,7 +114,10 @@ async function loadDefinition(
       return s ? { amountMinor: s.amountMinor, dueDay: s.dayOfMonth } : null
     }
     case 'bill': {
-      const [b] = await executor.select().from(bills).where(eq(bills.id, sourceId))
+      const [b] = await executor
+        .select()
+        .from(bills)
+        .where(eq(bills.id, sourceId))
       return b ? { amountMinor: b.amountMinor, dueDay: b.dueDay } : null
     }
     default:

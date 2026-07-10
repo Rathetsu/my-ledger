@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test'
 import { createAccount } from './helpers'
 
-test('rent bill: confirm posts a bill_payment (not an expense), balance drops', async ({ page }) => {
+test('rent bill: confirm posts a bill_payment (not an expense), balance drops', async ({
+  page,
+}) => {
   const stamp = Date.now()
   const accountName = `Rent EGP ${stamp}`
   const billName = `Rent ${stamp}`
@@ -13,7 +15,9 @@ test('rent bill: confirm posts a bill_payment (not an expense), balance drops', 
   await page.goto('/bills/new')
   await page.getByLabel('Name').fill(billName)
   await page.getByLabel('Amount').fill('15000.00')
-  await page.getByLabel('Account').selectOption({ label: `${accountName} (EGP)` })
+  await page
+    .getByLabel('Account')
+    .selectOption({ label: `${accountName} (EGP)` })
   await page.getByLabel('Due day').fill('1')
   await page.getByRole('button', { name: 'Create' }).click()
   await page.waitForURL('/bills')
@@ -39,7 +43,9 @@ test('rent bill: confirm posts a bill_payment (not an expense), balance drops', 
 
   // Balance reflects the payment: 20,000.00 - 15,000.00 = 5,000.00.
   await page.goto('/accounts')
-  await expect(page.getByRole('link', { name: new RegExp(accountName) })).toContainText('5,000.00', {
+  await expect(
+    page.getByRole('link', { name: new RegExp(accountName) }),
+  ).toContainText('5,000.00', {
     timeout: 15_000,
   })
 

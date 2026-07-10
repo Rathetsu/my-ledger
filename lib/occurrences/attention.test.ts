@@ -34,7 +34,11 @@ async function seedScenario() {
     status: 'pending',
   })
 
-  async function seedBill(name: string, dueDate: string, status: 'pending' | 'overdue') {
+  async function seedBill(
+    name: string,
+    dueDate: string,
+    status: 'pending' | 'overdue',
+  ) {
     const [bill] = await db
       .insert(bills)
       .values({
@@ -117,6 +121,10 @@ describe('getAttentionItems', () => {
 
     const items = await getAttentionItems(userId, '2026-07-15')
     expect(items).toHaveLength(1)
-    expect(items[0]).toMatchObject({ sourceName: 'Ancient', kind: 'bill', dueDate: '2026-01-01' })
+    expect(items[0]).toMatchObject({
+      sourceName: 'Ancient',
+      kind: 'bill',
+      dueDate: '2026-01-01',
+    })
   })
 })

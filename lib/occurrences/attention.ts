@@ -19,7 +19,10 @@ function plusDays(date: string, n: number): string {
   return d.toISOString().slice(0, 10)
 }
 
-export async function getAttentionItems(userId: string, today: string): Promise<AttentionItem[]> {
+export async function getAttentionItems(
+  userId: string,
+  today: string,
+): Promise<AttentionItem[]> {
   const soon = plusDays(today, 7)
 
   const incomeRows = await db
@@ -60,11 +63,16 @@ export async function getAttentionItems(userId: string, today: string): Promise<
         eq(occurrences.kind, 'bill'),
         or(
           eq(occurrences.status, 'overdue'),
-          and(eq(occurrences.status, 'pending'), lte(occurrences.dueDate, soon)), // due within 7 days
+          and(
+            eq(occurrences.status, 'pending'),
+            lte(occurrences.dueDate, soon),
+          ), // due within 7 days
         ),
       ),
     )
 
   // ponytail: two queries + JS sort beats a cross-table SQL union; n is tiny (one user's month)
-  return [...incomeRows, ...billRows].sort((a, b) => a.dueDate.localeCompare(b.dueDate)) as AttentionItem[]
+  return [...incomeRows, ...billRows].sort((a, b) =>
+    a.dueDate.localeCompare(b.dueDate),
+  ) as AttentionItem[]
 }
