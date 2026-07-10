@@ -38,3 +38,23 @@ export const billInput = z.object({
   accountId: z.string().uuid(),
   active: z.boolean().default(true),
 })
+
+export const installmentInput = z.object({
+  name: z.string().trim().min(1).max(100),
+  amount: z.string().min(1), // monthly amount, decimal string
+  currency: currencySchema,
+  dueDay: z.coerce.number().int().min(1).max(31),
+  totalCount: z.coerce.number().int().min(1).max(240),
+  startDate: isoDate,
+  accountId: z.string().uuid(),
+  apr: z.coerce.number().min(0).max(200).nullable().default(null),
+})
+
+export const installmentUpdateInput = installmentInput
+  .extend({
+    remainingCount: z.coerce.number().int().min(0),
+    active: z.boolean(),
+  })
+  .refine((v) => v.remainingCount <= v.totalCount, {
+    message: 'remainingCount cannot exceed totalCount',
+  })

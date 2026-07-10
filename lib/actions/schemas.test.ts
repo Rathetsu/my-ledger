@@ -3,6 +3,8 @@ import {
   billInput,
   confirmInput,
   incomeSourceInput,
+  installmentInput,
+  installmentUpdateInput,
   windfallInput,
 } from './schemas'
 
@@ -86,5 +88,44 @@ describe('billInput', () => {
     expect(billInput.safeParse({ ...base, dueDay: 0 }).success).toBe(false)
     expect(billInput.safeParse({ ...base, dueDay: 32 }).success).toBe(false)
     expect(billInput.safeParse({ ...base, name: '' }).success).toBe(false)
+  })
+})
+
+describe('installmentInput', () => {
+  const base = {
+    name: 'Phone',
+    amount: '500.00',
+    currency: 'USD',
+    dueDay: 15,
+    totalCount: 12,
+    startDate: '2026-07-01',
+    accountId: '4f3c2b1a-0000-4000-8000-000000000001',
+    apr: null,
+  }
+
+  it('accepts a valid installment, with or without apr', () => {
+    expect(installmentInput.safeParse(base).success).toBe(true)
+    expect(installmentInput.safeParse({ ...base, apr: 24.5 }).success).toBe(true)
+  })
+
+  it('rejects zero counts, bad due days, negative apr', () => {
+    expect(installmentInput.safeParse({ ...base, totalCount: 0 }).success).toBe(
+      false,
+    )
+    expect(installmentInput.safeParse({ ...base, dueDay: 32 }).success).toBe(
+      false,
+    )
+    expect(installmentInput.safeParse({ ...base, apr: -1 }).success).toBe(false)
+  })
+
+  it('update variant bounds remainingCount to [0, totalCount]', () => {
+    const upd = { ...base, remainingCount: 5, active: true }
+    expect(installmentUpdateInput.safeParse(upd).success).toBe(true)
+    expect(
+      installmentUpdateInput.safeParse({ ...upd, remainingCount: -1 }).success,
+    ).toBe(false)
+    expect(
+      installmentUpdateInput.safeParse({ ...upd, remainingCount: 13 }).success,
+    ).toBe(false)
   })
 })
