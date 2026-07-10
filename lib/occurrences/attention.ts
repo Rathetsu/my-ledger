@@ -1,6 +1,11 @@
 import { and, eq, inArray, lte, or } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
-import { bills, incomeSources, occurrences } from '@/lib/db/schema'
+import {
+  bills,
+  incomeSources,
+  installments,
+  occurrences,
+} from '@/lib/db/schema'
 import type { Currency } from '@/lib/money/money'
 
 export interface AttentionItem {
@@ -71,8 +76,34 @@ export async function getAttentionItems(
       ),
     )
 
-  // ponytail: two queries + JS sort beats a cross-table SQL union; n is tiny (one user's month)
-  return [...incomeRows, ...billRows].sort((a, b) =>
+  const installmentRows = await db
+    .select({
+      occurrenceId: occurrences.id,
+      kind: occurrences.kind,
+      sourceName: installments.name,
+      expectedAmountMinor: occurrences.expectedAmountMinor,
+      currency: installments.currency,
+      dueDate: occurrences.dueDate,
+      status: occurrences.status,
+    })
+    .from(occurrences)
+    .innerJoin(installments, eq(occurrences.sourceId, installments.id))
+    .where(
+      and(
+        eq(occurrences.userId, userId),
+        eq(occurrences.kind, 'installment'),
+        or(
+          eq(occurrences.status, 'overdue'),
+          and(
+            eq(occurrences.status, 'pending'),
+            lte(occurrences.dueDate, soon),
+          ), // due within 7 days
+        ),
+      ),
+    )
+
+  // ponytail: three queries + JS sort beats a cross-table SQL union; n is tiny (one user's month)
+  return [...incomeRows, ...billRows, ...installmentRows].sort((a, b) =>
     a.dueDate.localeCompare(b.dueDate),
   ) as AttentionItem[]
 }
