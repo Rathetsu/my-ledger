@@ -1,11 +1,12 @@
 import { randomUUID } from 'node:crypto'
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { describe, expect, it } from 'vitest'
 import { db } from '@/lib/db/client'
 import {
   accounts,
   bills,
   incomeSources,
+  installments,
   occurrences,
   transactions,
 } from '@/lib/db/schema'
@@ -291,6 +292,187 @@ describe('bill confirm', () => {
       .where(eq(occurrences.id, occ.id))
     expect(after.status).toBe('pending') // status update rolled back with the tx
     expect(after.transactionId).toBeNull()
+    expect(
+      await db
+        .select()
+        .from(transactions)
+        .where(eq(transactions.sourceId, occ.id)),
+    ).toHaveLength(0)
+  })
+})
+
+async function seedInstallmentOccurrence(remainingCount = 12) {
+  const userId = `test-${randomUUID()}`
+  const [account] = await db
+    .insert(accounts)
+    .values({ userId, name: 'Main USD', currency: 'USD' })
+    .returning()
+  const [inst] = await db
+    .insert(installments)
+    .values({
+      userId,
+      name: 'Phone',
+      monthlyAmountMinor: 50000,
+      currency: 'USD',
+      dueDay: 15,
+      totalCount: 12,
+      remainingCount,
+      startDate: '2026-01-01',
+      accountId: account.id,
+      apr: null,
+      active: true,
+    })
+    .returning()
+  const [occ] = await db
+    .insert(occurrences)
+    .values({
+      userId,
+      kind: 'installment',
+      sourceId: inst.id,
+      period: '2026-07',
+      dueDate: '2026-07-15',
+      expectedAmountMinor: 50000,
+      status: 'pending',
+    })
+    .returning()
+  return { userId, account, inst, occ }
+}
+
+async function remainingOf(id: string) {
+  const [row] = await db
+    .select()
+    .from(installments)
+    .where(eq(installments.id, id))
+  return row
+}
+
+describe('installment confirm', () => {
+  it('posts installment_payment and decrements remaining_count in the same transaction', async () => {
+    const { userId, account, inst, occ } = await seedInstallmentOccurrence(12)
+    const result = await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    expect(result).toEqual({ ok: true })
+    const [after] = await db
+      .select()
+      .from(occurrences)
+      .where(eq(occurrences.id, occ.id))
+    const [txn] = await db
+      .select()
+      .from(transactions)
+      .where(eq(transactions.id, after.transactionId!))
+    expect(txn).toMatchObject({
+      accountId: account.id,
+      type: 'installment_payment',
+      amountMinor: -50000, // outflow: negative
+      currency: 'USD',
+      sourceType: 'installment_occurrence',
+      sourceId: occ.id,
+    })
+    expect((await remainingOf(inst.id)).remainingCount).toBe(11)
+  })
+
+  it('double confirm is rejected and decrements exactly once (atomicity guard)', async () => {
+    const { userId, inst, occ } = await seedInstallmentOccurrence(12)
+    await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    const second = await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    expect(second.ok).toBe(false)
+    expect((await remainingOf(inst.id)).remainingCount).toBe(11) // not 10
+    expect(
+      await db
+        .select()
+        .from(transactions)
+        .where(eq(transactions.sourceId, occ.id)),
+    ).toHaveLength(1)
+  })
+
+  it('un-confirm deletes the payment and increments remaining_count back', async () => {
+    const { userId, inst, occ } = await seedInstallmentOccurrence(12)
+    await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    expect(await unconfirmOccurrence(userId, occ.id)).toEqual({ ok: true })
+    const after = await remainingOf(inst.id)
+    expect(after.remainingCount).toBe(12)
+    expect(after.active).toBe(true)
+    expect(
+      await db
+        .select()
+        .from(transactions)
+        .where(eq(transactions.sourceId, occ.id)),
+    ).toHaveLength(0)
+  })
+
+  it('confirming the last payment completes: active=false, leftover pending occurrences removed', async () => {
+    const { userId, inst, occ } = await seedInstallmentOccurrence(1)
+    // a stale next-period pending occurrence, as generation could have left before an edit
+    await db.insert(occurrences).values({
+      userId,
+      kind: 'installment',
+      sourceId: inst.id,
+      period: '2026-08',
+      dueDate: '2026-08-15',
+      expectedAmountMinor: 50000,
+      status: 'pending',
+    })
+    const result = await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    expect(result).toEqual({ ok: true })
+    const after = await remainingOf(inst.id)
+    expect(after.remainingCount).toBe(0)
+    expect(after.active).toBe(false)
+    const leftovers = await db
+      .select()
+      .from(occurrences)
+      .where(
+        and(
+          eq(occurrences.sourceId, inst.id),
+          eq(occurrences.status, 'pending'),
+        ),
+      )
+    expect(leftovers).toHaveLength(0)
+  })
+
+  it('rejects confirm when the installment account is archived and does not decrement', async () => {
+    const { userId, account, inst, occ } = await seedInstallmentOccurrence(12)
+    await db
+      .update(accounts)
+      .set({ archivedAt: new Date() })
+      .where(eq(accounts.id, account.id))
+    const result = await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    expect(result).toEqual({ ok: false, error: 'Account is archived' })
+    const after = await remainingOf(inst.id)
+    expect(after.remainingCount).toBe(12) // countdown not touched on rollback
+    const [occAfter] = await db
+      .select()
+      .from(occurrences)
+      .where(eq(occurrences.id, occ.id))
+    expect(occAfter.status).toBe('pending')
     expect(
       await db
         .select()

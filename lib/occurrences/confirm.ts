@@ -1,9 +1,10 @@
-import { and, eq, inArray } from 'drizzle-orm'
+import { and, eq, gt, inArray, sql } from 'drizzle-orm'
 import { db, dbPool } from '@/lib/db/client'
 import {
   accounts,
   bills,
   incomeSources,
+  installments,
   occurrences,
   transactions,
 } from '@/lib/db/schema'
@@ -77,9 +78,21 @@ async function loadSource(
       if (b.archivedAt) throw new ConfirmError('Account is archived')
       return { accountId: b.accountId, currency: b.currency, name: b.name }
     }
-    default:
-      // 'installment' is added in P5
-      throw new ConfirmError(`Unsupported occurrence kind: ${kind}`)
+    case 'installment': {
+      const [i] = await tx
+        .select({
+          accountId: installments.accountId,
+          currency: installments.currency,
+          name: installments.name,
+          archivedAt: accounts.archivedAt,
+        })
+        .from(installments)
+        .innerJoin(accounts, eq(installments.accountId, accounts.id))
+        .where(and(eq(installments.id, sourceId), eq(installments.userId, userId)))
+      if (!i) throw new ConfirmError('Installment not found')
+      if (i.archivedAt) throw new ConfirmError('Account is archived')
+      return { accountId: i.accountId, currency: i.currency, name: i.name }
+    }
   }
 }
 
@@ -128,6 +141,36 @@ export async function confirmOccurrence(params: {
         .update(occurrences)
         .set({ transactionId: txn.id })
         .where(eq(occurrences.id, occ.id))
+
+      // P5: the payment and the countdown move together or not at all
+      if (occ.kind === 'installment') {
+        const [inst] = await tx
+          .update(installments)
+          .set({ remainingCount: sql`${installments.remainingCount} - 1` })
+          .where(
+            and(
+              eq(installments.id, occ.sourceId),
+              gt(installments.remainingCount, 0),
+            ),
+          )
+          .returning({ remainingCount: installments.remainingCount })
+        if (!inst) throw new ConfirmError('No payments remaining')
+        if (inst.remainingCount === 0) {
+          await tx
+            .update(installments)
+            .set({ active: false })
+            .where(eq(installments.id, occ.sourceId))
+          await tx
+            .delete(occurrences)
+            .where(
+              and(
+                eq(occurrences.kind, 'installment'),
+                eq(occurrences.sourceId, occ.sourceId),
+                eq(occurrences.status, 'pending'),
+              ),
+            )
+        }
+      }
     })
     return { ok: true }
   } catch (e) {
@@ -188,6 +231,17 @@ export async function unconfirmOccurrence(
         await tx
           .delete(transactions)
           .where(eq(transactions.id, occ.transactionId))
+      }
+
+      // P5: reverse the countdown; reactivation lets housekeeping regenerate what completion removed
+      if (occ.kind === 'installment') {
+        await tx
+          .update(installments)
+          .set({
+            remainingCount: sql`${installments.remainingCount} + 1`,
+            active: true,
+          })
+          .where(eq(installments.id, occ.sourceId))
       }
     })
     return { ok: true }
