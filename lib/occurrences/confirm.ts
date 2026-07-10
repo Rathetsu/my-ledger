@@ -217,6 +217,12 @@ export async function unconfirmOccurrence(
         )
       if (!occ) throw new ConfirmError('Occurrence is not confirmed')
 
+      // Write-freeze: reversing a confirm deletes the posted transaction (and,
+      // for installments, reactivates the definition) — both write into the
+      // source account, so refuse if it is archived. loadSource joins accounts
+      // and throws ConfirmError('Account is archived').
+      await loadSource(tx, occ.kind, occ.sourceId, userId)
+
       const updated = await tx
         .update(occurrences)
         .set({ status: 'pending', transactionId: null })

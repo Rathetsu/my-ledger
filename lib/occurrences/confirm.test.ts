@@ -481,3 +481,58 @@ describe('installment confirm', () => {
     ).toHaveLength(0)
   })
 })
+
+describe('unconfirm archived-account write-freeze', () => {
+  it('rejects un-confirm when the source account is archived and leaves the transaction intact', async () => {
+    const { userId, account, occ } = await seed()
+    await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 250000,
+      actualDate: '2026-07-25',
+    })
+    // Account archived AFTER the confirm posted (e.g. source deactivated then account archived).
+    await db
+      .update(accounts)
+      .set({ archivedAt: new Date() })
+      .where(eq(accounts.id, account.id))
+    const result = await unconfirmOccurrence(userId, occ.id)
+    expect(result).toEqual({ ok: false, error: 'Account is archived' })
+    // Write-freeze: the posted transaction must NOT be deleted from a frozen account.
+    expect(
+      await db
+        .select()
+        .from(transactions)
+        .where(eq(transactions.sourceId, occ.id)),
+    ).toHaveLength(1)
+    const [after] = await db
+      .select()
+      .from(occurrences)
+      .where(eq(occurrences.id, occ.id))
+    expect(after.status).toBe('confirmed') // rolled back, still settled
+  })
+
+  it('rejects un-confirm of an installment on an archived account and does not revert the countdown', async () => {
+    const { userId, account, inst, occ } = await seedInstallmentOccurrence(12)
+    await confirmOccurrence({
+      userId,
+      occurrenceId: occ.id,
+      actualAmountMinor: 50000,
+      actualDate: '2026-07-15',
+    })
+    expect((await remainingOf(inst.id)).remainingCount).toBe(11)
+    await db
+      .update(accounts)
+      .set({ archivedAt: new Date() })
+      .where(eq(accounts.id, account.id))
+    const result = await unconfirmOccurrence(userId, occ.id)
+    expect(result).toEqual({ ok: false, error: 'Account is archived' })
+    expect((await remainingOf(inst.id)).remainingCount).toBe(11) // not incremented back
+    expect(
+      await db
+        .select()
+        .from(transactions)
+        .where(eq(transactions.sourceId, occ.id)),
+    ).toHaveLength(1)
+  })
+})
