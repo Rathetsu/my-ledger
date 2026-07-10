@@ -21,3 +21,9 @@ export async function requireUser() {
   if (!session) redirect('/sign-in')
   return session.user
 }
+
+// Inverse gate: bounce an already-authenticated user off the auth pages.
+export async function redirectIfAuthenticated(to = '/') {
+  const session = await auth.api.getSession({ headers: await headers() })
+  if (session) redirect(to)
+}

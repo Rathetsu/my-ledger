@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SignOutButton } from '@/components/sign-out-button'
 
 const LINKS = [
   { href: '/accounts', label: 'Accounts' },
@@ -18,6 +19,7 @@ export default function MorePage() {
           </li>
         ))}
       </ul>
+      <SignOutButton />
     </div>
   )
 }
