@@ -3,6 +3,7 @@
 import { useActionState } from 'react'
 import type { ActionState } from '@/lib/actions/accounts'
 import { postTransaction } from '@/lib/actions/transactions'
+import { CategoryPicker } from '@/components/expenses/category-picker'
 
 export interface AccountOption {
   id: string
@@ -12,9 +13,11 @@ export interface AccountOption {
 
 export function TransactionForm({
   accounts,
+  categories,
   defaultDate,
 }: {
   accounts: AccountOption[]
+  categories: { id: string; name: string; icon: string | null }[]
   defaultDate: string
 }) {
   const [state, formAction] = useActionState<ActionState, FormData>(
@@ -64,6 +67,7 @@ export function TransactionForm({
         <span className="text-sm">Note</span>
         <input name="note" className="mt-1 w-full rounded border p-3" />
       </label>
+      <CategoryPicker categories={categories} />
       <label className="flex items-center gap-2">
         <input type="checkbox" name="oneOff" className="h-5 w-5" />
         <span className="text-sm">One-off</span>

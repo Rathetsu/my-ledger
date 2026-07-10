@@ -6,7 +6,7 @@ import { and, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
-import { accounts, transactions } from '@/lib/db/schema'
+import { accounts, expenseCategories, transactions } from '@/lib/db/schema'
 import { accountBalanceMinor, isAccountArchived } from '@/lib/db/queries'
 import { todayCairo } from '@/lib/dates/cairo'
 import { parseToMinor } from '@/lib/money/money'
@@ -20,6 +20,7 @@ const postSchema = z.object({
   amount: z.string().trim().min(1, 'Amount is required'),
   occurredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date'),
   note: z.string().trim().max(500).optional(),
+  categoryId: z.string().uuid().nullish(),
 })
 
 export async function postTransaction(
@@ -33,6 +34,7 @@ export async function postTransaction(
     amount: formData.get('amount'),
     occurredOn: formData.get('occurredOn'),
     note: formData.get('note') || undefined,
+    categoryId: formData.get('categoryId') || undefined,
   })
   if (!parsed.success) return { error: parsed.error.issues[0].message }
   const d = parsed.data
@@ -53,6 +55,22 @@ export async function postTransaction(
   }
   if (amountMinor <= 0) return { error: 'Amount must be positive' }
 
+  // ponytail: validate the client-supplied categoryId belongs to this user before storing
+  // (unguessable UUID, but this is a stored reference crossing a trust boundary); income never carries a category.
+  let categoryId: string | null = null
+  if (d.type === 'expense' && d.categoryId) {
+    const [cat] = await db
+      .select({ id: expenseCategories.id })
+      .from(expenseCategories)
+      .where(
+        and(
+          eq(expenseCategories.id, d.categoryId),
+          eq(expenseCategories.userId, user.id),
+        ),
+      )
+    categoryId = cat?.id ?? null
+  }
+
   await db.insert(transactions).values({
     userId: user.id,
     accountId: account.id,
@@ -63,7 +81,7 @@ export async function postTransaction(
     occurredOn: d.occurredOn,
     note: d.note,
     oneOff,
-    categoryId: null, // categories arrive in P6
+    categoryId,
   })
   revalidatePath('/transactions')
   revalidatePath('/accounts')
