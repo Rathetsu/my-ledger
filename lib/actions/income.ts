@@ -3,7 +3,6 @@
 import { and, eq, gt, isNull } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { requireUser } from '@/lib/auth'
-import { dueDateFor } from '@/lib/dates/cairo'
 import { db, dbPool } from '@/lib/db/client'
 import {
   accounts,
@@ -11,6 +10,7 @@ import {
   occurrences,
   transactions,
 } from '@/lib/db/schema'
+import { rewritePendingOccurrences } from '@/lib/housekeeping'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
 import { incomeSourceInput, windfallInput } from './schemas'
@@ -110,9 +110,15 @@ export async function updateIncomeSource(
         throw new UpdateIncomeSourceError('Income source not found')
 
       // Definition edits rewrite pending occurrences only (spec §3).
-      // P4 extracts this loop into rewritePendingOccurrences(kind, sourceId) in lib/housekeeping.
+      await rewritePendingOccurrences('income', id, tx)
+
+      // recurring true->false: a non-recurring source keeps at most one pending
+      // occurrence. Housekeeping seeds current + next; drop everything after the
+      // earliest period (string min works on 'YYYY-MM'). Deterministic, no "today".
+      // Re-derive `pending` (the rewrite above only changes amount/dueDate, not
+      // which rows are pending).
       const pending = await tx
-        .select()
+        .select({ period: occurrences.period })
         .from(occurrences)
         .where(
           and(
@@ -122,19 +128,6 @@ export async function updateIncomeSource(
             eq(occurrences.status, 'pending'),
           ),
         )
-      for (const occ of pending) {
-        await tx
-          .update(occurrences)
-          .set({
-            expectedAmountMinor: amountMinor,
-            dueDate: dueDateFor(occ.period, parsed.data.dayOfMonth),
-          })
-          .where(eq(occurrences.id, occ.id))
-      }
-
-      // recurring true->false: a non-recurring source keeps at most one pending
-      // occurrence. Housekeeping seeds current + next; drop everything after the
-      // earliest period (string min works on 'YYYY-MM'). Deterministic, no "today".
       if (!parsed.data.recurring && pending.length >= 2) {
         const minPeriod = pending.reduce(
           (m, o) => (o.period < m ? o.period : m),

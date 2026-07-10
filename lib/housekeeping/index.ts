@@ -1,5 +1,5 @@
 import { and, eq, lt } from 'drizzle-orm'
-import { db } from '@/lib/db/client'
+import { db, dbPool } from '@/lib/db/client'
 import { bills, incomeSources, occurrences } from '@/lib/db/schema'
 import { dueDateFor, periodOf } from '@/lib/dates/cairo'
 
@@ -92,4 +92,60 @@ export async function housekeeping(
         lt(occurrences.dueDate, today),
       ),
     )
+}
+
+// Definition-edit rail shared by income, bills, and (P5) installments.
+// Bills/income call this outside a transaction (defaults to the http `db`);
+// updateIncomeSource calls it with its own `tx` to stay atomic with the source update.
+type DbTx = Parameters<Parameters<typeof dbPool.transaction>[0]>[0]
+type Executor = typeof db | DbTx
+
+async function loadDefinition(
+  kind: 'income' | 'bill' | 'installment',
+  sourceId: string,
+  executor: Executor,
+): Promise<{ amountMinor: number; dueDay: number } | null> {
+  switch (kind) {
+    case 'income': {
+      const [s] = await executor
+        .select()
+        .from(incomeSources)
+        .where(eq(incomeSources.id, sourceId))
+      return s ? { amountMinor: s.amountMinor, dueDay: s.dayOfMonth } : null
+    }
+    case 'bill': {
+      const [b] = await executor.select().from(bills).where(eq(bills.id, sourceId))
+      return b ? { amountMinor: b.amountMinor, dueDay: b.dueDay } : null
+    }
+    default:
+      return null // installment case lands in P5; unknown definition = no-op
+  }
+}
+
+export async function rewritePendingOccurrences(
+  kind: 'income' | 'bill' | 'installment',
+  sourceId: string,
+  executor: Executor = db,
+): Promise<void> {
+  const def = await loadDefinition(kind, sourceId, executor)
+  if (!def) return
+  const pending = await executor
+    .select()
+    .from(occurrences)
+    .where(
+      and(
+        eq(occurrences.kind, kind),
+        eq(occurrences.sourceId, sourceId),
+        eq(occurrences.status, 'pending'),
+      ),
+    )
+  for (const occ of pending) {
+    await executor
+      .update(occurrences)
+      .set({
+        expectedAmountMinor: def.amountMinor,
+        dueDate: dueDateFor(occ.period, def.dueDay),
+      })
+      .where(eq(occurrences.id, occ.id))
+  }
 }
