@@ -1,7 +1,12 @@
 import { randomUUID } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import { db } from '@/lib/db/client'
-import { accounts, bills, incomeSources } from '@/lib/db/schema'
+import {
+  accounts,
+  bills,
+  incomeSources,
+  installments,
+} from '@/lib/db/schema'
 import { archiveBlockers } from './queries'
 
 async function seedAccount(userId: string) {
@@ -47,6 +52,27 @@ async function seedIncomeSource(
   })
 }
 
+async function seedInstallment(
+  userId: string,
+  accountId: string,
+  active: boolean,
+  name = 'Phone',
+) {
+  await db.insert(installments).values({
+    userId,
+    name,
+    monthlyAmountMinor: 50000,
+    currency: 'EUR',
+    dueDay: 1,
+    totalCount: 12,
+    remainingCount: 12,
+    startDate: '2026-01-01',
+    accountId,
+    apr: null,
+    active,
+  })
+}
+
 describe('archiveBlockers', () => {
   it('includes an active bill targeting the account', async () => {
     const userId = `test-${randomUUID()}`
@@ -70,6 +96,16 @@ describe('archiveBlockers', () => {
     const blockers = await archiveBlockers(account.id, userId)
     expect(blockers).toContain('Salary')
     expect(blockers).toContain('Rent')
+  })
+
+  it('includes an active installment and excludes an inactive one', async () => {
+    const userId = `test-${randomUUID()}`
+    const account = await seedAccount(userId)
+    await seedInstallment(userId, account.id, true, 'Phone')
+    await seedInstallment(userId, account.id, false, 'Laptop')
+    const blockers = await archiveBlockers(account.id, userId)
+    expect(blockers).toContain('Phone')
+    expect(blockers).not.toContain('Laptop')
   })
 
   it('returns an empty list when nothing active targets the account', async () => {

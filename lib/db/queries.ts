@@ -1,6 +1,12 @@
 import { and, eq, sql } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
-import { bills, incomeSources, settings, transactions } from '@/lib/db/schema'
+import {
+  bills,
+  incomeSources,
+  installments,
+  settings,
+  transactions,
+} from '@/lib/db/schema'
 import type { Currency } from '@/lib/money/money'
 
 // Balances are always derived by summing transactions (spec §3).
@@ -53,7 +59,21 @@ export async function archiveBlockers(
         eq(bills.active, true),
       ),
     )
-  return [...incomeRows.map((r) => r.name), ...billRows.map((r) => r.name)]
+  const installmentRows = await db
+    .select({ name: installments.name })
+    .from(installments)
+    .where(
+      and(
+        eq(installments.accountId, accountId),
+        eq(installments.userId, userId),
+        eq(installments.active, true),
+      ),
+    )
+  return [
+    ...incomeRows.map((r) => r.name),
+    ...billRows.map((r) => r.name),
+    ...installmentRows.map((r) => r.name),
+  ]
 }
 
 // Lazy upsert on first authenticated read (spec §5.1). Defaults come from
