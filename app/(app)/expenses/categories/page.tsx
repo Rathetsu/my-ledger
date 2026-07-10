@@ -1,0 +1,45 @@
+import { eq } from 'drizzle-orm'
+import { db } from '@/lib/db/client'
+import { expenseCategories } from '@/lib/db/schema'
+import { requireUser } from '@/lib/auth'
+import { deleteCategory } from '@/lib/actions/expense-categories'
+import { CategoryForm } from '@/components/expenses/category-form'
+
+export default async function CategoriesPage() {
+  const user = await requireUser()
+  const categories = await db
+    .select()
+    .from(expenseCategories)
+    .where(eq(expenseCategories.userId, user.id))
+    .orderBy(expenseCategories.name)
+  return (
+    <main className="mx-auto max-w-md space-y-4 p-4">
+      <h1 className="text-xl font-semibold">Expense categories</h1>
+      <CategoryForm />
+      {categories.length === 0 ? (
+        <p className="text-sm text-neutral-500">No categories yet. Add one above; expenses can also stay uncategorized.</p>
+      ) : (
+        <ul className="divide-y rounded-lg border">
+          {categories.map((c) => (
+            <li key={c.id} className="flex items-center justify-between gap-2 p-3">
+              <span>
+                {c.icon ? `${c.icon} ` : ''}
+                {c.name}
+              </span>
+              <form
+                action={async () => {
+                  'use server'
+                  await deleteCategory({ id: c.id })
+                }}
+              >
+                <button className="p-2 text-sm text-red-600" aria-label={`Delete ${c.name}`}>
+                  Delete
+                </button>
+              </form>
+            </li>
+          ))}
+        </ul>
+      )}
+    </main>
+  )
+}
