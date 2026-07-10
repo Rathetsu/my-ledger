@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { categorySchema } from './expense-categories'
+import { categoryInput } from './schemas'
 
-describe('categorySchema', () => {
+describe('categoryInput', () => {
   it('accepts a name and optional icon', () => {
-    expect(categorySchema.parse({ name: 'Groceries', icon: '🛒' })).toEqual({ name: 'Groceries', icon: '🛒' })
-    expect(categorySchema.parse({ name: 'Transport' })).toEqual({ name: 'Transport' })
+    expect(categoryInput.parse({ name: 'Groceries', icon: '🛒' })).toEqual({ name: 'Groceries', icon: '🛒' })
+    expect(categoryInput.parse({ name: 'Transport' })).toEqual({ name: 'Transport' })
   })
   it('rejects an empty name', () => {
-    expect(() => categorySchema.parse({ name: '' })).toThrow()
+    expect(() => categoryInput.parse({ name: '' })).toThrow()
   })
 })

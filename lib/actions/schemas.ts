@@ -58,6 +58,11 @@ export const installmentInput = z.object({
   apr: z.coerce.number().min(0).max(200).nullable().default(null),
 })
 
+export const categoryInput = z.object({
+  name: z.string().trim().min(1).max(60),
+  icon: z.string().trim().min(1).max(8).optional(),
+})
+
 export const installmentUpdateInput = installmentInput
   .extend({
     // Reject a blank field rather than coercing '' to 0 (which would silently

@@ -6,16 +6,12 @@ import { revalidatePath } from 'next/cache'
 import { db, dbPool } from '@/lib/db/client'
 import { expenseCategories, transactions } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
-
-export const categorySchema = z.object({
-  name: z.string().trim().min(1).max(60),
-  icon: z.string().trim().min(1).max(8).optional(),
-})
+import { categoryInput } from './schemas'
 
 const idSchema = z.object({ id: z.string().uuid() })
 
 export async function createCategory(raw: unknown) {
-  const data = categorySchema.parse(raw)
+  const data = categoryInput.parse(raw)
   const user = await requireUser()
   await db.insert(expenseCategories).values({ userId: user.id, name: data.name, icon: data.icon ?? null })
   revalidatePath('/expenses')
@@ -23,7 +19,7 @@ export async function createCategory(raw: unknown) {
 }
 
 export async function updateCategory(raw: unknown) {
-  const data = categorySchema.extend({ id: z.string().uuid() }).parse(raw)
+  const data = categoryInput.extend({ id: z.string().uuid() }).parse(raw)
   const user = await requireUser()
   await db
     .update(expenseCategories)
