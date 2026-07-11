@@ -66,10 +66,17 @@ export const categoryInput = z.object({
 export const debtSchema = z.object({
   name: z.string().trim().min(1).max(80),
   originalMinor: z.number().int().positive(),
-  currency: z.enum(['EUR', 'USD', 'EGP']),
+  currency: currencySchema,
   apr: z.number().min(0).max(200).default(0),
   deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   minPaymentMinor: z.number().int().positive().optional(),
+})
+
+export const debtPaymentSchema = z.object({
+  debtId: z.string().uuid(),
+  accountId: z.string().uuid(),
+  amountMinor: z.number().int().positive(),
+  occurredOn: isoDate.optional(),
 })
 
 export const installmentUpdateInput = installmentInput

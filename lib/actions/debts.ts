@@ -6,7 +6,9 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db/client'
 import { flexibleDebts, transactions } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
-import { debtSchema } from './schemas'
+import type { Currency } from '@/lib/money/money'
+import { postDebtPayment, reverseDebtPayment } from '@/lib/debts/payments'
+import { debtPaymentSchema, debtSchema } from './schemas'
 
 const idSchema = z.object({ id: z.string().uuid() })
 
@@ -22,7 +24,7 @@ export async function createDebt(raw: unknown) {
     userId: user.id,
     name: data.name,
     originalMinor: data.originalMinor,
-    currency: data.currency,
+    currency: data.currency as Currency,
     apr: data.apr,
     deadline: data.deadline ?? null,
     minPaymentMinor: data.minPaymentMinor ?? null,
@@ -58,4 +60,20 @@ export async function deleteDebt(raw: unknown) {
   if (linked.length > 0) throw new Error('This debt has payments; reverse them first')
   await db.delete(flexibleDebts).where(and(eq(flexibleDebts.id, id), eq(flexibleDebts.userId, user.id)))
   revalidateDebtPaths()
+}
+
+export async function recordDebtPayment(raw: unknown) {
+  const data = debtPaymentSchema.parse(raw)
+  const user = await requireUser()
+  await postDebtPayment(user.id, data)
+  revalidateDebtPaths()
+  revalidatePath('/accounts')
+}
+
+export async function deleteDebtPayment(raw: unknown) {
+  const { id } = idSchema.parse(raw)
+  const user = await requireUser()
+  await reverseDebtPayment(user.id, id)
+  revalidateDebtPaths()
+  revalidatePath('/accounts')
 }
