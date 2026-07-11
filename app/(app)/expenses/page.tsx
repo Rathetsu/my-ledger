@@ -13,7 +13,13 @@ export default async function ExpensesPage({
 }) {
   const params = await searchParams
   const user = await requireUser()
-  const period = /^\d{4}-\d{2}$/.test(params.month ?? '') ? params.month! : periodOf(todayCairo())
+  // Validate shape AND range: a digit-only regex lets ?month=2026-13 through,
+  // then gte(occurredOn, '2026-13-01') makes Postgres throw out-of-range and 500s.
+  const monthOk =
+    /^\d{4}-\d{2}$/.test(params.month ?? '') &&
+    Number(params.month!.slice(5, 7)) >= 1 &&
+    Number(params.month!.slice(5, 7)) <= 12
+  const period = monthOk ? params.month! : periodOf(todayCairo())
   // categoryId is a uuid column; guard the raw param so a malformed ?category=
   // degrades to "no filter" instead of a Postgres cast error (like month above).
   const categoryFilter =
