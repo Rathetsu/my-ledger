@@ -50,6 +50,13 @@
       "when": 1783711658438,
       "tag": "0006_p6-expense-categories",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1783758500748,
+      "tag": "0007_p7-flexible-debts",
+      "breakpoints": true
     }
   ]
 }

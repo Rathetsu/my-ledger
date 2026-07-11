@@ -177,3 +177,15 @@ export const expenseCategories = pgTable('expense_categories', {
   name: text('name').notNull(),
   icon: text('icon'),
 })
+
+export const flexibleDebts = pgTable('flexible_debts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  originalMinor: integer('original_minor').notNull(),
+  currency: currencyEnum('currency').notNull(),
+  apr: doublePrecision('apr').notNull().default(0),
+  deadline: date('deadline'),
+  minPaymentMinor: integer('min_payment_minor'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+})
