@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'vitest'
-import { addPeriods, dueDateFor, periodOf, todayCairo } from '@/lib/dates/cairo'
+import { describe, expect, it, test } from 'vitest'
+import { addPeriods, dueDateFor, periodOf, periodsBetween, todayCairo } from '@/lib/dates/cairo'
 
 test('todayCairo returns YYYY-MM-DD', () => {
   expect(todayCairo()).toMatch(/^\d{4}-\d{2}-\d{2}$/)
@@ -28,4 +28,10 @@ describe('addPeriods', () => {
   test('crosses year end forward', () => expect(addPeriods('2026-11', 3)).toBe('2027-02'))
   test('crosses year start backward', () => expect(addPeriods('2026-01', -2)).toBe('2025-11'))
   test('zero is identity', () => expect(addPeriods('2026-07', 0)).toBe('2026-07'))
+})
+
+describe('periodsBetween', () => {
+  it('same period is zero', () => expect(periodsBetween('2026-08', '2026-08')).toBe(0))
+  it('counts forward across years', () => expect(periodsBetween('2026-11', '2027-02')).toBe(3))
+  it('is negative when the target is earlier', () => expect(periodsBetween('2026-08', '2026-05')).toBe(-3))
 })

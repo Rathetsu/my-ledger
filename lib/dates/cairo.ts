@@ -30,3 +30,9 @@ export function addPeriods(period: string, n: number): string {
   const mm = (total % 12) + 1
   return `${yy}-${String(mm).padStart(2, '0')}`
 }
+
+export function periodsBetween(a: string, b: string): number {
+  const [ya, ma] = a.split('-').map(Number)
+  const [yb, mb] = b.split('-').map(Number)
+  return (yb - ya) * 12 + (mb - ma)
+}
