@@ -707,7 +707,9 @@ export function trendSeries(
 - [ ] Run: `npx vitest run lib/insights/chart-data.test.ts` - expect PASS.
 - [ ] Commit: `git add app/globals.css components/charts/palette.ts lib/insights/chart-data.ts lib/insights/chart-data.test.ts && git commit -m "P6: chart palette tokens + pure chart-data pivots"`
 
----### Task 8: insights screen with per-currency Recharts charts
+---
+
+### Task 8: insights screen with per-currency Recharts charts
 
 Insights show actual spending, so the category and trend queries include one_off rows (unlike Task 6's planner helper, which excludes them). Each currency renders its own section; no cross-currency series ever share a chart (spec §5.6).
 

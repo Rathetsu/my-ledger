@@ -11,6 +11,8 @@ Single-context repo. Auth is self-hosted Better Auth, email+password only (see [
 - **Reconciliation** - "set actual balance" on an account; posts an `adjustment` transaction closing the gap between ledger and reality.
 - **Income Source** - a recurring expected income (salary: amount, day-of-month, target account). Generates occurrences needing confirmation.
 - **Windfall** - one-off income (freelance) logged directly as an `income` transaction with no source. Never counted on by the plan in advance.
+- **Expense Category** - a user-defined label (name + optional icon) for tagging `expense` transactions; optional. Deleting a category leaves its expenses uncategorized — it never deletes the expense. Not used by bills, installments, or income.
+- **One-off** - an `expense` tagged `one_off`: a rare, non-recurring outlay excluded from the Variable Spend Estimate. (Distinct from a Windfall, which is one-off *income*.)
 - **Bill** - a recurring committed outflow with no end (rent, internet). Generates occurrences; confirming posts a `bill_payment` (never `expense`).
 - **Installment** - a fixed monthly debt payment with a countdown (`remaining_count`). Count-based: confirming decrements; irregular events are handled by editing the definition. Fixed obligation - never avalanched.
 - **Occurrence** - one period's instance of an income source, bill, or installment. Status: `pending → confirmed | skipped | overdue`. Unique per (kind, source, period). Confirming opens an editable pre-filled sheet and posts the actual figures.
@@ -27,6 +29,7 @@ Single-context repo. Auth is self-hosted Better Auth, email+password only (see [
 - **Plan** - the deterministic engine's month-by-month projection: debt payoff months, wishlist affordability months, funding gaps. The engine owns 100% of all numbers.
 - **AI Advisor** - a free-text second opinion over the engine's numbers ("Algorithm suggests X; AI thinks Y"). Quotes engine figures, never computes new ones. Receives only an anonymized payload. App fully works without it.
 - **Attention List** - the dashboard section of things needing action: income to confirm, bills/installments due or overdue.
+- **Insights** - the `/expenses/insights` view: per-currency spend-by-category and month-over-month trend charts over `expense` **actuals** (includes `one_off` rows and the current partial month, unlike the Variable Spend Estimate feed). Currencies are never mixed in one chart.
 
 ## Domain rules (invariants)
 
