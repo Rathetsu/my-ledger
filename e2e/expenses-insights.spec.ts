@@ -15,8 +15,13 @@ test('categories, tagged expenses, filtered list, insights charts', async ({
   // 1. create a category (unique name — categories accumulate across runs on
   // the shared dev DB, so a fixed name like "Groceries" would pile up).
   await page.goto('/expenses/categories')
-  await page.getByLabel('Category name').fill(categoryName)
-  await page.getByRole('button', { name: 'Add' }).click()
+  // Scope to the create form (button "Add"); each row now also carries an edit
+  // CategoryForm ("Save") with an identically-labelled "Category name" input.
+  const createForm = page
+    .locator('form')
+    .filter({ has: page.getByRole('button', { name: 'Add' }) })
+  await createForm.getByLabel('Category name').fill(categoryName)
+  await createForm.getByRole('button', { name: 'Add' }).click()
   await expect(page.getByText(categoryName)).toBeVisible()
 
   // 2. log a categorized expense and a one-off (uncategorized) expense
