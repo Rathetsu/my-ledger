@@ -21,21 +21,31 @@ export default async function CategoriesPage() {
       ) : (
         <ul className="divide-y rounded-lg border">
           {categories.map((c) => (
-            <li key={c.id} className="flex items-center justify-between gap-2 p-3">
-              <span>
-                {c.icon ? `${c.icon} ` : ''}
-                {c.name}
-              </span>
-              <form
-                action={async () => {
-                  'use server'
-                  await deleteCategory({ id: c.id })
-                }}
-              >
-                <button className="p-2 text-sm text-red-600" aria-label={`Delete ${c.name}`}>
-                  Delete
-                </button>
-              </form>
+            <li key={c.id} className="space-y-2 p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span>
+                  {c.icon ? `${c.icon} ` : ''}
+                  {c.name}
+                </span>
+                <form
+                  action={async () => {
+                    'use server'
+                    await deleteCategory({ id: c.id })
+                  }}
+                >
+                  <button className="p-2 text-sm text-red-600" aria-label={`Delete ${c.name}`}>
+                    Delete
+                  </button>
+                </form>
+              </div>
+              {/* Native <details> disclosure reveals the edit form full-width without any
+                  client state, since this row lives in a server component. */}
+              <details>
+                <summary className="cursor-pointer list-none text-sm text-blue-600">Edit</summary>
+                <div className="mt-2">
+                  <CategoryForm existing={c} />
+                </div>
+              </details>
             </li>
           ))}
         </ul>
