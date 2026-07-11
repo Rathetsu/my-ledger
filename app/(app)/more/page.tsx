@@ -3,6 +3,7 @@ import { SignOutButton } from '@/components/sign-out-button'
 
 const LINKS = [
   { href: '/accounts', label: 'Accounts' },
+  { href: '/debts', label: 'Debts' },
   { href: '/settings', label: 'Settings' },
 ]
 
