@@ -115,4 +115,35 @@ describe('expensesByCategoryAndPeriod', () => {
       { period: current, category: 'Groceries', totalMinor: 700 },
     ])
   })
+
+  it('includes the oldest month in the window (current-2) and excludes the month just outside it', async () => {
+    const userId = `test-${randomUUID()}`
+    const a = await seedAccount(userId, 'EUR')
+    const current = periodOf(todayCairo())
+    // monthsBack=3 -> window is [current-2, current]; from = addPeriods(current, -(3-1)).
+    const oldestIncluded = addPeriods(current, -2)
+    const justOutside = addPeriods(current, -3)
+
+    await seedTx(userId, a.id, {
+      type: 'expense',
+      currency: 'EUR',
+      amountMinor: -4444,
+      occurredOn: `${oldestIncluded}-15`,
+    })
+    await seedTx(userId, a.id, {
+      type: 'expense',
+      currency: 'EUR',
+      amountMinor: -99999,
+      occurredOn: `${justOutside}-15`,
+    })
+
+    const result = await expensesByCategoryAndPeriod(userId, 'EUR', 3)
+
+    expect(result.find((r) => r.period === oldestIncluded)).toEqual({
+      period: oldestIncluded,
+      category: 'Uncategorized',
+      totalMinor: 4444,
+    })
+    expect(result.find((r) => r.period === justOutside)).toBeUndefined()
+  })
 })

@@ -130,4 +130,34 @@ describe('variableSpendActuals', () => {
 
     expect(result).toEqual([{ period: p1, totalMinor: 15000 }])
   })
+
+  it('includes the oldest month in the window and excludes the month just outside it', async () => {
+    const userId = `test-${randomUUID()}`
+    const a = await seedAccount(userId, 'EUR')
+    const current = periodOf(todayCairo())
+    // monthsBack=3 -> window is [current-3, current-1]; from = addPeriods(current, -3).
+    const oldestIncluded = addPeriods(current, -3)
+    const justOutside = addPeriods(current, -4)
+
+    await seedTx(userId, a.id, {
+      type: 'expense',
+      currency: 'EUR',
+      amountMinor: -12345,
+      occurredOn: `${oldestIncluded}-15`,
+    })
+    await seedTx(userId, a.id, {
+      type: 'expense',
+      currency: 'EUR',
+      amountMinor: -99999,
+      occurredOn: `${justOutside}-15`,
+    })
+
+    const result = await variableSpendActuals(userId, 'EUR', 3)
+
+    expect(result.find((r) => r.period === oldestIncluded)).toEqual({
+      period: oldestIncluded,
+      totalMinor: 12345,
+    })
+    expect(result.find((r) => r.period === justOutside)).toBeUndefined()
+  })
 })
