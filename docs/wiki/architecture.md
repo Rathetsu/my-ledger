@@ -1,6 +1,6 @@
 # Architecture
 
-Current truth of the system design. Terms per [/CONTEXT.md](../../CONTEXT.md); requirements per [the spec](../superpowers/specs/2026-07-07-my-ledger-design.md); rationale in [ADRs](../adr/). P0–P6 are implemented (foundations, accounts & currency, ledger core, income & the shared occurrence rails, recurring bills, count-based installments, expense categories & per-currency insights); see [status.md](status.md) for phase status. This page describes the full target design, including modules that later phases (P7+) still build.
+Current truth of the system design. Terms per [/CONTEXT.md](../../CONTEXT.md); requirements per [the spec](../superpowers/specs/2026-07-07-my-ledger-design.md); rationale in [ADRs](../adr/). P0–P7 are implemented (foundations, accounts & currency, ledger core, income & the shared occurrence rails, recurring bills, count-based installments, expense categories & per-currency insights, flexible debts & the deterministic payoff planner); see [status.md](status.md) for phase status. This page describes the full target design, including modules that later phases (P8+) still build.
 
 ## Core model
 
@@ -27,9 +27,10 @@ lib/
   dates/cairo.ts                  # Africa/Cairo day boundaries, due-day clamping
   currency/{rates.ts, convert.ts} # open.er-api fetch/cache/seed + convert()
   housekeeping/index.ts           # idempotent: occurrences, overdue flips, snapshot, rates
-  insights/{variable-spend,category-spend,chart-data}.ts  # spend aggregates (variableSpendActuals feeds P7) + pure chart pivots
+  insights/{variable-spend,category-spend,chart-data}.ts  # spend aggregates (variableSpendActuals feeds the planner) + pure chart pivots
   expense-categories.ts           # category CRUD + categoryId ownership resolver (testable, non-'use server')
-  planner/{types.ts, engine.ts}   # deterministic currency-aware planner (pure)
+  debts/{balance.ts, payments.ts} # derived debt balance + record/reverse payment logic (plain, userId-taking, testable)
+  planner/{types,engine,spend-estimate,input}.ts  # deterministic currency-aware planner (pure engine + spend blend + DB input assembler)
   ai/{advisor.ts, sanitize.ts, prompt.ts}  # Gemini advisor: anonymize → prompt → cache
   actions/                        # server actions by domain
 components/                       # mobile-first UI + charts
