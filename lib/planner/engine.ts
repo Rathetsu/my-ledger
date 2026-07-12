@@ -60,7 +60,15 @@ export function buildPlan(input: PlanInput): PlanResult {
       if (d.balance <= 0 && debtPayoffPeriod[d.id] === null) debtPayoffPeriod[d.id] = period
     }
 
-    // --- (1) deadline-required just-in-time payments: Task 11 ---
+    // (1) deadline-required just-in-time payments (obligations: scheduled even past surplus).
+    // jit is recomputed each month from the live balance, so actual-payment drift self-corrects.
+    for (const d of debts) {
+      if (d.balance <= 0 || !d.deadline) continue
+      const n = Math.max(1, periodsBetween(period, d.deadline.slice(0, 7)) + 1) // past-deadline debts pay off now
+      const jit = jitPayment(d.balance, d.apr, n)
+      d.balance += interestOn(d.balance, d.apr)
+      pay(d, Math.min(Math.max(jit, d.minPaymentMinor ?? 0), d.balance))
+    }
 
     // (2) minimum payments on ASAP debts that define one (obligations: paid even past surplus)
     for (const d of debts) {

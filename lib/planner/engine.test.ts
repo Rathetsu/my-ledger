@@ -142,3 +142,32 @@ describe('buildPlan: debt not cleared within the horizon', () => {
     expect(plan.months[5].debtPayments).toEqual([{ debtId: 'Z', amountMinor: 100000, currency: 'EUR' }])
   })
 })
+
+describe('buildPlan: deadline just-in-time payments release slack', () => {
+  // Surplus = 200000 - 100000 = 100000/month.
+  // Debt D: 30000 @ 12% apr (1%/month), deadline 2026-10-15 -> deadline period 2026-10, 3 payments.
+  // Level payment: 30000*0.01 / (1 - 1.01^-3) = 300 / 0.0294099 = 10200.66 -> ceil 10201.
+  // 2026-08: jit(30000, 12, 3) = 10201; accrue 300 -> 30300; pay 10201 -> 20099; slack 100000 - 10201 = 89799
+  // 2026-09: jit(20099, 12, 2) = ceil(200.99 / 0.0197040) = ceil(10200.49) = 10201; accrue 201 -> 20300; pay 10201 -> 10099
+  // 2026-10: jit(10099, 12, 1) = ceil(10099 * 1.01) = ceil(10199.99) = 10200; accrue 101 -> 10200; pay 10200 -> 0
+  const plan = buildPlan(
+    mkInput({
+      monthlyIncomeMinor: { EUR: 200000 },
+      variableSpendMinor: { EUR: 100000 },
+      accountBalancesMinor: { EUR: 1000000 },
+      debts: [{ id: 'D', name: 'Family', balanceMinor: 30000, currency: 'EUR', apr: 12, deadline: '2026-10-15' }],
+    }),
+  )
+
+  it('pays just enough to clear balance plus apr/12 interest by the deadline', () => {
+    expect(plan.months[0].debtPayments).toEqual([{ debtId: 'D', amountMinor: 10201, currency: 'EUR' }])
+    expect(plan.months[1].debtPayments).toEqual([{ debtId: 'D', amountMinor: 10201, currency: 'EUR' }])
+    expect(plan.months[2].debtPayments).toEqual([{ debtId: 'D', amountMinor: 10200, currency: 'EUR' }])
+    expect(plan.debtPayoffPeriod).toEqual({ D: '2026-10' })
+  })
+  it('releases the deadline slack instead of avalanching the deadlined debt', () => {
+    expect(plan.months[0].unallocatedMinor).toBe(89799)
+    expect(plan.months[2].unallocatedMinor).toBe(89800) // 100000 - 10200
+    expect(plan.months[3].unallocatedMinor).toBe(100000) // debt gone
+  })
+})
