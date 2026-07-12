@@ -171,3 +171,65 @@ describe('buildPlan: deadline just-in-time payments release slack', () => {
     expect(plan.months[3].unallocatedMinor).toBe(100000) // debt gone
   })
 })
+
+describe('buildPlan: currency-aware funding gaps', () => {
+  // Home EUR. 1 EGP minor = 0.9/50 = 0.018 EUR minor at the fixture rates.
+  // Accounts: EUR 500000, EGP 100000. Income EUR 200000/month. Bills EGP 600000/month.
+  // 2026-08: EGP 100000 + 0 - 600000 = -500000 -> gap 500000; 500000 * 0.018 = 9000 -> "€90.00"
+  //          EUR 500000 + 200000 = 700000; applying the suggested transfer -> 691000, EGP -> 0
+  // 2026-09: EGP 0 - 600000 = -600000 -> gap 600000; 600000 * 0.018 = 10800 -> "€108.00"
+  const plan = buildPlan(
+    mkInput({
+      monthlyIncomeMinor: { EUR: 200000 },
+      billsMinor: { EGP: 600000 },
+      accountBalancesMinor: { EUR: 500000, EGP: 100000 },
+    }),
+  )
+
+  it('detects the gap and suggests a live-rate transfer', () => {
+    expect(plan.months[0].fundingGaps).toEqual([
+      { currency: 'EGP', shortfallMinor: 500000, suggestion: 'Transfer ~ €90.00 into EGP' },
+    ])
+  })
+  it('rolls projected balances forward as if the suggested transfer happened', () => {
+    expect(plan.months[1].fundingGaps).toEqual([
+      { currency: 'EGP', shortfallMinor: 600000, suggestion: 'Transfer ~ €108.00 into EGP' },
+    ])
+  })
+  it('computes surplus in home currency at live rates', () => {
+    // 200000 - convert(600000 EGP) = 200000 - 10800 = 189200
+    expect(plan.surplusMinorByMonth['2026-08']).toBe(189200)
+    expect(plan.months[0].unallocatedMinor).toBe(189200)
+  })
+})
+
+describe('buildPlan: flags and passthroughs', () => {
+  it('flags installments with apr >= 15 and echoes the spend estimate source', () => {
+    const plan = buildPlan(
+      mkInput({
+        spendEstimateSource: 'blend',
+        monthlyIncomeMinor: { EUR: 200000 },
+        accountBalancesMinor: { EUR: 1000000 },
+        installments: [
+          { name: 'Phone', monthlyMinor: 50000, currency: 'EUR', remainingCount: 4, apr: 24 },
+          { name: 'Fridge', monthlyMinor: 30000, currency: 'EUR', remainingCount: 2, apr: 14.9 },
+          { name: 'Couch', monthlyMinor: 20000, currency: 'EUR', remainingCount: 2 },
+        ],
+      }),
+    )
+    expect(plan.highAprInstallmentFlags).toEqual(['Phone'])
+    expect(plan.spendEstimateSource).toBe('blend')
+  })
+  it('drops installment obligations from surplus after remainingCount months', () => {
+    const plan = buildPlan(
+      mkInput({
+        monthlyIncomeMinor: { EUR: 100000 },
+        accountBalancesMinor: { EUR: 1000000 },
+        installments: [{ name: 'Phone', monthlyMinor: 50000, currency: 'EUR', remainingCount: 2 }],
+      }),
+    )
+    expect(plan.surplusMinorByMonth['2026-08']).toBe(50000)
+    expect(plan.surplusMinorByMonth['2026-09']).toBe(50000)
+    expect(plan.surplusMinorByMonth['2026-10']).toBe(100000)
+  })
+})

@@ -96,8 +96,43 @@ export function buildPlan(input: PlanInput): PlanResult {
     // --- wishlist funding: filled by P8 ---
     const wishlistFunding: MonthPlan['wishlistFunding'] = []
 
-    // --- (5) currency-aware funding gaps + balance roll-forward: Task 12 ---
+    // (5) currency-aware funding gaps: group this month's obligations + planned payments by
+    // currency against projected balances, then roll balances forward
+    const outflow = Object.fromEntries(CURRENCIES.map((c) => [c, 0])) as Record<Currency, number>
+    for (const c of CURRENCIES) outflow[c] += (input.billsMinor[c] ?? 0) + (input.variableSpendMinor[c] ?? 0)
+    for (const inst of installmentsDue) outflow[inst.currency] += inst.monthlyMinor
+    for (const p of debtPayments) outflow[p.currency] += p.amountMinor
+
+    const end = { ...balances }
+    for (const c of CURRENCIES) end[c] += (input.monthlyIncomeMinor[c] ?? 0) - outflow[c]
+
     const fundingGaps: MonthPlan['fundingGaps'] = []
+    for (const c of CURRENCIES) {
+      if (end[c] >= 0) continue
+      const shortfallMinor = -end[c]
+      const source = CURRENCIES.filter((s) => s !== c && end[s] > 0).sort((a, b) => toHome(end[b], b) - toHome(end[a], a))[0]
+      if (source) {
+        const transferMinor = convert(shortfallMinor, c, source, input.rates)
+        fundingGaps.push({
+          currency: c,
+          shortfallMinor,
+          suggestion: `Transfer ~ ${formatMoney({ amountMinor: transferMinor, currency: source })} into ${c}`,
+        })
+        // apply the suggested transfer to the projection so later months stay consistent
+        end[source] -= transferMinor
+        end[c] = 0
+      } else {
+        fundingGaps.push({
+          currency: c,
+          shortfallMinor,
+          suggestion: `No other currency can cover ${formatMoney({ amountMinor: shortfallMinor, currency: c })}`,
+        })
+      }
+    }
+
+    // --- wishlist affordability gaps: filled by P8 ---
+
+    for (const c of CURRENCIES) balances[c] = end[c]
 
     months.push({ period, debtPayments, wishlistFunding, fundingGaps, unallocatedMinor })
   }
