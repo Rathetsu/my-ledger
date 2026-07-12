@@ -39,30 +39,37 @@ export async function buildPlanInput(userId: string): Promise<PlanInput> {
     db.select().from(accounts).where(and(eq(accounts.userId, userId), isNull(accounts.archivedAt))),
   ])
 
-  const actualsByCurrency: Partial<Record<Currency, SpendActualsRow[]>> = {}
-  for (const c of CURRENCIES) actualsByCurrency[c] = await variableSpendActuals(userId, c, ACTUALS_MONTHS_BACK)
+  // Each of these queries is a one-shot HTTP round trip (neon-http, see lib/db/client.ts),
+  // so awaiting them one row at a time serializes N round trips end to end. With hundreds of
+  // accounts (accumulated e2e/dev accounts never get archived) that turned /plan into a
+  // 100+ second load; Promise.all lets the independent per-row lookups run concurrently.
+  const actualsEntries = await Promise.all(
+    CURRENCIES.map(async (c) => [c, await variableSpendActuals(userId, c, ACTUALS_MONTHS_BACK)] as const),
+  )
+  const actualsByCurrency: Partial<Record<Currency, SpendActualsRow[]>> = Object.fromEntries(actualsEntries)
   const { variableSpendMinor, source } = estimateVariableSpend(baseline, actualsByCurrency)
 
-  const debts: PlanInput['debts'] = []
-  for (const d of debtRows) {
-    const balanceMinor = await debtBalanceMinor(d.id)
-    if (balanceMinor > 0) {
-      debts.push({
-        id: d.id,
-        name: d.name,
-        balanceMinor,
-        currency: d.currency as Currency,
-        apr: d.apr,
-        deadline: d.deadline ?? undefined,
-        minPaymentMinor: d.minPaymentMinor ?? undefined,
-      })
-    }
-  }
+  const debtBalances = await Promise.all(
+    debtRows.map(async (d) => ({ d, balanceMinor: await debtBalanceMinor(d.id) })),
+  )
+  const debts: PlanInput['debts'] = debtBalances
+    .filter(({ balanceMinor }) => balanceMinor > 0)
+    .map(({ d, balanceMinor }) => ({
+      id: d.id,
+      name: d.name,
+      balanceMinor,
+      currency: d.currency as Currency,
+      apr: d.apr,
+      deadline: d.deadline ?? undefined,
+      minPaymentMinor: d.minPaymentMinor ?? undefined,
+    }))
 
+  const accountBalances = await Promise.all(
+    accountRows.map(async (a) => ({ currency: a.currency as Currency, bal: await accountBalanceMinor(a.id) })),
+  )
   const accountBalancesMinor: Partial<Record<Currency, number>> = {}
-  for (const a of accountRows) {
-    const bal = await accountBalanceMinor(a.id)
-    accountBalancesMinor[a.currency as Currency] = (accountBalancesMinor[a.currency as Currency] ?? 0) + bal
+  for (const { currency, bal } of accountBalances) {
+    accountBalancesMinor[currency] = (accountBalancesMinor[currency] ?? 0) + bal
   }
 
   return {
