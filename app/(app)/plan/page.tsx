@@ -11,6 +11,7 @@ export default async function PlanPage() {
   const input = await buildPlanInput(user.id)
   const plan = buildPlan(input)
   const debtNames = Object.fromEntries(input.debts.map((d) => [d.id, d.name]))
+  const wishlistNames = Object.fromEntries(input.wishlist.map((w) => [w.id, w.name]))
 
   return (
     <main className="mx-auto max-w-md space-y-4 p-4">
@@ -48,7 +49,7 @@ export default async function PlanPage() {
           </ul>
         )}
       </section>
-      <PlanTimeline months={plan.months} debtNames={debtNames} homeCurrency={input.homeCurrency} />
+      <PlanTimeline months={plan.months} debtNames={debtNames} wishlistNames={wishlistNames} homeCurrency={input.homeCurrency} />
     </main>
   )
 }

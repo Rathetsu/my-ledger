@@ -4,15 +4,19 @@ import type { MonthPlan } from '@/lib/planner/types'
 export function PlanTimeline({
   months,
   debtNames,
+  wishlistNames,
   homeCurrency,
 }: {
   months: MonthPlan[]
   debtNames: Record<string, string>
+  wishlistNames: Record<string, string>
   homeCurrency: Currency
 }) {
-  const shown = months.filter((m) => m.debtPayments.length > 0 || m.fundingGaps.length > 0).slice(0, 12)
+  const shown = months
+    .filter((m) => m.debtPayments.length > 0 || m.fundingGaps.length > 0 || m.wishlistFunding.length > 0)
+    .slice(0, 12)
   if (shown.length === 0) {
-    return <p className="text-sm text-neutral-500">No planned payments. Surplus flows to the wishlist (next phase).</p>
+    return <p className="text-sm text-neutral-500">Nothing scheduled in the coming months.</p>
   }
   return (
     <ol className="space-y-3">
@@ -32,6 +36,19 @@ export function PlanTimeline({
               </li>
             ))}
           </ul>
+          {m.wishlistFunding.length > 0 && (
+            <>
+              <p className="mt-2 text-xs font-medium text-neutral-500">Saving toward</p>
+              <ul className="mt-1 space-y-1 text-sm text-neutral-600 dark:text-neutral-400">
+                {m.wishlistFunding.map((f, i) => (
+                  <li key={i} className="flex justify-between">
+                    <span>{'→ '}{wishlistNames[f.itemId] ?? 'Wishlist'}</span>
+                    <span className="tabular-nums">{formatMoney({ amountMinor: f.amountMinor, currency: f.currency })}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           {m.unallocatedMinor > 0 && (
             <p className="mt-1 text-xs text-neutral-500">
               Unallocated: {formatMoney({ amountMinor: m.unallocatedMinor, currency: homeCurrency })}
