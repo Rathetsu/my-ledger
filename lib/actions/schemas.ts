@@ -92,3 +92,11 @@ export const installmentUpdateInput = installmentInput
   .refine((v) => v.remainingCount <= v.totalCount, {
     message: 'remainingCount cannot exceed totalCount',
   })
+
+export const wishlistInput = z.object({
+  name: z.string().trim().min(1).max(80),
+  costMinor: z.number().int().positive(),
+  currency: currencySchema,
+  priority: z.number().int().min(1).max(9).default(3),
+  targetDate: isoDate.optional(),
+})
