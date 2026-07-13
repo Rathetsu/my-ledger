@@ -1,12 +1,13 @@
 import { and, eq, gt, isNull } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { accountBalanceMinor } from '@/lib/db/queries'
-import { accounts, bills, flexibleDebts, incomeSources, installments, settings } from '@/lib/db/schema'
+import { accounts, bills, flexibleDebts, incomeSources, installments, settings, wishlistItems } from '@/lib/db/schema'
 import { getRates } from '@/lib/currency/rates'
 import { CURRENCIES, type Currency } from '@/lib/money/money'
 import { periodOf, todayCairo } from '@/lib/dates/cairo'
 import { variableSpendActuals } from '@/lib/insights/variable-spend'
 import { debtBalanceMinor } from '@/lib/debts/balance'
+import { activeWishlistForPlan } from './wishlist'
 import { estimateVariableSpend, type SpendActualsRow } from './spend-estimate'
 import type { PlanInput } from './types'
 
@@ -24,7 +25,7 @@ export async function buildPlanInput(userId: string): Promise<PlanInput> {
   const homeCurrency = (settingsRow?.homeCurrency ?? 'EUR') as Currency
   const baseline = (settingsRow?.essentialsBaseline ?? {}) as Partial<Record<Currency, number>>
 
-  const [rates, incomeRows, billRows, instRows, debtRows, accountRows] = await Promise.all([
+  const [rates, incomeRows, billRows, instRows, debtRows, accountRows, wishlistRows] = await Promise.all([
     getRates(),
     db
       .select()
@@ -37,6 +38,7 @@ export async function buildPlanInput(userId: string): Promise<PlanInput> {
       .where(and(eq(installments.userId, userId), eq(installments.active, true), gt(installments.remainingCount, 0))),
     db.select().from(flexibleDebts).where(eq(flexibleDebts.userId, userId)),
     db.select().from(accounts).where(and(eq(accounts.userId, userId), isNull(accounts.archivedAt))),
+    db.select().from(wishlistItems).where(and(eq(wishlistItems.userId, userId), eq(wishlistItems.status, 'planned'))),
   ])
 
   // Each of these queries is a one-shot HTTP round trip (neon-http, see lib/db/client.ts),
@@ -89,7 +91,7 @@ export async function buildPlanInput(userId: string): Promise<PlanInput> {
     variableSpendMinor,
     spendEstimateSource: source,
     debts,
-    wishlist: [], // P8 fills this from wishlist_items
+    wishlist: activeWishlistForPlan(wishlistRows),
     accountBalancesMinor,
   }
 }
