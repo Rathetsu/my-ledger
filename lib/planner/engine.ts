@@ -161,7 +161,23 @@ export function buildPlan(input: PlanInput): PlanResult {
       }
     }
 
-    // --- wishlist affordability gaps: filled by P8 ---
+    // wishlist affordability gaps: the month an item becomes affordable, check the item's
+    // currency actually holds the cash; advisory only, never applied to the roll-forward
+    for (const w of wishlist) {
+      if (wishlistAffordablePeriod[w.id] !== period) continue
+      if (end[w.currency] >= w.costMinor) continue
+      const shortfallMinor = w.costMinor - end[w.currency]
+      const source = CURRENCIES.filter((s) => s !== w.currency && end[s] > 0).sort(
+        (a, b) => toHome(end[b], b) - toHome(end[a], a),
+      )[0]
+      fundingGaps.push({
+        currency: w.currency,
+        shortfallMinor,
+        suggestion: source
+          ? `Transfer ~ ${formatMoney({ amountMinor: convert(shortfallMinor, w.currency, source, input.rates), currency: source })} into ${w.currency}`
+          : `No other currency can cover ${formatMoney({ amountMinor: shortfallMinor, currency: w.currency })}`,
+      })
+    }
 
     for (const c of CURRENCIES) balances[c] = end[c]
 

@@ -83,3 +83,25 @@ describe('buildPlan: target-dated item jumps the priority queue', () => {
     expect(plan.wishlistAffordablePeriod).toEqual({ T: '2026-10', P: '2026-09' })
   })
 })
+
+describe('buildPlan: item in a gapped currency still gets an affordability month + transfer suggestion', () => {
+  // Home EUR. Unallocated = 200000/month. Item G: 500000 EGP minor, priority 1.
+  // Funding (home leftover converted to EGP): fromHome(200000 EUR) = 200000 / 0.9 * 50 = 11111111,
+  // capped at cost -> fund 500000 EGP in 2026-08 -> affordable immediately.
+  // But EGP accounts hold 0: projected EGP end = 0 < 500000 -> shortfall 500000;
+  // 500000 EGP * 0.9/50 = 9000 EUR minor -> "Transfer ~ €90.00 into EGP".
+  it('reports the affordability month and the advisory transfer', () => {
+    const plan = buildPlan(
+      mkInput({
+        monthlyIncomeMinor: { EUR: 200000 },
+        accountBalancesMinor: { EUR: 1000000, EGP: 0 },
+        wishlist: [{ id: 'G', name: 'Phone', costMinor: 500000, currency: 'EGP', priority: 1 }],
+      }),
+    )
+    expect(plan.wishlistAffordablePeriod).toEqual({ G: '2026-08' })
+    expect(plan.months[0].wishlistFunding).toEqual([{ itemId: 'G', amountMinor: 500000, currency: 'EGP' }])
+    expect(plan.months[0].fundingGaps).toEqual([
+      { currency: 'EGP', shortfallMinor: 500000, suggestion: 'Transfer ~ €90.00 into EGP' },
+    ])
+  })
+})
