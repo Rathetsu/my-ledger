@@ -189,3 +189,17 @@ export const flexibleDebts = pgTable('flexible_debts', {
   minPaymentMinor: integer('min_payment_minor'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 })
+
+export const wishlistStatus = pgEnum('wishlist_status', ['planned', 'purchased'])
+
+export const wishlistItems = pgTable('wishlist_items', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  costMinor: integer('cost_minor').notNull(),
+  currency: currencyEnum('currency').notNull(),
+  priority: integer('priority').notNull().default(3),
+  targetDate: date('target_date'),
+  status: wishlistStatus('status').notNull().default('planned'),
+  transactionId: uuid('transaction_id'),
+})
