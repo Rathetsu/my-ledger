@@ -100,3 +100,5 @@ export const wishlistInput = z.object({
   priority: z.number().int().min(1).max(9).default(3),
   targetDate: isoDate.optional(),
 })
+
+export const purchaseInput = z.object({ itemId: z.string().uuid(), accountId: z.string().uuid() })
