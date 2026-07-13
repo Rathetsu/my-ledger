@@ -27,6 +27,7 @@ export function buildPlan(input: PlanInput): PlanResult {
   const fromHome = (amountMinor: number, c: Currency) => (c === home ? amountMinor : convert(amountMinor, home, c, input.rates))
 
   const debts = input.debts.map((d) => ({ ...d, balance: d.balanceMinor }))
+  const wishlist = input.wishlist.map((w) => ({ ...w, fundedMinor: 0 }))
   const balances = Object.fromEntries(CURRENCIES.map((c) => [c, input.accountBalancesMinor[c] ?? 0])) as Record<Currency, number>
 
   const months: MonthPlan[] = []
@@ -93,8 +94,38 @@ export function buildPlan(input: PlanInput): PlanResult {
     // (4) leftover = deadline slack + post-debt surplus; P8 draws wishlist funding from this
     const unallocatedMinor = Math.max(0, available)
 
-    // --- wishlist funding: filled by P8 ---
+    // wishlist funding: unallocated leftover (deadline slack + post-debt surplus) funds items;
+    // unallocatedMinor keeps its pre-wishlist meaning, wishlistFunding shows where it went
     const wishlistFunding: MonthPlan['wishlistFunding'] = []
+    let freeMinor = unallocatedMinor // home currency
+    const fund = (w: (typeof wishlist)[number], amountMinor: number) => {
+      if (amountMinor <= 0) return
+      w.fundedMinor += amountMinor
+      freeMinor -= toHome(amountMinor, w.currency)
+      wishlistFunding.push({ itemId: w.id, amountMinor, currency: w.currency })
+      if (w.fundedMinor >= w.costMinor && wishlistAffordablePeriod[w.id] === null) {
+        wishlistAffordablePeriod[w.id] = period
+      }
+    }
+    // target-dated first (earliest target, then priority): fund the level amount that
+    // makes the item affordable by its target date when possible
+    const dated = wishlist
+      .filter((w) => w.fundedMinor < w.costMinor && w.targetDate)
+      .sort((a, b) => a.targetDate!.localeCompare(b.targetDate!) || a.priority - b.priority || a.id.localeCompare(b.id))
+    for (const w of dated) {
+      if (freeMinor <= 0) break
+      const n = Math.max(1, periodsBetween(period, w.targetDate!.slice(0, 7)) + 1) // past-target items fund now
+      const needMinor = Math.ceil((w.costMinor - w.fundedMinor) / n)
+      fund(w, Math.min(needMinor, w.costMinor - w.fundedMinor, fromHome(freeMinor, w.currency)))
+    }
+    // then by priority (lower = more important), greedily to completion
+    const byPriority = wishlist
+      .filter((w) => w.fundedMinor < w.costMinor && !w.targetDate)
+      .sort((a, b) => a.priority - b.priority || a.id.localeCompare(b.id))
+    for (const w of byPriority) {
+      if (freeMinor <= 0) break
+      fund(w, Math.min(w.costMinor - w.fundedMinor, fromHome(freeMinor, w.currency)))
+    }
 
     // (5) currency-aware funding gaps: group this month's obligations + planned payments by
     // currency against projected balances, then roll balances forward
