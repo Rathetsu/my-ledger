@@ -27,6 +27,14 @@ Backlinks: [Plans index](../plans/README.md) | [Design spec](../specs/2026-07-07
 - `MonthPlan.unallocatedMinor` keeps its P7 meaning (leftover before wishlist funding); `wishlistFunding` shows where it went. Funding is saving, not spending, so it never enters the funding-gap outflow; instead, the month an item becomes affordable, the engine checks the item's currency actually holds the cash and emits an advisory transfer suggestion if not.
 - Priority is an int where lower = more important (1 is highest). Target-dated items outrank priority while their target is still ahead.
 
+**Reconciliation with P2-P7 decisions** (this plan predates P6/P7; the following are verified against current code and are non-negotiable):
+
+- **A `'use server'` module may export ONLY async functions.** Exporting a zod schema or type from one makes Next 404 the route at runtime while `tsc` and unit tests stay green (this bit P6). So: schemas live in `lib/actions/schemas.ts`; testable DB logic lives in a plain (non-`'use server'`) `lib/wishlist.ts` taking an explicit `userId`; `lib/actions/wishlist.ts` is a thin `requireUser` + helper + `revalidatePath` wrapper. P7's `lib/actions/debts.ts` (schemas from `./schemas`, DB logic from `lib/debts/payments.ts`) is the exact template.
+- **Archived-account write-freeze.** Every money-write path guards its account against `archivedAt` (spec §3). This invariant was breached by a new write path and caught at final review in P2, P3, P4, and P5. Wishlist purchase inserts a transaction and un-purchase deletes one, so BOTH guard. A wishlist item is not an active definition targeting an account, so wishlist adds NO `archiveBlockers` clause; that makes the per-write guard the only defense, so it is mandatory, not belt-and-suspenders.
+- **Schema conventions** (verified against `transactions`/`flexible_debts`): money columns are `integer` minor units, never `bigint`; every enumerated column is a `pgEnum` (reuse the shared `currencyEnum`); migrations run via `npm run db:generate` / `npm run db:migrate`.
+- **`CURRENCIES` is still `readonly Currency[]`, not `as const`** (the const-ification deferred since P3 never landed), so the `x as Currency` casts and `currencySchema` (`z.enum(CURRENCIES as unknown as [...])`, already in `schemas.ts`) remain the pattern; reuse them rather than a fresh `z.enum(['EUR','USD','EGP'])`.
+- **Secondary screens are reached through the More hub, not a new bottom tab** (the 7-tab bar is already cramped at 375px; accepted P5 decision). `/wishlist` joins `LINKS` in `app/(app)/more/page.tsx` alongside `/debts`, `/accounts`, `/settings`.
+
 ---
 
 ### Task 1: wishlist_items table and migration
@@ -40,50 +48,57 @@ Backlinks: [Plans index](../plans/README.md) | [Design spec](../specs/2026-07-07
 
 **Steps:**
 
-- [ ] Append to `lib/db/schema.ts` (reuse P1's currency and money column helpers if they exist):
+- [ ] Append to `lib/db/schema.ts`, matching the current conventions: reuse the shared `currencyEnum`; money is an `integer` minor-unit column like `transactions.amount_minor` and `flexible_debts.original_minor` (never `bigint`); `status` is a `pgEnum` like every other enumerated column:
 
 ```ts
+export const wishlistStatus = pgEnum('wishlist_status', ['planned', 'purchased'])
+
 export const wishlistItems = pgTable('wishlist_items', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: text('user_id').notNull(),
   name: text('name').notNull(),
-  costMinor: bigint('cost_minor', { mode: 'number' }).notNull(),
-  currency: text('currency', { enum: ['EUR', 'USD', 'EGP'] }).notNull(),
+  costMinor: integer('cost_minor').notNull(),
+  currency: currencyEnum('currency').notNull(),
   priority: integer('priority').notNull().default(3),
   targetDate: date('target_date'),
-  status: text('status', { enum: ['planned', 'purchased'] }).notNull().default('planned'),
+  status: wishlistStatus('status').notNull().default('planned'),
   transactionId: uuid('transaction_id'),
 })
 ```
 
-- [ ] Run: `npx drizzle-kit generate --name p8-wishlist-items` - expect a new SQL file containing `CREATE TABLE "wishlist_items"`.
-- [ ] Run: `npx drizzle-kit migrate` - expect clean apply.
+- [ ] Run: `npm run db:generate -- --name p8-wishlist-items` - expect `drizzle/0008_p8-wishlist-items.sql` containing `CREATE TABLE "wishlist_items"` and `CREATE TYPE "public"."wishlist_status"`.
+- [ ] Run: `npm run db:migrate` - expect clean apply.
 - [ ] Run: `npx tsc --noEmit` - expect PASS.
 - [ ] Commit: `git add lib/db/schema.ts drizzle && git commit -m "P8: wishlist_items table + migration"`
 
 ---
 
-### Task 2: wishlist CRUD actions
+### Task 2: wishlist CRUD (schema + helper + thin action)
+
+Follows the P6/P7 split (see Reconciliation): schema in `schemas.ts`, DB logic in a plain module, the `'use server'` file is a thin wrapper. Mirrors `categoryInput` + `lib/expense-categories.ts` + `lib/actions/expense-categories.ts`.
 
 **Files:**
-- Create: `lib/actions/wishlist.ts`
-- Test: `lib/actions/wishlist.test.ts`
+- Modify: `lib/actions/schemas.ts` (add `wishlistInput`)
+- Create: `lib/wishlist.ts` (plain DB helpers, explicit `userId`)
+- Create: `lib/actions/wishlist.ts` (`'use server'` wrappers)
+- Test: `lib/actions/wishlist.test.ts` (imports the schema from `./schemas`, like `expense-categories.test.ts`)
 
 **Interfaces:**
-- Produces: `wishlistItemSchema` (zod), server actions `createWishlistItem(raw: unknown)`, `updateWishlistItem(raw: unknown)`, `deleteWishlistItem(raw: unknown)`.
-- Consumes: `requireUser`, `db`, `wishlistItems` (Task 1).
+- Produces: `wishlistInput` (zod, in `schemas.ts`); DB helpers `createItem(userId, data)`, `updateItem(userId, id, data)`, `deleteItem(userId, id)` in `lib/wishlist.ts`; server actions `createWishlistItem(raw)`, `updateWishlistItem(raw)`, `deleteWishlistItem(raw)` in `lib/actions/wishlist.ts`.
+- Consumes: `requireUser`, `db`, `wishlistItems` (Task 1), `currencySchema`/`isoDate` (schemas.ts).
 
 **Steps:**
 
-- [ ] Write failing test `lib/actions/wishlist.test.ts`:
+- [ ] Write failing test `lib/actions/wishlist.test.ts` (schema shape only; the schema comes from `schemas.ts`, never from the `'use server'` module):
 
 ```ts
-import { wishlistItemSchema } from './wishlist'
+import { describe, expect, it } from 'vitest'
+import { wishlistInput } from './schemas'
 
-describe('wishlistItemSchema', () => {
+describe('wishlistInput', () => {
   it('accepts a full item', () => {
     expect(
-      wishlistItemSchema.parse({
+      wishlistInput.parse({
         name: 'Desk chair',
         costMinor: 250000,
         currency: 'EUR',
@@ -93,35 +108,85 @@ describe('wishlistItemSchema', () => {
     ).toMatchObject({ name: 'Desk chair', priority: 1 })
   })
   it('defaults priority to 3 and allows omitting targetDate', () => {
-    expect(wishlistItemSchema.parse({ name: 'Phone', costMinor: 500000, currency: 'EGP' })).toMatchObject({ priority: 3 })
+    expect(wishlistInput.parse({ name: 'Phone', costMinor: 500000, currency: 'EGP' })).toMatchObject({ priority: 3 })
   })
   it('rejects zero cost and out-of-range priority', () => {
-    expect(() => wishlistItemSchema.parse({ name: 'X', costMinor: 0, currency: 'EUR' })).toThrow()
-    expect(() => wishlistItemSchema.parse({ name: 'X', costMinor: 100, currency: 'EUR', priority: 0 })).toThrow()
+    expect(() => wishlistInput.parse({ name: 'X', costMinor: 0, currency: 'EUR' })).toThrow()
+    expect(() => wishlistInput.parse({ name: 'X', costMinor: 100, currency: 'EUR', priority: 0 })).toThrow()
   })
 })
 ```
 
-- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect FAIL: module not found.
-- [ ] Implement `lib/actions/wishlist.ts`:
+- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect FAIL: `wishlistInput` not exported.
+- [ ] Add to `lib/actions/schemas.ts` (reuse the `currencySchema` and `isoDate` already defined there; do not hand-roll a new `z.enum`):
+
+```ts
+export const wishlistInput = z.object({
+  name: z.string().trim().min(1).max(80),
+  costMinor: z.number().int().positive(),
+  currency: currencySchema,
+  priority: z.number().int().min(1).max(9).default(3),
+  targetDate: isoDate.optional(),
+})
+```
+
+- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect PASS.
+- [ ] Implement `lib/wishlist.ts` (plain module, no `'use server'`, so it stays unit-testable and its DB client never leaks into the pure planner tests):
+
+```ts
+import { and, eq } from 'drizzle-orm'
+import { db } from '@/lib/db/client'
+import { wishlistItems } from '@/lib/db/schema'
+import type { Currency } from '@/lib/money/money'
+
+// Inline type mirrors lib/expense-categories.ts, keeping this module free of a
+// dependency on the schema; it matches z.infer<typeof wishlistInput>.
+type WishlistData = { name: string; costMinor: number; currency: Currency; priority: number; targetDate?: string }
+
+export async function createItem(userId: string, data: WishlistData): Promise<void> {
+  await db.insert(wishlistItems).values({
+    userId,
+    name: data.name,
+    costMinor: data.costMinor,
+    currency: data.currency,
+    priority: data.priority,
+    targetDate: data.targetDate ?? null,
+  })
+}
+
+export async function updateItem(userId: string, id: string, data: WishlistData): Promise<void> {
+  // currency is not editable once created; status changes only via the purchase flow;
+  // the status='planned' clause keeps a purchased item immutable through this path.
+  await db
+    .update(wishlistItems)
+    .set({
+      name: data.name,
+      costMinor: data.costMinor,
+      priority: data.priority,
+      targetDate: data.targetDate ?? null,
+    })
+    .where(and(eq(wishlistItems.id, id), eq(wishlistItems.userId, userId), eq(wishlistItems.status, 'planned')))
+}
+
+export async function deleteItem(userId: string, id: string): Promise<void> {
+  const deleted = await db
+    .delete(wishlistItems)
+    .where(and(eq(wishlistItems.id, id), eq(wishlistItems.userId, userId), eq(wishlistItems.status, 'planned')))
+    .returning()
+  if (deleted.length === 0) throw new Error('Purchased items must be un-purchased before deleting')
+}
+```
+
+- [ ] Implement `lib/actions/wishlist.ts` (thin wrappers only; every export is an async function):
 
 ```ts
 'use server'
 
 import { z } from 'zod'
-import { and, eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { db } from '@/lib/db/client'
-import { wishlistItems } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
-
-export const wishlistItemSchema = z.object({
-  name: z.string().trim().min(1).max(80),
-  costMinor: z.number().int().positive(),
-  currency: z.enum(['EUR', 'USD', 'EGP']),
-  priority: z.number().int().min(1).max(9).default(3),
-  targetDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-})
+import { wishlistInput } from './schemas'
+import { createItem, updateItem, deleteItem } from '@/lib/wishlist'
 
 const idSchema = z.object({ id: z.string().uuid() })
 
@@ -131,49 +196,29 @@ function revalidateWishlistPaths() {
 }
 
 export async function createWishlistItem(raw: unknown) {
-  const data = wishlistItemSchema.parse(raw)
+  const data = wishlistInput.parse(raw)
   const user = await requireUser()
-  await db.insert(wishlistItems).values({
-    userId: user.id,
-    name: data.name,
-    costMinor: data.costMinor,
-    currency: data.currency,
-    priority: data.priority,
-    targetDate: data.targetDate ?? null,
-  })
+  await createItem(user.id, data)
   revalidateWishlistPaths()
 }
 
 export async function updateWishlistItem(raw: unknown) {
-  const data = wishlistItemSchema.extend({ id: z.string().uuid() }).parse(raw)
+  const { id, ...data } = wishlistInput.extend({ id: z.string().uuid() }).parse(raw)
   const user = await requireUser()
-  await db
-    .update(wishlistItems)
-    .set({
-      name: data.name,
-      costMinor: data.costMinor,
-      priority: data.priority,
-      targetDate: data.targetDate ?? null,
-      // currency intentionally not editable once created; status changes only via the purchase flow
-    })
-    .where(and(eq(wishlistItems.id, data.id), eq(wishlistItems.userId, user.id), eq(wishlistItems.status, 'planned')))
+  await updateItem(user.id, id, data)
   revalidateWishlistPaths()
 }
 
 export async function deleteWishlistItem(raw: unknown) {
   const { id } = idSchema.parse(raw)
   const user = await requireUser()
-  const deleted = await db
-    .delete(wishlistItems)
-    .where(and(eq(wishlistItems.id, id), eq(wishlistItems.userId, user.id), eq(wishlistItems.status, 'planned')))
-    .returning()
-  if (deleted.length === 0) throw new Error('Purchased items must be un-purchased before deleting')
+  await deleteItem(user.id, id)
   revalidateWishlistPaths()
 }
 ```
 
-- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect PASS.
-- [ ] Commit: `git add lib/actions/wishlist.ts lib/actions/wishlist.test.ts && git commit -m "P8: wishlist CRUD actions"`
+- [ ] Run: `npx tsc --noEmit` and `npx vitest run lib/actions/wishlist.test.ts` - expect PASS.
+- [ ] Commit: `git add lib/actions/schemas.ts lib/wishlist.ts lib/actions/wishlist.ts lib/actions/wishlist.test.ts && git commit -m "P8: wishlist CRUD (schema + helper + thin action)"`
 
 ---
 
@@ -243,17 +288,16 @@ export function activeWishlistForPlan(rows: WishlistRow[]): PlanInput['wishlist'
 ```
 
 - [ ] Run: `npx vitest run lib/planner/wishlist.test.ts` - expect PASS.
-- [ ] Modify `lib/planner/input.ts`: add the imports, add the wishlist query to the existing `Promise.all`, and replace the placeholder.
+- [ ] Modify `lib/planner/input.ts`: add the imports, add the wishlist query to the existing `Promise.all`, and replace the placeholder. `eq`/`and` are already imported there; merge `wishlistItems` into the existing `from '@/lib/db/schema'` import line rather than adding a second one.
 
 ```ts
-import { wishlistItems } from '@/lib/db/schema'
 import { activeWishlistForPlan } from './wishlist'
 ```
 
-  Inside the `Promise.all` array, append:
+  Inside the `Promise.all` array, append (the mapper filters status, but filtering in SQL matches how income/bills/installments are queried and avoids shipping purchased rows to the planner):
 
 ```ts
-    db.select().from(wishlistItems).where(eq(wishlistItems.userId, userId)),
+    db.select().from(wishlistItems).where(and(eq(wishlistItems.userId, userId), eq(wishlistItems.status, 'planned'))),
 ```
 
   (destructure it as `wishlistRows` alongside the existing results), then replace
@@ -509,72 +553,83 @@ describe('buildPlan: item in a gapped currency still gets an affordability month
 
 ### Task 6: purchase and un-purchase flow
 
-Source-linked mutability: `purchase` transactions are created and deleted only through these two actions, atomically with the item's status flip.
+Source-linked mutability: `purchase` transactions are created and deleted only through these two actions, atomically with the item's status flip. Both are money-writes, so both uphold the archived-account write-freeze (see Reconciliation): purchase refuses an archived target account, and un-purchase refuses to delete a transaction out of an account that is now archived (the `unconfirmOccurrence` analog). Same split as Task 2: schema in `schemas.ts`, DB logic in `lib/wishlist.ts`, thin `'use server'` wrappers.
 
 **Files:**
-- Modify: `lib/actions/wishlist.ts`
-- Test: `lib/actions/wishlist.test.ts` (extend)
+- Modify: `lib/actions/schemas.ts` (add `purchaseInput`)
+- Modify: `lib/wishlist.ts` (add `purchaseItem`, `unpurchaseItem`)
+- Modify: `lib/actions/wishlist.ts` (add the two wrappers)
+- Test: `lib/actions/wishlist.test.ts` (extend, schema shape)
 
 **Interfaces:**
-- Produces: `purchaseSchema` (zod), `purchaseWishlistItem(raw: unknown)`, `unpurchaseWishlistItem(raw: unknown)`.
-- Consumes: `dbPool` (transactions), `accounts`/`transactions` schema, `todayCairo` (P1).
+- Produces: `purchaseInput` (zod, in `schemas.ts`); `purchaseItem(userId, { itemId, accountId })`, `unpurchaseItem(userId, id)` in `lib/wishlist.ts`; server actions `purchaseWishlistItem(raw)`, `unpurchaseWishlistItem(raw)`.
+- Consumes: `dbPool` (transactions), `accounts`/`transactions` schema, `todayCairo` (P1). The write-freeze guard reads `accounts.archivedAt` inside the transaction (equivalent to `isAccountArchived`, but on the `tx` executor so it stays consistent with the write); wishlist adds NO `archiveBlockers` clause, so this per-write guard is the only defense.
 
 **Steps:**
 
 - [ ] Add failing test to `lib/actions/wishlist.test.ts`:
 
 ```ts
-import { purchaseSchema } from './wishlist'
+import { purchaseInput } from './schemas'
 
-describe('purchaseSchema', () => {
+describe('purchaseInput', () => {
   it('requires item and account uuids', () => {
     expect(
-      purchaseSchema.parse({
+      purchaseInput.parse({
         itemId: '9f8b7c6d-1234-4abc-9def-0123456789ab',
         accountId: '1f8b7c6d-1234-4abc-9def-0123456789ab',
       }),
     ).toBeTruthy()
-    expect(() => purchaseSchema.parse({ itemId: 'nope', accountId: 'nope' })).toThrow()
+    expect(() => purchaseInput.parse({ itemId: 'nope', accountId: 'nope' })).toThrow()
   })
 })
 ```
 
-- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect FAIL: `purchaseSchema` is not exported.
-- [ ] Add to `lib/actions/wishlist.ts`:
+- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect FAIL: `purchaseInput` is not exported.
+- [ ] Add to `lib/actions/schemas.ts`:
+
+```ts
+export const purchaseInput = z.object({ itemId: z.string().uuid(), accountId: z.string().uuid() })
+```
+
+- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect PASS.
+- [ ] Add to `lib/wishlist.ts` (both flows atomic inside one `dbPool.transaction`; both guard the account against `archivedAt`). Merge the new imports into the module's existing import block:
 
 ```ts
 import { dbPool } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
 import { todayCairo } from '@/lib/dates/cairo'
 
-export const purchaseSchema = z.object({ itemId: z.string().uuid(), accountId: z.string().uuid() })
-
-export async function purchaseWishlistItem(raw: unknown) {
-  const { itemId, accountId } = purchaseSchema.parse(raw)
-  const user = await requireUser()
+export async function purchaseItem(
+  userId: string,
+  { itemId, accountId }: { itemId: string; accountId: string },
+): Promise<void> {
   await dbPool.transaction(async (tx) => {
     const [item] = await tx
       .select()
       .from(wishlistItems)
-      .where(and(eq(wishlistItems.id, itemId), eq(wishlistItems.userId, user.id)))
+      .where(and(eq(wishlistItems.id, itemId), eq(wishlistItems.userId, userId)))
     if (!item || item.status !== 'planned') throw new Error('Item not found or already purchased')
     const [account] = await tx
       .select()
       .from(accounts)
-      .where(and(eq(accounts.id, accountId), eq(accounts.userId, user.id)))
+      .where(and(eq(accounts.id, accountId), eq(accounts.userId, userId)))
+    // write-freeze guard (mandatory; wishlist has no archiveBlockers clause): account must be
+    // owned, the right currency, AND not archived. Row already loaded, so no extra round trip.
     if (!account || account.currency !== item.currency) throw new Error('Account must hold the item currency')
+    if (account.archivedAt) throw new Error('Account is archived')
     // shortfall is advisory and lives in the UI: no balance check here, negative balances are allowed
     const [txn] = await tx
       .insert(transactions)
       .values({
-        userId: user.id,
+        userId,
         accountId,
         type: 'purchase',
         amountMinor: -item.costMinor, // outflow stored negative
         currency: item.currency,
         occurredOn: todayCairo(),
         note: `Wishlist: ${item.name}`,
-        sourceType: 'wishlist_item',
+        sourceType: 'wishlist_item', // free-text source_type; a one-time purchase, not an occurrence
         sourceId: item.id,
       })
       .returning()
@@ -585,19 +640,30 @@ export async function purchaseWishlistItem(raw: unknown) {
       .returning()
     if (updated.length === 0) throw new Error('Item was purchased concurrently')
   })
-  revalidateWishlistPaths()
-  revalidatePath('/accounts')
 }
 
-export async function unpurchaseWishlistItem(raw: unknown) {
-  const { id } = idSchema.parse(raw)
-  const user = await requireUser()
+export async function unpurchaseItem(userId: string, id: string): Promise<void> {
   await dbPool.transaction(async (tx) => {
     const [item] = await tx
       .select()
       .from(wishlistItems)
-      .where(and(eq(wishlistItems.id, id), eq(wishlistItems.userId, user.id)))
+      .where(and(eq(wishlistItems.id, id), eq(wishlistItems.userId, userId)))
     if (!item || item.status !== 'purchased') throw new Error('Item is not purchased')
+    if (item.transactionId) {
+      // deleting a source-linked transaction is a money-write: refuse if that account is now
+      // archived (the write-freeze rule for every non-insert write, per the post-P5 remediation).
+      const [txn] = await tx
+        .select({ accountId: transactions.accountId })
+        .from(transactions)
+        .where(eq(transactions.id, item.transactionId))
+      if (txn) {
+        const [acct] = await tx
+          .select({ archivedAt: accounts.archivedAt })
+          .from(accounts)
+          .where(eq(accounts.id, txn.accountId))
+        if (acct?.archivedAt) throw new Error('Account is archived')
+      }
+    }
     const updated = await tx
       .update(wishlistItems)
       .set({ status: 'planned', transactionId: null })
@@ -610,13 +676,34 @@ export async function unpurchaseWishlistItem(raw: unknown) {
         .where(and(eq(transactions.id, item.transactionId), eq(transactions.sourceType, 'wishlist_item')))
     }
   })
+}
+```
+
+- [ ] Add the wrappers to `lib/actions/wishlist.ts`:
+
+```ts
+import { purchaseInput } from './schemas'
+import { purchaseItem, unpurchaseItem } from '@/lib/wishlist'
+
+export async function purchaseWishlistItem(raw: unknown) {
+  const data = purchaseInput.parse(raw)
+  const user = await requireUser()
+  await purchaseItem(user.id, data)
+  revalidateWishlistPaths()
+  revalidatePath('/accounts')
+}
+
+export async function unpurchaseWishlistItem(raw: unknown) {
+  const { id } = idSchema.parse(raw)
+  const user = await requireUser()
+  await unpurchaseItem(user.id, id)
   revalidateWishlistPaths()
   revalidatePath('/accounts')
 }
 ```
 
-- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` - expect PASS.
-- [ ] Commit: `git add lib/actions/wishlist.ts lib/actions/wishlist.test.ts && git commit -m "P8: purchase + un-purchase flow"`
+- [ ] Run: `npx vitest run lib/actions/wishlist.test.ts` and `npx tsc --noEmit` - expect PASS.
+- [ ] Commit: `git add lib/actions/schemas.ts lib/wishlist.ts lib/actions/wishlist.ts lib/actions/wishlist.test.ts && git commit -m "P8: purchase + un-purchase flow (archived-account guarded)"`
 
 ---
 
@@ -938,9 +1025,15 @@ export default async function WishlistItemPage({ params }: { params: Promise<{ i
 }
 ```
 
+- [ ] Wire the screen into navigation. The bottom bar is already at 7 tabs and cramped at 375px (accepted P5 decision), so secondary screens live in the More hub, not a new tab. Add to the `LINKS` array in `app/(app)/more/page.tsx`, next to Debts:
+
+```tsx
+  { href: '/wishlist', label: 'Wishlist' },
+```
+
 - [ ] Run: `npx tsc --noEmit` - expect PASS.
-- [ ] Run: `npm run dev`, open `/wishlist` on a mobile viewport - add an item, see its affordability badge, open Buy with an under-funded account and see the advisory warning without a disabled button, purchase, un-purchase.
-- [ ] Commit: `git add components/wishlist "app/(app)/wishlist" && git commit -m "P8: wishlist screen with affordability badges + purchase sheet"`
+- [ ] Run: `npm run dev`, reach `/wishlist` from More on a mobile viewport - add an item, see its affordability badge, open Buy with an under-funded account and see the advisory warning without a disabled button, purchase, un-purchase.
+- [ ] Commit: `git add components/wishlist "app/(app)/wishlist" "app/(app)/more/page.tsx" && git commit -m "P8: wishlist screen with affordability badges + purchase sheet"`
 
 ---
 
@@ -960,32 +1053,40 @@ export default async function WishlistItemPage({ params }: { params: Promise<{ i
 import { expect, test } from '@playwright/test'
 
 test('wishlist lifecycle: badge, advisory purchase, un-purchase', async ({ page }) => {
+  // Unique name per run: the shared Neon dev DB accumulates rows across runs, and the
+  // wishlist list is unscoped, so an unscoped getByText('Desk chair') hits a Playwright
+  // strict-mode violation once prior runs pile up (the P5 e2e lesson). Scope every
+  // assertion/action to this run's row.
+  const name = `Desk chair ${Date.now()}`
+
   // create an item costing more than the account holds
   await page.goto('/wishlist')
-  await page.getByLabel('Name').fill('Desk chair')
+  await page.getByLabel('Name').fill(name)
   await page.getByLabel('Cost').fill('9999.00')
   await page.getByRole('button', { name: 'Add' }).click()
-  await expect(page.getByText('Desk chair')).toBeVisible()
+
+  const row = page.locator('li', { hasText: name })
+  await expect(row).toBeVisible()
 
   // affordability badge comes from the plan
-  await expect(page.getByText(/Affordable \d{4}-\d{2}|Beyond 24 months/)).toBeVisible()
+  await expect(row.getByText(/Affordable \d{4}-\d{2}|Beyond 24 months/)).toBeVisible()
 
   // purchase: advisory shortfall warning shows, button still works
-  await page.getByRole('button', { name: 'Buy' }).click()
-  await expect(page.getByText('Purchases are never blocked.')).toBeVisible()
-  await page.getByRole('button', { name: 'Confirm purchase' }).click()
-  await expect(page.getByRole('heading', { name: 'Purchased' })).toBeVisible()
-  await expect(page.getByText('Desk chair')).toBeVisible()
+  await row.getByRole('button', { name: 'Buy' }).click()
+  await expect(row.getByText('Purchases are never blocked.')).toBeVisible()
+  await row.getByRole('button', { name: 'Confirm purchase' }).click()
+
+  // item moved to the Purchased section (its row now offers Un-purchase, not Buy)
+  await expect(page.locator('li', { hasText: name }).getByRole('button', { name: 'Un-purchase' })).toBeVisible()
 
   // account went negative (honesty over enforcement)
   await page.goto('/accounts')
-  await expect(page.getByText('-€')).toBeVisible()
+  await expect(page.getByText('-€').first()).toBeVisible()
 
-  // un-purchase restores the item and the balance
+  // un-purchase restores the item to planned (its Buy button returns)
   await page.goto('/wishlist')
-  await page.getByRole('button', { name: 'Un-purchase' }).click()
-  await expect(page.getByRole('heading', { name: 'Purchased' })).not.toBeVisible()
-  await expect(page.getByRole('button', { name: 'Buy' })).toBeVisible()
+  await page.locator('li', { hasText: name }).getByRole('button', { name: 'Un-purchase' }).click()
+  await expect(page.locator('li', { hasText: name }).getByRole('button', { name: 'Buy' })).toBeVisible()
 })
 ```
 
