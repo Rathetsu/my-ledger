@@ -1,6 +1,6 @@
 # Architecture
 
-Current truth of the system design. Terms per [/CONTEXT.md](../../CONTEXT.md); requirements per [the spec](../superpowers/specs/2026-07-07-my-ledger-design.md); rationale in [ADRs](../adr/). P0–P7 are implemented (foundations, accounts & currency, ledger core, income & the shared occurrence rails, recurring bills, count-based installments, expense categories & per-currency insights, flexible debts & the deterministic payoff planner); see [status.md](status.md) for phase status. This page describes the full target design, including modules that later phases (P8+) still build.
+Current truth of the system design. Terms per [/CONTEXT.md](../../CONTEXT.md); requirements per [the spec](../superpowers/specs/2026-07-07-my-ledger-design.md); rationale in [ADRs](../adr/). P0–P8 are implemented (foundations, accounts & currency, ledger core, income & the shared occurrence rails, recurring bills, count-based installments, expense categories & per-currency insights, flexible debts & the deterministic payoff planner, wishlist items with planner funding & a source-linked purchase flow); see [status.md](status.md) for phase status. This page describes the full target design, including modules that later phases (P9+) still build.
 
 ## Core model
 
@@ -30,7 +30,8 @@ lib/
   insights/{variable-spend,category-spend,chart-data}.ts  # spend aggregates (variableSpendActuals feeds the planner) + pure chart pivots
   expense-categories.ts           # category CRUD + categoryId ownership resolver (testable, non-'use server')
   debts/{balance.ts, payments.ts} # derived debt balance + record/reverse payment logic (plain, userId-taking, testable)
-  planner/{types,engine,spend-estimate,input}.ts  # deterministic currency-aware planner (pure engine + spend blend + DB input assembler)
+  wishlist.ts                     # wishlist CRUD + purchase/un-purchase (plain, userId-taking, testable; archived-guarded, atomic)
+  planner/{types,engine,spend-estimate,input,wishlist}.ts  # deterministic currency-aware planner (pure engine incl. wishlist funding + spend blend + DB input assembler + pure wishlist mapper)
   ai/{advisor.ts, sanitize.ts, prompt.ts}  # Gemini advisor: anonymize → prompt → cache
   actions/                        # server actions by domain
 components/                       # mobile-first UI + charts
@@ -40,7 +41,8 @@ components/                       # mobile-first UI + charts
 
 - **Confirm flow** (income/bill/installment occurrence): editable pre-filled sheet → server action → DB transaction: `UPDATE occurrences … WHERE status='pending'` + insert typed transaction (+ decrement installment count). Un-confirm reverses both.
 - **Housekeeping** (`housekeeping(userId, today)`): idempotent; generates current+next-period occurrences (`ON CONFLICT DO NOTHING`), flips overdue, upserts today's snapshot, refreshes stale rates. Called on dashboard load and by the daily cron.
-- **Planner**: pure function over engine inputs → monthly allocations, payoff/affordability months, funding-gap transfer suggestions. Simple monthly interest (`apr/12`) in projections only; DB balances never accrue.
+- **Planner**: pure function over engine inputs → monthly allocations, payoff/affordability months, funding-gap transfer suggestions. Debt-first, then wishlist items are funded from each month's `unallocatedMinor` leftover (target-dated first, then by priority), filling `wishlistFunding` + `wishlistAffordablePeriod` without changing the reported leftover or the debt allocation above it; an affordable item in a currency short on cash gets an advisory transfer suggestion. Simple monthly interest (`apr/12`) in projections only; DB balances never accrue.
+- **Wishlist purchase**: buying an item posts one source-linked `purchase` transaction (negative, item currency) and flips the item to `purchased` atomically; un-purchase reverses both. Both guard the account's `archivedAt` inside the transaction (wishlist has no `archiveBlockers` clause, so the per-write guard is the sole write-freeze defense). Shortfall is advisory in the UI; the action never blocks on balance.
 - **Insights** (`/expenses/insights`): grouped SQL → pure, unit-tested pivots (`pivotByCategory`, `trendSeries`) → per-currency Recharts client components. One section per currency; currencies never share a chart (spec §5.6). Insights show **actuals** (include `one_off`, include the current partial month); the planner's `variableSpendActuals` feed is the opposite — excludes `one_off` and the current partial month so no half-month skews the blend.
 - **AI advisor**: sanitized anonymized payload → `gemini-3-flash-preview` (env-configurable) → free-text second opinion, cached by bucketed-payload hash.
 
