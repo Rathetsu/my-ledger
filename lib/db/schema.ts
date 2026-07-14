@@ -203,3 +203,10 @@ export const wishlistItems = pgTable('wishlist_items', {
   status: wishlistStatus('status').notNull().default('planned'),
   transactionId: uuid('transaction_id'),
 })
+
+export const aiAdviceCache = pgTable('ai_advice_cache', {
+  userId: text('user_id').primaryKey(),
+  payloadHash: text('payload_hash').notNull(),
+  advice: text('advice').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+})
