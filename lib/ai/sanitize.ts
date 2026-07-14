@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import type { Currency } from '@/lib/money/money'
 import { CURRENCIES } from '@/lib/money/money'
 import type { PlanInput, PlanResult } from '@/lib/planner/types'
@@ -125,4 +126,30 @@ export function sanitizePlanPayload(input: PlanInput, result: PlanResult): Sanit
       .map((name) => installmentLabelByName.get(name))
       .filter((label): label is string => label !== undefined),
   }
+}
+
+// Snap to the nearest point on the 1.05^n geometric grid. ~5% wide buckets:
+// changes under ~2.5% keep the bucket, a 10% change always moves it.
+export function bucketMinor(amountMinor: number): number {
+  if (amountMinor === 0) return 0
+  const sign = amountMinor < 0 ? -1 : 1
+  const step = Math.log(1.05)
+  const n = Math.round(Math.log(Math.abs(amountMinor)) / step)
+  return sign * Math.round(Math.exp(n * step))
+}
+
+// Recursively bucket every number that lives under a key containing "Minor".
+function bucketDeep(value: unknown, underMinor: boolean): unknown {
+  if (typeof value === 'number') return underMinor ? bucketMinor(value) : value
+  if (Array.isArray(value)) return value.map((v) => bucketDeep(v, underMinor))
+  if (value !== null && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([k, v]) => [k, bucketDeep(v, underMinor || k.includes('Minor'))]),
+    )
+  }
+  return value
+}
+
+export function cacheKey(payload: SanitizedPayload): string {
+  return createHash('sha256').update(JSON.stringify(bucketDeep(payload, false))).digest('hex')
 }

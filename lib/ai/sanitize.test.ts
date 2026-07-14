@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { PlanInput, PlanResult } from '@/lib/planner/types'
 import { sanitizePlanPayload, seqLabel } from './sanitize'
+import { bucketMinor, cacheKey } from './sanitize'
 
 const RATES = {
   base: 'USD' as const,
@@ -98,5 +99,43 @@ describe('seqLabel', () => {
     expect(seqLabel('debt', 0)).toBe('debtA')
     expect(seqLabel('debt', 25)).toBe('debtZ')
     expect(seqLabel('debt', 26)).toBe('debtAA')
+  })
+})
+
+describe('bucketMinor', () => {
+  it('maps a 1% change to the same bucket', () => {
+    expect(bucketMinor(101000)).toBe(bucketMinor(100000))
+  })
+  it('maps a 10% change to a different bucket', () => {
+    expect(bucketMinor(110000)).not.toBe(bucketMinor(100000))
+  })
+  it('handles zero and negatives', () => {
+    expect(bucketMinor(0)).toBe(0)
+    expect(bucketMinor(-100000)).toBe(-bucketMinor(100000))
+  })
+})
+
+describe('cacheKey', () => {
+  const base = sanitizePlanPayload(input, result)
+  const withBalance = (balanceMinor: number) => ({
+    ...base,
+    debts: [{ ...base.debts[0], balanceMinor }, base.debts[1]],
+  })
+
+  it('is stable for identical payloads', () => {
+    expect(cacheKey(base)).toBe(cacheKey(sanitizePlanPayload(input, result)))
+  })
+  it('is a 64-char sha256 hex string', () => {
+    expect(cacheKey(base)).toMatch(/^[0-9a-f]{64}$/)
+  })
+  it('does not change for a small (1%) amount change', () => {
+    expect(cacheKey(withBalance(3030000))).toBe(cacheKey(withBalance(3000000)))
+  })
+  it('changes for a 10% amount change', () => {
+    expect(cacheKey(withBalance(3300000))).not.toBe(cacheKey(withBalance(3000000)))
+  })
+  it('changes when an APR changes', () => {
+    const bumped = { ...base, debts: [{ ...base.debts[0], apr: 5 }, base.debts[1]] }
+    expect(cacheKey(bumped)).not.toBe(cacheKey(base))
   })
 })
