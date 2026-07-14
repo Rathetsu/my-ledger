@@ -28,14 +28,13 @@ export async function setHomeCurrency(
   return null
 }
 
-const aiEnabledSchema = z.object({ aiEnabled: z.enum(['on']).optional() })
-
 export async function updateAiEnabled(formData: FormData) {
   const user = await requireUser()
-  const parsed = aiEnabledSchema.parse({ aiEnabled: formData.get('aiEnabled') ?? undefined })
+  // A checkbox submits 'on' when checked and is absent otherwise; any other value
+  // reads as unchecked. A single boolean needs no schema (and no throw-on-parse path).
   await db
     .update(settings)
-    .set({ aiEnabled: parsed.aiEnabled === 'on' })
+    .set({ aiEnabled: formData.get('aiEnabled') === 'on' })
     .where(eq(settings.userId, user.id))
   revalidatePath('/settings')
   revalidatePath('/plan')

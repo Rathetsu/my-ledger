@@ -40,10 +40,10 @@ export async function buildPlanInput(userId: string): Promise<PlanInput> {
     db.select().from(wishlistItems).where(and(eq(wishlistItems.userId, userId), eq(wishlistItems.status, 'planned'))),
   ])
 
-  // Each of these queries is a one-shot HTTP round trip (neon-http, see lib/db/client.ts),
-  // so awaiting them one row at a time serializes N round trips end to end. With hundreds of
-  // accounts (accumulated e2e/dev accounts never get archived) that turned /plan into a
-  // 100+ second load; Promise.all lets the independent per-row lookups run concurrently.
+  // variableSpendActuals is one HTTP round trip per currency (neon-http); CURRENCIES is
+  // small (3) and Promise.all runs them concurrently. The former per-account and per-debt
+  // fan-outs that dominated /plan load are now single grouped queries (see
+  // accountBalancesByCurrency and debtBalancesByDebt below / in lib/db + lib/debts).
   const actualsEntries = await Promise.all(
     CURRENCIES.map(async (c) => [c, await variableSpendActuals(userId, c, ACTUALS_MONTHS_BACK)] as const),
   )
