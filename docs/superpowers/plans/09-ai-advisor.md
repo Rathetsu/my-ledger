@@ -46,8 +46,8 @@ export const aiAdviceCache = pgTable('ai_advice_cache', {
 })
 ```
 
-- [ ] Generate and inspect the migration: `pnpm drizzle-kit generate`. Expected: a new file under `drizzle/` containing `CREATE TABLE "ai_advice_cache"` with the four columns and `PRIMARY KEY` on `user_id`.
-- [ ] Apply to the dev database: `pnpm drizzle-kit migrate`. Expected: exit 0.
+- [ ] Generate and inspect the migration: `npm run db:generate -- --name p9-ai-advice-cache`. Expected: a new file under `drizzle/` containing `CREATE TABLE "ai_advice_cache"` with the four columns and `PRIMARY KEY` on `user_id`.
+- [ ] Apply to the dev database: `npm run db:migrate`. Expected: exit 0.
 - [ ] Add the phase env vars to `.env.example`:
 
 ```
@@ -90,12 +90,14 @@ const input: PlanInput = {
   homeCurrency: 'EUR',
   rates: RATES,
   horizonMonths: 24,
+  startPeriod: '2026-07',
   monthlyIncomeMinor: { EUR: 250000 },
   billsMinor: { EGP: 1200000, EUR: 30000 },
   installments: [
     { name: 'iPhone 15 from Amr', monthlyMinor: 150000, currency: 'EGP', remainingCount: 5, apr: 32 },
   ],
   variableSpendMinor: { EGP: 800000 },
+  spendEstimateSource: 'blend',
   debts: [
     { id: 'debt-uuid-1', name: 'Loan from Dad', balanceMinor: 3000000, currency: 'EGP', apr: 0, deadline: '2026-12-31' },
     { id: 'debt-uuid-2', name: 'CIB credit card', balanceMinor: 90000, currency: 'EUR', apr: 18, minPaymentMinor: 5000 },
@@ -115,6 +117,7 @@ const result: PlanResult = {
       fundingGaps: [
         { currency: 'EGP', shortfallMinor: 950000, suggestion: 'Transfer from Revolut EUR to CIB EGP' },
       ],
+      unallocatedMinor: 0,
     },
   ],
   debtPayoffPeriod: { 'debt-uuid-1': '2026-12', 'debt-uuid-2': '2026-08' },
@@ -177,7 +180,7 @@ describe('seqLabel', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/sanitize.test.ts`. Expected: FAIL (module `./sanitize` not found).
+- [ ] Run `npx vitest run lib/ai/sanitize.test.ts`. Expected: FAIL (module `./sanitize` not found).
 - [ ] Implement `lib/ai/sanitize.ts`:
 
 ```ts
@@ -311,7 +314,7 @@ export function sanitizePlanPayload(input: PlanInput, result: PlanResult): Sanit
 }
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/sanitize.test.ts`. Expected: PASS (6 tests).
+- [ ] Run `npx vitest run lib/ai/sanitize.test.ts`. Expected: PASS (6 tests).
 - [ ] Commit: `git add lib/ai/sanitize.ts lib/ai/sanitize.test.ts && git commit -m "feat(ai): sanitizePlanPayload with generic labels and anonymization tests"`
 
 ---
@@ -373,7 +376,7 @@ describe('cacheKey', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/sanitize.test.ts`. Expected: FAIL (`bucketMinor` is not exported).
+- [ ] Run `npx vitest run lib/ai/sanitize.test.ts`. Expected: FAIL (`bucketMinor` is not exported).
 - [ ] Add to `lib/ai/sanitize.ts` (top: `import { createHash } from 'node:crypto'`):
 
 ```ts
@@ -404,7 +407,7 @@ export function cacheKey(payload: SanitizedPayload): string {
 }
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/sanitize.test.ts`. Expected: PASS (all sanitize + bucket + cacheKey tests).
+- [ ] Run `npx vitest run lib/ai/sanitize.test.ts`. Expected: PASS (all sanitize + bucket + cacheKey tests).
 - [ ] Commit: `git add lib/ai/sanitize.ts lib/ai/sanitize.test.ts && git commit -m "feat(ai): 5% geometric bucketing and sha256 cache key"`
 
 ---
@@ -458,7 +461,7 @@ describe('prompt pack', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/prompt.test.ts`. Expected: FAIL (module `./prompt` not found).
+- [ ] Run `npx vitest run lib/ai/prompt.test.ts`. Expected: FAIL (module `./prompt` not found).
 - [ ] Implement `lib/ai/prompt.ts` exactly as follows:
 
 ```ts
@@ -564,7 +567,7 @@ export function buildContents(
 }
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/prompt.test.ts`. Expected: PASS (4 tests).
+- [ ] Run `npx vitest run lib/ai/prompt.test.ts`. Expected: PASS (4 tests).
 - [ ] Commit: `git add lib/ai/prompt.ts lib/ai/prompt.test.ts && git commit -m "feat(ai): prompt pack with system prompt, guardrails, and two few-shot examples"`
 
 ---
@@ -725,7 +728,7 @@ describe('getAdvice', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/advisor.test.ts`. Expected: FAIL (module `./advisor` not found).
+- [ ] Run `npx vitest run lib/ai/advisor.test.ts`. Expected: FAIL (module `./advisor` not found).
 - [ ] Implement `lib/ai/advisor.ts`:
 
 ```ts
@@ -787,7 +790,7 @@ export async function getAdvice(payload: SanitizedPayload): Promise<string | nul
 }
 ```
 
-- [ ] Run `pnpm vitest run lib/ai/advisor.test.ts`. Expected: PASS (9 tests).
+- [ ] Run `npx vitest run lib/ai/advisor.test.ts`. Expected: PASS (9 tests).
 - [ ] Commit: `git add lib/ai/advisor.ts lib/ai/advisor.test.ts && git commit -m "feat(ai): getAdvice with settings gate, cached hash, gemini call, null on any error"`
 
 ---
@@ -856,6 +859,12 @@ describe('POST /api/ai/advice', () => {
     expect(deleted).toHaveLength(0)
   })
 
+  it('accepts a partial per-currency record (only currencies the user holds)', async () => {
+    const partial = { ...FEW_SHOTS[0].input, monthlyIncomeMinor: { EUR: 250000 } }
+    const res = await post({ payload: partial })
+    expect(res.status).toBe(200)
+  })
+
   it('rejects a payload whose labels are not generic', async () => {
     const bad = {
       ...FEW_SHOTS[0].input,
@@ -879,7 +888,7 @@ describe('POST /api/ai/advice', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run app/api/ai/advice/route.test.ts`. Expected: FAIL (module `./route` not found).
+- [ ] Run `npx vitest run app/api/ai/advice/route.test.ts`. Expected: FAIL (module `./route` not found).
 - [ ] Implement `app/api/ai/advice/route.ts`:
 
 ```ts
@@ -897,10 +906,13 @@ const payloadSchema = z.object({
   homeCurrency: currency,
   horizonMonths: z.number().int().positive(),
   spendEstimateSource: z.enum(['baseline', 'blend']),
-  monthlyIncomeMinor: z.record(currency, z.number().int()),
-  billsMinor: z.record(currency, z.number().int()),
-  variableSpendMinor: z.record(currency, z.number().int()),
-  accountBalancesMinor: z.record(currency, z.number().int()),
+  // zod 4's z.record with an enum key schema is exhaustive (requires every enum
+  // key present). sanitizePlanPayload only emits the currencies the user actually
+  // holds, so these four must use z.partialRecord (installed zod ^4.4.3 has it).
+  monthlyIncomeMinor: z.partialRecord(currency, z.number().int()),
+  billsMinor: z.partialRecord(currency, z.number().int()),
+  variableSpendMinor: z.partialRecord(currency, z.number().int()),
+  accountBalancesMinor: z.partialRecord(currency, z.number().int()),
   installments: z.array(
     z.object({
       label: z.string().regex(/^installment[A-Z]+$/),
@@ -953,7 +965,7 @@ export async function POST(req: Request) {
 }
 ```
 
-- [ ] Run `pnpm vitest run app/api/ai/advice/route.test.ts`. Expected: PASS (4 tests).
+- [ ] Run `npx vitest run app/api/ai/advice/route.test.ts`. Expected: PASS (5 tests).
 - [ ] Commit: `git add app/api/ai/advice && git commit -m "feat(ai): zod-validated advice route with cache-bypassing refresh"`
 
 ---
@@ -961,18 +973,17 @@ export async function POST(req: Request) {
 ### Task 7: AI panel on the plan screen + settings toggle
 
 **Files:**
-- Create: `components/ai-panel.tsx`
-- Modify: `app/(app)/plan/page.tsx` (built in P7), `app/(app)/settings/page.tsx` (built in P1), `lib/actions/settings.ts` (built in P1)
+- Modify: `components/plan/ai-advisor-slot.tsx` (built in P7; this task replaces the stub in place, keeping its path, export name, and mount point), `app/(app)/plan/page.tsx` (built in P7), `app/(app)/settings/page.tsx` (built in P1), `lib/actions/settings.ts` (built in P1)
 
 **Interfaces:**
-- Consumes: `sanitizePlanPayload` (Task 2); the plan page's existing `PlanInput`/`PlanResult`/settings values, all already in scope from P7.
-- Produces: `AiPanel({ payload, aiEnabled }: { payload: SanitizedPayload; aiEnabled: boolean })` client component; `updateAiEnabled(formData: FormData)` server action.
+- Consumes: `sanitizePlanPayload` (Task 2); the plan page's existing `input: PlanInput` and `plan: PlanResult` (P7's local name for the engine result is `plan`, not `result`); `getSettings` from `@/lib/db/queries` for the settings row (the plan page does not load settings today).
+- Produces: `AiAdvisorSlot({ payload, aiEnabled }: { payload: SanitizedPayload; aiEnabled: boolean })` client component, replacing the P7 stub (a no-props server component rendering "AI advisor is off."); `updateAiEnabled(formData: FormData)` server action.
 
 Panel states: loading ("Asking the advisor..."), advice text, and the degraded state, which reads exactly: "AI advisor unavailable, your plan above is complete without it." shown when the route returns `advice: null`, on any fetch failure, or immediately (no request at all) when `ai_enabled` is false. The "what gets sent" disclosure is a native `<details>` element showing the exact sanitized JSON. The Refresh button re-posts with `refresh: true`, bypassing the cache.
 
 **Steps:**
 
-- [ ] Create `components/ai-panel.tsx`:
+- [ ] Replace the whole contents of the P7 stub `components/plan/ai-advisor-slot.tsx` (currently a no-props server component rendering "AI advisor is off.") with the real panel below. Same file, same export name, same mount point in `plan/page.tsx`, so no import path changes anywhere:
 
 ```tsx
 'use client'
@@ -985,7 +996,7 @@ type PanelState =
   | { status: 'ready'; advice: string }
   | { status: 'unavailable' }
 
-export function AiPanel({ payload, aiEnabled }: { payload: SanitizedPayload; aiEnabled: boolean }) {
+export function AiAdvisorSlot({ payload, aiEnabled }: { payload: SanitizedPayload; aiEnabled: boolean }) {
   const [state, setState] = useState<PanelState>(
     aiEnabled ? { status: 'loading' } : { status: 'unavailable' },
   )
@@ -1050,31 +1061,23 @@ export function AiPanel({ payload, aiEnabled }: { payload: SanitizedPayload; aiE
 }
 ```
 
-- [ ] Wire it into `app/(app)/plan/page.tsx`. The P7 page already computes `input: PlanInput`, `result: PlanResult`, and the user's settings row; add below the algorithm plan rendering:
+- [ ] Wire it into `app/(app)/plan/page.tsx`. The P7 page already computes `input: PlanInput` and `plan: PlanResult` (its local name for the engine result), but does not load the settings row yet. Add the settings fetch and the sanitized payload, then swap the existing `<AiAdvisorSlot />` call (no props today) for the props version, in the same spot:
 
 ```tsx
-import { AiPanel } from '@/components/ai-panel'
+import { getSettings } from '@/lib/db/queries'
 import { sanitizePlanPayload } from '@/lib/ai/sanitize'
 
-// inside the page component, after buildPlan(input) produced `result`:
-const sanitized = sanitizePlanPayload(input, result)
+// inside the page component, after `const plan = buildPlan(input)`:
+const s = await getSettings(user.id)
+const sanitized = sanitizePlanPayload(input, plan)
 
-// at the bottom of the returned JSX, after the plan sections:
-<AiPanel payload={sanitized} aiEnabled={userSettings.aiEnabled} />
+// replace the existing `<AiAdvisorSlot />` line (same position, after <AlgorithmSuggests .../>) with:
+<AiAdvisorSlot payload={sanitized} aiEnabled={s.aiEnabled} />
 ```
 
-- [ ] Add the `ai_enabled` toggle. In `lib/actions/settings.ts` append (all mutations zod-validated + `revalidatePath` per global constraints):
+- [ ] Add the `ai_enabled` toggle. `lib/actions/settings.ts` already starts with `'use server'` and already imports `revalidatePath`, `eq`, `z`, `requireUser`, `db`, and `settings`, so append ONLY the function below to the end of that file (no new imports, no second `'use server'` directive; pasting a full new file with its own directive and imports would duplicate both and fail to compile):
 
 ```ts
-'use server'
-
-import { eq } from 'drizzle-orm'
-import { revalidatePath } from 'next/cache'
-import { z } from 'zod'
-import { requireUser } from '@/lib/auth'
-import { db } from '@/lib/db/client'
-import { settings } from '@/lib/db/schema'
-
 const aiEnabledSchema = z.object({ aiEnabled: z.enum(['on']).optional() })
 
 export async function updateAiEnabled(formData: FormData) {
@@ -1089,9 +1092,12 @@ export async function updateAiEnabled(formData: FormData) {
 }
 ```
 
-- [ ] In `app/(app)/settings/page.tsx`, add a section to the existing settings form area (the page already loads the settings row as `userSettings`):
+- [ ] In `app/(app)/settings/page.tsx`, the page already loads the settings row as `s` (`const s = await getSettings(user.id)`). Add an import for `updateAiEnabled` and insert a section into the returned JSX, after `<HomeCurrencyForm current={s.homeCurrency} />`:
 
 ```tsx
+import { updateAiEnabled } from '@/lib/actions/settings'
+
+// in the returned JSX, after <HomeCurrencyForm current={s.homeCurrency} />:
 <section aria-label="AI advisor" className="mt-6">
   <h2 className="text-base font-semibold">AI advisor</h2>
   <form action={updateAiEnabled} className="mt-2 flex items-center gap-3">
@@ -1100,7 +1106,7 @@ export async function updateAiEnabled(formData: FormData) {
         id="aiEnabled"
         name="aiEnabled"
         type="checkbox"
-        defaultChecked={userSettings.aiEnabled}
+        defaultChecked={s.aiEnabled}
         className="h-5 w-5"
       />
       Show an AI second opinion on the plan screen
@@ -1112,8 +1118,8 @@ export async function updateAiEnabled(formData: FormData) {
 </section>
 ```
 
-- [ ] Verify it compiles and renders: `pnpm build`. Expected: exit 0. Then `pnpm dev`, open `/plan` on a mobile viewport: panel shows either advice (if `GEMINI_API_KEY` set) or the degraded message; the disclosure opens and shows only generic labels; `/settings` toggle flips `ai_enabled` and the panel degrades when off.
-- [ ] Commit: `git add components/ai-panel.tsx app/\(app\)/plan/page.tsx app/\(app\)/settings/page.tsx lib/actions/settings.ts && git commit -m "feat(ai): plan-screen AI panel with disclosure, refresh, degraded state, and settings toggle"`
+- [ ] Verify it compiles and renders: `npm run build`. Expected: exit 0. Then `npm run dev`, open `/plan` on a mobile viewport: panel shows either advice (if `GEMINI_API_KEY` set) or the degraded message; the disclosure opens and shows only generic labels; `/settings` toggle flips `ai_enabled` and the panel degrades when off.
+- [ ] Commit: `git add components/plan/ai-advisor-slot.tsx app/\(app\)/plan/page.tsx app/\(app\)/settings/page.tsx lib/actions/settings.ts && git commit -m "feat(ai): plan-screen AI panel with disclosure, refresh, degraded state, and settings toggle"`
 
 ---
 
@@ -1203,7 +1209,7 @@ test.describe('AI advisor panel', () => {
 })
 ```
 
-- [ ] Run `pnpm exec playwright test e2e/ai-advisor.spec.ts`. Expected: PASS (3 tests). If a selector misses, fix the screen's accessible name to match the domain vocabulary (CONTEXT.md), not the test.
+- [ ] Run `npx playwright test e2e/ai-advisor.spec.ts`. Expected: PASS (3 tests). If a selector misses, fix the screen's accessible name to match the domain vocabulary (CONTEXT.md), not the test.
 - [ ] Commit: `git add e2e/ai-advisor.spec.ts && git commit -m "test(ai): e2e for mocked advice, sanitized disclosure, and 429 degradation"`
 
 ---
@@ -1215,9 +1221,9 @@ test.describe('AI advisor panel', () => {
 
 **Steps:**
 
-- [ ] Run the full unit suite: `pnpm test`. Expected: all green, including every earlier phase.
-- [ ] Run the full E2E suite: `pnpm exec playwright test`. Expected: all green.
-- [ ] Run the production build: `pnpm build`. Expected: exit 0.
+- [ ] Run the full unit suite: `npm test`. Expected: all green, including every earlier phase.
+- [ ] Run the full E2E suite: `npx playwright test`. Expected: all green.
+- [ ] Run the production build: `npm run build`. Expected: exit 0.
 - [ ] Manual mobile-viewport pass on `/plan`: advice or degraded message, disclosure, refresh, settings toggle.
 - [ ] Update the P9 row in `docs/wiki/status.md` to `done`.
 - [ ] Commit: `git add docs/wiki/status.md && git commit -m "docs(status): P9 AI advisor complete"`

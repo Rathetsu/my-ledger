@@ -20,7 +20,7 @@ Backlinks: [Plans master index](../plans/README.md) | [Design spec](../specs/202
 - TDD: failing test → minimal code → pass → commit. Frequent small commits.
 - The deterministic engine owns all numbers; the AI only quotes.
 
-**Phase conventions:** unit tests colocated as `*.test.ts`; E2E specs in `e2e/`; imports use the `@/` alias. Canonical interfaces consumed exactly as published: `housekeeping(userId, today)` (P3), `getRates(): Promise<Rates>` (cache-first, refetches when older than 24h, seed/last-good fallback, P1), `convert(amountMinor, from, to, rates)` (round half-up, base USD cross rates, P1), `accountBalanceMinor(accountId)` (P1, exported from `lib/db`; if P1 placed it in a submodule, re-export it from `lib/db/index.ts` as part of Task 3), `todayCairo()` (P1).
+**Phase conventions:** unit tests colocated as `*.test.ts`; E2E specs in `e2e/`; imports use the `@/` alias. Canonical interfaces consumed exactly as published: `housekeeping(userId, today)` (P3), `getRates(): Promise<Rates>` (cache-first, refetches when older than 24h, seed/last-good fallback, P1), `convert(amountMinor, from, to, rates)` (round half-up, base USD cross rates, P1), `totalsByCurrency(userId)` (shipped, `@/lib/db/queries` - there is no `lib/db/index.ts`, always import from the submodule), `debtBalanceMinor(debtId)` (shipped, `@/lib/debts/balance`), `todayCairo()` (P1).
 
 ---
 
@@ -35,7 +35,7 @@ Backlinks: [Plans master index](../plans/README.md) | [Design spec](../specs/202
 
 **Steps:**
 
-- [ ] Add the table to `lib/db/schema.ts` (schema tasks carry no unit test; the generated SQL is the check). `bigint` mode `number` for money columns so long-horizon EGP totals cannot overflow int4:
+- [ ] Add the table to `lib/db/schema.ts` (schema tasks carry no unit test; the generated SQL is the check). Imports: add `bigint` to the file's existing `drizzle-orm/pg-core` import; `uniqueIndex` is already imported there, and `currencyEnum` is defined in the same file. Repo conventions: every enumerated column is a pgEnum (see `settings.homeCurrency`), and uniqueness is expressed with `uniqueIndex(...)` in the table's third argument (see `occurrences`):
 
 ```ts
 export const netWorthSnapshots = pgTable(
@@ -45,17 +45,19 @@ export const netWorthSnapshots = pgTable(
     userId: text('user_id').notNull(),
     date: date('date').notNull(), // Cairo calendar day, YYYY-MM-DD
     perCurrency: jsonb('per_currency').notNull().$type<Partial<Record<'EUR' | 'USD' | 'EGP', number>>>(),
+    // bigint diverges from the integer-column convention on purpose: these are converted
+    // SUMS that can exceed int4 for EGP-home users; mode 'number' keeps them JS numbers.
     combinedMinor: bigint('combined_minor', { mode: 'number' }).notNull(),
-    homeCurrency: text('home_currency').notNull().$type<'EUR' | 'USD' | 'EGP'>(),
+    homeCurrency: currencyEnum('home_currency').notNull(),
     rates: jsonb('rates').notNull().$type<{ base: 'USD'; rates: Record<'EUR' | 'USD' | 'EGP', number>; fetchedAt: string }>(),
     totalDebtMinor: bigint('total_debt_minor', { mode: 'number' }).notNull(),
   },
-  (t) => [unique('net_worth_snapshots_user_date').on(t.userId, t.date)],
+  (t) => [uniqueIndex('net_worth_snapshots_user_date').on(t.userId, t.date)],
 )
 ```
 
-- [ ] Generate and inspect the migration: `pnpm drizzle-kit generate`. Expected: SQL containing `CREATE TABLE "net_worth_snapshots"` and a `UNIQUE` constraint on `("user_id","date")`.
-- [ ] Apply to the dev database: `pnpm drizzle-kit migrate`. Expected: exit 0.
+- [ ] Generate and inspect the migration: `npm run db:generate -- --name p10-net-worth-snapshots`. Expected: SQL containing `CREATE TABLE "net_worth_snapshots"` and a unique index on `("user_id","date")`.
+- [ ] Apply to the dev database: `npm run db:migrate`. Expected: exit 0.
 - [ ] Commit: `git add lib/db/schema.ts drizzle && git commit -m "feat(snapshots): net_worth_snapshots table with UNIQUE(user_id, date)"`
 
 ---
@@ -89,7 +91,7 @@ function rederiveNetWorthMinor(perCurrency: Partial<Record<Currency, number>>, s
 function rederiveDebtMinor(totalDebtMinor: number, snapshotHome: Currency, snapshotRates: Rates, currentHome: Currency): number
 ```
 
-Per spec §3: convert each per-currency total once, round half-up, then sum. Re-derivation always uses the SNAPSHOT's stored rates, never today's.
+Per spec §3: convert each per-currency total once, round half-up, then sum. Re-derivation always uses the SNAPSHOT's stored rates, never today's. Note: debt is stored as a single home-currency total, so after a home-currency switch the re-derived debt line can drift by integer rounding versus a per-currency re-derivation; accepted because trend charts are advisory display.
 
 **Steps:**
 
@@ -167,7 +169,7 @@ describe('rederiveDebtMinor', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run lib/housekeeping/snapshot.test.ts`. Expected: FAIL (module `./snapshot` not found).
+- [ ] Run `npx vitest run lib/housekeeping/snapshot.test.ts`. Expected: FAIL (module `./snapshot` not found).
 - [ ] Implement the pure part of `lib/housekeeping/snapshot.ts`:
 
 ```ts
@@ -247,7 +249,7 @@ export function rederiveDebtMinor(
 }
 ```
 
-- [ ] Run `pnpm vitest run lib/housekeeping/snapshot.test.ts`. Expected: PASS (6 tests).
+- [ ] Run `npx vitest run lib/housekeeping/snapshot.test.ts`. Expected: PASS (6 tests).
 - [ ] Commit: `git add lib/housekeeping/snapshot.ts lib/housekeeping/snapshot.test.ts && git commit -m "feat(snapshots): pure snapshot math and stored-rates re-derivation"`
 
 ---
@@ -259,12 +261,12 @@ export function rederiveDebtMinor(
 - Test: `lib/housekeeping/upsert-snapshot.test.ts`
 
 **Interfaces:**
-- Consumes: `getRates` (P1: cache-first, refetches when the stored row is older than 24h, so calling it here IS the "refresh stale rates" housekeeping step), `accountBalanceMinor` (P1), `db`, schema tables `settings`, `accounts`, `flexibleDebts`, `transactions`, `netWorthSnapshots`.
+- Consumes: `getRates` (P1: cache-first, refetches when the stored row is older than 24h, so calling it here IS the "refresh stale rates" housekeeping step), `totalsByCurrency` (`@/lib/db/queries` - the same query the dashboard net-worth number uses), `debtBalanceMinor` (`@/lib/debts/balance` - the shipped derivation: `originalMinor` plus the SIGNED sum of `debt_payment`/`adjustment` rows), `db`, schema tables `settings`, `flexibleDebts`, `netWorthSnapshots`.
 - Produces: `upsertDailySnapshot(userId: string, date: string): Promise<void>`; `housekeeping(userId, today)` (canonical signature unchanged) now ends with the snapshot step.
 
 **Steps:**
 
-- [ ] Write the failing test `lib/housekeeping/upsert-snapshot.test.ts`. The mock db honors the `onConflictDoUpdate` target semantics with an in-memory map keyed by `(userId, date)`, so running the upsert twice on the same Cairo date must update the same row (the real constraint from Task 1 enforces this in Postgres; the E2E in Task 6 exercises it for real):
+- [ ] Write the failing test `lib/housekeeping/upsert-snapshot.test.ts`. The mock db honors the `onConflictDoUpdate` target semantics with an in-memory map keyed by `(userId, date)`, so running the upsert twice on the same Cairo date must update the same row (the real constraint from Task 1 enforces this in Postgres; the E2E in Task 6 exercises it for real). `@/lib/debts/balance` is deliberately NOT mocked: the real `debtBalanceMinor` runs against the mocked client, so the signed-adjustment math is exercised - a positive adjustment must INCREASE the balance, and an abs-based derivation would invert it:
 
 ```ts
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -276,8 +278,12 @@ const RATES = {
 }
 
 const state = {
-  balances: { a1: 100000, a2: 2000000 } as Record<string, number>,
-  paidTotal: -2000000, // debt payments as seen in the ledger
+  totals: { EUR: 100000, EGP: 2000000 } as Record<string, number>,
+  // Payments stored negative; adjustments SIGNED (positive = owe more).
+  debtTransactions: [
+    { type: 'debt_payment', amountMinor: -500000 },
+    { type: 'adjustment', amountMinor: 1000000 },
+  ] as { type: string; amountMinor: number }[],
   store: new Map<string, Record<string, unknown>>(),
 }
 
@@ -285,8 +291,8 @@ vi.mock('@/lib/currency/rates', () => ({
   getRates: vi.fn(async () => RATES),
 }))
 
-vi.mock('@/lib/db', () => ({
-  accountBalanceMinor: vi.fn(async (id: string) => state.balances[id]),
+vi.mock('@/lib/db/queries', () => ({
+  totalsByCurrency: vi.fn(async () => state.totals),
 }))
 
 vi.mock('@/lib/db/client', async () => {
@@ -297,14 +303,9 @@ vi.mock('@/lib/db/client', async () => {
         from: (table: unknown) => ({
           where: async () => {
             if (table === schema.settings) return [{ userId: 'user-1', homeCurrency: 'EUR' }]
-            if (table === schema.accounts)
-              return [
-                { id: 'a1', currency: 'EUR' },
-                { id: 'a2', currency: 'EGP' },
-              ]
             if (table === schema.flexibleDebts)
               return [{ id: 'd1', userId: 'user-1', currency: 'EGP', originalMinor: 5000000 }]
-            if (table === schema.transactions) return [{ total: state.paidTotal }]
+            if (table === schema.transactions) return state.debtTransactions
             return []
           },
         }),
@@ -326,25 +327,26 @@ import { upsertDailySnapshot } from './snapshot'
 describe('upsertDailySnapshot', () => {
   beforeEach(() => {
     state.store.clear()
-    state.balances = { a1: 100000, a2: 2000000 }
+    state.totals = { EUR: 100000, EGP: 2000000 }
   })
 
-  it('writes one row with derived per-currency totals, combined value, and derived debt', async () => {
+  it('writes one row with per-currency totals, combined value, and the derived signed debt', async () => {
     await upsertDailySnapshot('user-1', '2026-07-07')
     expect(state.store.size).toBe(1)
     const row = state.store.get('user-1|2026-07-07')!
     expect(row.perCurrency).toEqual({ EUR: 100000, EGP: 2000000 })
     // EUR 100000 + EGP 2000000 -> 36000 EUR = 136000.
     expect(row.combinedMinor).toBe(136000)
-    // Debt: 5000000 original - |−2000000| paid = 3000000 EGP -> 54000 EUR.
-    expect(row.totalDebtMinor).toBe(54000)
+    // Debt: 5000000 - 500000 paid + 1000000 adjustment = 5500000 EGP -> 99000 EUR.
+    // An abs-based derivation would give 5000000 - |−500000 + 1000000| = 4500000 (wrong).
+    expect(row.totalDebtMinor).toBe(99000)
     expect(row.homeCurrency).toBe('EUR')
     expect(row.rates).toEqual(RATES)
   })
 
   it('re-running on the same Cairo date updates the same row', async () => {
     await upsertDailySnapshot('user-1', '2026-07-07')
-    state.balances = { a1: 110000, a2: 2000000 }
+    state.totals = { EUR: 110000, EGP: 2000000 }
     await upsertDailySnapshot('user-1', '2026-07-07')
     expect(state.store.size).toBe(1)
     expect(state.store.get('user-1|2026-07-07')!.combinedMinor).toBe(146000)
@@ -358,15 +360,16 @@ describe('upsertDailySnapshot', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run lib/housekeeping/upsert-snapshot.test.ts`. Expected: FAIL (`upsertDailySnapshot` is not exported).
+- [ ] Run `npx vitest run lib/housekeeping/upsert-snapshot.test.ts`. Expected: FAIL (`upsertDailySnapshot` is not exported).
 - [ ] Append to `lib/housekeeping/snapshot.ts`:
 
 ```ts
-import { and, eq, isNull, sql } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { getRates } from '@/lib/currency/rates'
-import { accountBalanceMinor } from '@/lib/db'
 import { db } from '@/lib/db/client'
-import { accounts, flexibleDebts, netWorthSnapshots, settings, transactions } from '@/lib/db/schema'
+import { totalsByCurrency } from '@/lib/db/queries'
+import { flexibleDebts, netWorthSnapshots, settings } from '@/lib/db/schema'
+import { debtBalanceMinor } from '@/lib/debts/balance'
 
 export async function upsertDailySnapshot(userId: string, date: string): Promise<void> {
   // getRates() is cache-first and refetches when the stored row is older than 24h,
@@ -376,37 +379,23 @@ export async function upsertDailySnapshot(userId: string, date: string): Promise
   const [userSettings] = await db.select().from(settings).where(eq(settings.userId, userId))
   const homeCurrency = (userSettings?.homeCurrency ?? 'EUR') as Currency
 
-  // Per-currency totals across non-archived accounts (balances are always derived).
-  const accountRows = await db
-    .select({ id: accounts.id, currency: accounts.currency })
-    .from(accounts)
-    .where(and(eq(accounts.userId, userId), isNull(accounts.archivedAt)))
-  const accountTotalsMinor: Partial<Record<Currency, number>> = {}
-  for (const a of accountRows) {
-    const c = a.currency as Currency
-    accountTotalsMinor[c] = (accountTotalsMinor[c] ?? 0) + (await accountBalanceMinor(a.id))
-  }
-  // ponytail: sequential per-account queries, fine for a single user's handful of accounts
+  // Per-currency totals in ONE grouped query - the exact query behind the dashboard
+  // net-worth number, so the snapshot always matches what the dashboard shows.
+  // Never loop accounts calling accountBalanceMinor per account: that is the documented
+  // N+1 (one Neon HTTP round trip each; ~500 accumulated dev accounts = ~60s loads).
+  const accountTotalsMinor = await totalsByCurrency(userId)
 
-  // Total debt = sum of derived flexible-debt balances (original minus payments).
+  // Total debt = sum of derived balances via the shipped debtBalanceMinor:
+  // originalMinor + SIGNED sum of rows filtered to type IN ('debt_payment','adjustment').
+  // Payments are stored negative; adjustments are signed (positive = owe more).
   const debtRows = await db.select().from(flexibleDebts).where(eq(flexibleDebts.userId, userId))
   const debtTotalsMinor: Partial<Record<Currency, number>> = {}
   for (const d of debtRows) {
-    const [paid] = await db
-      .select({ total: sql<number>`coalesce(sum(${transactions.amountMinor}), 0)::bigint` })
-      .from(transactions)
-      .where(
-        and(
-          eq(transactions.userId, userId),
-          eq(transactions.sourceType, 'flexible_debt'),
-          eq(transactions.sourceId, d.id),
-        ),
-      )
-    // Absolute sum: correct whether P2 stores outflows as negative or positive amounts.
-    const remaining = d.originalMinor - Math.abs(Number(paid?.total ?? 0))
-    if (remaining > 0) {
+    // ponytail: one round trip per debt; debts are few per user, so this stays flat
+    const balance = await debtBalanceMinor(d.id)
+    if (balance > 0) {
       const c = d.currency as Currency
-      debtTotalsMinor[c] = (debtTotalsMinor[c] ?? 0) + remaining
+      debtTotalsMinor[c] = (debtTotalsMinor[c] ?? 0) + balance
     }
   }
 
@@ -427,25 +416,11 @@ export async function upsertDailySnapshot(userId: string, date: string): Promise
 }
 ```
 
-- [ ] Run `pnpm vitest run lib/housekeeping/upsert-snapshot.test.ts`. Expected: PASS (3 tests).
-- [ ] Extend `lib/housekeeping/index.ts`: keep P3's body (occurrence generation, then overdue flips) and append the snapshot as the final step, preserving the canonical signature:
-
-```ts
-import { upsertDailySnapshot } from './snapshot'
-
-export async function housekeeping(userId: string, today: string): Promise<void> {
-  // P3 steps, unchanged: generate current+next period occurrences (ON CONFLICT DO NOTHING),
-  // then flip pending -> overdue for occurrences past their due date.
-  await generateOccurrences(userId, today)
-  await flipOverdue(userId, today)
-  // P10: refresh stale rates + upsert today's snapshot. Idempotent per UNIQUE(user_id, date).
-  await upsertDailySnapshot(userId, today)
-}
-```
-
-(The two P3 function names above must match whatever P3 actually named its internal steps; the contract is only that the P3 behavior runs first and `upsertDailySnapshot(userId, today)` runs last.)
-
-- [ ] Run the whole housekeeping test set to prove P3 behavior is intact: `pnpm vitest run lib/housekeeping`. Expected: PASS (P3 suites plus the two new files).
+- [ ] Run `npx vitest run lib/housekeeping/upsert-snapshot.test.ts`. Expected: PASS (3 tests).
+- [ ] Extend `lib/housekeeping/index.ts` with the minimal change - do NOT restructure the existing body. `housekeeping` there is one inline function (income + bills + installments occurrence generation with the non-recurring one-shot logic, startDate filter and remaining-count caps, a single `onConflictDoNothing` insert, then the overdue update); there are no `generateOccurrences`/`flipOverdue` helpers to call, and pasting a rewritten body would delete all of that (this exact verbatim-paste regression happened in P5 and P7). The whole change is two lines:
+  - add `import { upsertDailySnapshot } from './snapshot'` to the imports;
+  - append `await upsertDailySnapshot(userId, today)` as the LAST statement of the existing `housekeeping` body, after the overdue `db.update(occurrences)...` call. Nothing else in the file changes.
+- [ ] Run the whole housekeeping test set to prove P3 behavior is intact: `npx vitest run lib/housekeeping`. Expected: PASS (existing suites plus the two new files).
 - [ ] Commit: `git add lib/housekeeping && git commit -m "feat(snapshots): housekeeping upserts today's snapshot with derived totals and current rates"`
 
 ---
@@ -454,7 +429,7 @@ export async function housekeeping(userId: string, today: string): Promise<void>
 
 **Files:**
 - Create: `app/api/cron/daily/route.ts`
-- Create or Modify: `vercel.json`
+- Modify: `vercel.json` (already exists with the shipped `buildCommand`; merge, never replace)
 - Test: `app/api/cron/daily/route.test.ts`
 
 **Interfaces:**
@@ -521,7 +496,7 @@ describe('GET /api/cron/daily', () => {
 })
 ```
 
-- [ ] Run `pnpm vitest run app/api/cron/daily/route.test.ts`. Expected: FAIL (module `./route` not found).
+- [ ] Run `npx vitest run app/api/cron/daily/route.test.ts`. Expected: FAIL (module `./route` not found).
 - [ ] Implement `app/api/cron/daily/route.ts`:
 
 ```ts
@@ -546,11 +521,12 @@ export async function GET(req: Request) {
 }
 ```
 
-- [ ] Run `pnpm vitest run app/api/cron/daily/route.test.ts`. Expected: PASS (4 tests).
-- [ ] Create `vercel.json` at the repo root (or add the `crons` key if P0 already created the file):
+- [ ] Run `npx vitest run app/api/cron/daily/route.test.ts`. Expected: PASS (4 tests). The per-user loop is sequential and unbounded by design; fine for this single-user app at this scale.
+- [ ] Merge the `crons` key into the EXISTING `vercel.json` at the repo root - it already contains the shipped `buildCommand` that runs migrations on deploy, and replacing the file with a crons-only object would silently stop migrations. The full merged file:
 
 ```json
 {
+  "buildCommand": "drizzle-kit migrate && next build",
   "crons": [
     {
       "path": "/api/cron/daily",
@@ -664,7 +640,7 @@ const trendPoints: TrendPoint[] = snapshotRows.map((s) => ({
 <TrendCharts points={trendPoints} homeCurrency={home} />
 ```
 
-- [ ] Verify: `pnpm build`. Expected: exit 0. Then `pnpm dev`, open `/` on a mobile viewport: with fewer than 2 snapshots the empty state shows; after a second day (or after Task 6 seeding) two line charts render.
+- [ ] Verify: `npm run build`. Expected: exit 0. Then `npm run dev`, open `/` on a mobile viewport: with fewer than 2 snapshots the empty state shows; after a second day (or after Task 6 seeding) two line charts render.
 - [ ] Commit: `git add components/trend-charts.tsx app/\(app\)/page.tsx && git commit -m "feat(trends): dashboard net-worth and debt charts re-derived from stored snapshot rates"`
 
 ---
@@ -675,15 +651,15 @@ const trendPoints: TrendPoint[] = snapshotRows.map((s) => ({
 - Create: `e2e/trends.spec.ts`
 
 **Interfaces:**
-- Consumes: `@neondatabase/serverless` `neon()` raw SQL against `DATABASE_URL` (test database) for seeding; the test auth project sign-in (env `E2E_EMAIL` / `E2E_PASSWORD`).
+- Consumes: `@neondatabase/serverless` `neon()` raw SQL against `DATABASE_URL` (test database) for seeding; the shipped auth harness - `e2e/auth.setup.ts` signs in once with env `E2E_TEST_EMAIL` / `E2E_TEST_PASSWORD` and persists `e2e/.auth/user.json`, and every spec runs pre-authenticated via the storageState project. Specs NEVER sign in per test; do not hand-roll a sign-in helper.
 
 **Steps:**
 
-- [ ] Write `e2e/trends.spec.ts`:
+- [ ] Write `e2e/trends.spec.ts`. The user lookup goes through the Better Auth `user` table (`lib/db/auth-schema.ts`) by the known `E2E_TEST_EMAIL`; "first settings row" is wrong on the shared multi-user dev DB:
 
 ```ts
 import { neon } from '@neondatabase/serverless'
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 const sql = neon(process.env.DATABASE_URL!)
 
@@ -693,25 +669,14 @@ const RATES = JSON.stringify({
   fetchedAt: '2026-07-05T03:00:00.000Z',
 })
 
-async function signIn(page: Page) {
-  await page.goto('/')
-  if (await page.getByLabel('Email').isVisible({ timeout: 3000 }).catch(() => false)) {
-    await page.getByLabel('Email').fill(process.env.E2E_EMAIL!)
-    await page.getByLabel('Password').fill(process.env.E2E_PASSWORD!)
-    await page.getByRole('button', { name: /sign in/i }).click()
-    await page.waitForURL('**/')
-  }
-}
-
 async function testUserId(): Promise<string> {
-  const rows = (await sql`select user_id from settings limit 1`) as { user_id: string }[]
+  const rows = (await sql`select id from "user" where email = ${process.env.E2E_TEST_EMAIL!}`) as { id: string }[]
   expect(rows.length).toBe(1)
-  return rows[0].user_id
+  return rows[0].id
 }
 
 test.describe('dashboard trends', () => {
   test('shows the empty state with fewer than two snapshots', async ({ page }) => {
-    await signIn(page)
     const userId = await testUserId()
     await sql`delete from net_worth_snapshots where user_id = ${userId}`
     // Dashboard load runs housekeeping, creating exactly one snapshot (today's).
@@ -720,7 +685,6 @@ test.describe('dashboard trends', () => {
   })
 
   test('renders both charts after housekeeping ran with seeded history', async ({ page }) => {
-    await signIn(page)
     const userId = await testUserId()
     await sql`delete from net_worth_snapshots where user_id = ${userId}`
     for (const [d, combined, debt] of [
@@ -751,7 +715,7 @@ test.describe('cron route', () => {
 })
 ```
 
-- [ ] Run `pnpm exec playwright test e2e/trends.spec.ts`. Expected: PASS (3 tests). If a selector misses, fix the screen's accessible name, not the test.
+- [ ] Run `npx playwright test e2e/trends.spec.ts`. Expected: PASS (3 tests). If a selector misses, fix the screen's accessible name, not the test.
 - [ ] Commit: `git add e2e/trends.spec.ts && git commit -m "test(trends): e2e for seeded trend charts, empty state, and cron auth"`
 
 ---
@@ -763,9 +727,9 @@ test.describe('cron route', () => {
 
 **Steps:**
 
-- [ ] Run the full unit suite: `pnpm test`. Expected: all green.
-- [ ] Run the full E2E suite: `pnpm exec playwright test`. Expected: all green.
-- [ ] Run the production build: `pnpm build`. Expected: exit 0.
+- [ ] Run the full unit suite: `npm test`. Expected: all green.
+- [ ] Run the full E2E suite: `npx playwright test`. Expected: all green.
+- [ ] Run the production build: `npm run build`. Expected: exit 0.
 - [ ] Manual mobile-viewport pass on `/`: trends section (charts or empty state), attention list intact, no regression to P3 housekeeping behavior.
 - [ ] After deploying: hit `/api/cron/daily` once with `curl -H "Authorization: Bearer $CRON_SECRET" https://<deployment>/api/cron/daily` and expect `{"ok":true,"ran":1}`; confirm a snapshot row exists for today.
 - [ ] Update the P10 row in `docs/wiki/status.md` to `done`.

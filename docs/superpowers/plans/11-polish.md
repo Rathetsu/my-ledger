@@ -4,11 +4,11 @@
 
 Backlinks: [Plans master index](../plans/README.md) | [Design spec](../specs/2026-07-07-my-ledger-design.md) (esp. §5.13, §7) | Previous: [10-cron-and-snapshots.md](10-cron-and-snapshots.md) | Back to: [README.md](README.md)
 
-**Goal:** Ship the finish line: guided first-run empty states on the dashboard (checklist card, no blocking wizard), empty states on every list screen, route-group error and loading states, an inline form-error pattern for failed server actions, a concrete accessibility pass, a responsive audit (bottom tabs on mobile, sidebar from `md`), and one full-scenario Playwright walkthrough of the spec's top scenario, then the final all-green gate.
+**Goal:** Ship the finish line: guided first-run empty states on the dashboard (checklist card, no blocking wizard), re-skinned empty states on every list screen (each screen already ships inline copy; Task 3 moves it onto the shared component), route-group error and loading states, an inline form-error pattern for failed server actions, a concrete accessibility pass, a responsive audit (bottom tabs on mobile, sidebar from `md`), and one full-scenario Playwright walkthrough of the spec's top scenario, then the final all-green gate.
 
 **Architecture:** P11 adds thin presentational pieces (EmptyState, SetupChecklist, FormErrors, error/loading boundaries, sidebar) and modifies existing screens from P0-P10; it introduces no new tables, actions with business logic, or engine changes. The walkthrough spec is the phase's real deliverable: it drives the whole app end to end through the browser against the test auth project, with the AI seam mocked exactly as in P9.
 
-**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Playwright, `@neondatabase/serverless` for the walkthrough's database reset, existing Vitest suites (this phase has fewer TDD units; every task instead ends in a concrete verifiable check).
+**Tech Stack:** Next.js App Router + TypeScript + Tailwind (mobile-first), Playwright, `@neondatabase/serverless` for the walkthrough's snapshot seed, existing Vitest suites (this phase has fewer TDD units; every task instead ends in a concrete verifiable check).
 
 **Global Constraints** (from [plans README](../plans/README.md), verbatim):
 
@@ -50,7 +50,7 @@ export function EmptyState({ title, body, action }: { title: string; body: strin
 }
 ```
 
-- [ ] Verify it compiles: `pnpm build`. Expected: exit 0.
+- [ ] Verify it compiles: `npm run build`. Expected: exit 0.
 - [ ] Commit: `git add components/empty-state.tsx && git commit -m "feat(polish): shared EmptyState component"`
 
 ---
@@ -165,124 +165,55 @@ const [[acct], [inc], [bill], [inst], [exp]] = await Promise.all([
 />
 ```
 
-- [ ] Verify: `pnpm build` exits 0; `pnpm dev` with an empty user shows the card with "Create your accounts" linked; the card disappears once all four steps are done. (The walkthrough spec in Task 8 asserts both states.)
+- [ ] Verify: `npm run build` exits 0; `npm run dev` with an empty user shows the card with "Create your accounts" linked; the card disappears once all four steps are done. (The walkthrough spec in Task 8 asserts both states.)
 - [ ] Commit: `git add components/setup-checklist.tsx app/\(app\)/page.tsx && git commit -m "feat(polish): first-run setup checklist card on the dashboard"`
 
 ---
 
-### Task 3: empty states on every list screen
+### Task 3: re-skin the existing inline empty states with `EmptyState`
 
 **Files:**
-- Modify: `app/(app)/transactions/page.tsx`, `app/(app)/bills/page.tsx`, `app/(app)/installments/page.tsx`, `app/(app)/debts/page.tsx`, `app/(app)/wishlist/page.tsx`, `app/(app)/expenses/page.tsx` (insights live here per the module map)
+- Modify: `app/(app)/accounts/page.tsx`, `app/(app)/transactions/page.tsx`, `app/(app)/income/page.tsx`, `app/(app)/bills/page.tsx`, `app/(app)/installments/page.tsx`, `app/(app)/debts/page.tsx`, `app/(app)/wishlist/page.tsx`, `app/(app)/expenses/page.tsx`, `app/(app)/expenses/categories/page.tsx`, `app/(app)/expenses/insights/page.tsx`, `app/(app)/plan/page.tsx`
 
 **Interfaces:**
 - Consumes: `EmptyState` (Task 1); each page's existing list query and existing add control.
 
-Exact copy per screen:
+Every list screen ALREADY ships an inline empty state with its own copy (a bare `<p>` or `<li>`); this task is not "add empty states", it is "re-skin the existing inline empty states with the shared `EmptyState` component, keeping the existing copy by default" (the walkthrough spec asserts these exact strings). The definitive set:
 
-| Screen | Title | Body |
-|---|---|---|
-| Transactions | No transactions yet | Money you log or confirm shows up here, newest first. |
-| Bills | No bills yet | Add recurring commitments like rent or internet and confirm them each month. |
-| Installments | No installments yet | Track fixed monthly payments with a countdown until they are done. |
-| Debts | No debts yet | Track money you owe, with or without a deadline, and let the plan pay it down. |
-| Wishlist | Nothing on the wishlist | Add things you want to buy and the plan will tell you when you can afford them. |
-| Expenses | No expenses yet | Log day-to-day spending to unlock category insights and a real spend estimate. |
+| Screen | Existing copy (kept) |
+|---|---|
+| /accounts | No accounts yet. |
+| /transactions | Nothing here yet. |
+| /income | No income sources yet. |
+| /bills | No bills yet. |
+| /installments | No installments yet. |
+| /debts | No flexible debts. Add one to see it in the plan. |
+| /wishlist | Nothing here yet. Add something you are saving for. |
+| /expenses | No expenses in {period}. |
+| /expenses/categories | No categories yet. Add one above; expenses can also stay uncategorized. |
+| /expenses/insights | No expenses yet. Log a few from the Expenses tab and charts appear here. |
+| /plan | Two branches: the no-debts message in the Debt payoff section ("No flexible debts. Add one to see a payoff plan.") and the timeline's "Nothing scheduled in the coming months." |
+
+Note: insights is its own route (`/expenses/insights`) with its own empty state; it does not live under `/expenses`.
 
 **Steps:**
 
-- [ ] In `app/(app)/transactions/page.tsx`, where the list renders, guard on the already-fetched rows:
+- [ ] For each screen above, replace the inline empty-state element with `EmptyState`. Single-sentence copy becomes the `title`; two-sentence copy splits first sentence into `title`, rest into `body`. Example for `/bills`:
 
 ```tsx
 import { EmptyState } from '@/components/empty-state'
 
 {rows.length === 0 ? (
-  <EmptyState
-    title="No transactions yet"
-    body="Money you log or confirm shows up here, newest first."
-  />
+  <EmptyState title="No bills yet." body="Recurring commitments the plan should expect show up here." />
 ) : (
   /* existing list rendering, unchanged */
 )}
 ```
 
-- [ ] In `app/(app)/bills/page.tsx` (keep the screen's existing add button visible above or pass it as `action`):
-
-```tsx
-import { EmptyState } from '@/components/empty-state'
-
-{rows.length === 0 ? (
-  <EmptyState
-    title="No bills yet"
-    body="Add recurring commitments like rent or internet and confirm them each month."
-  />
-) : (
-  /* existing list rendering, unchanged */
-)}
-```
-
-- [ ] In `app/(app)/installments/page.tsx`:
-
-```tsx
-import { EmptyState } from '@/components/empty-state'
-
-{rows.length === 0 ? (
-  <EmptyState
-    title="No installments yet"
-    body="Track fixed monthly payments with a countdown until they are done."
-  />
-) : (
-  /* existing list rendering, unchanged */
-)}
-```
-
-- [ ] In `app/(app)/debts/page.tsx`:
-
-```tsx
-import { EmptyState } from '@/components/empty-state'
-
-{rows.length === 0 ? (
-  <EmptyState
-    title="No debts yet"
-    body="Track money you owe, with or without a deadline, and let the plan pay it down."
-  />
-) : (
-  /* existing list rendering, unchanged */
-)}
-```
-
-- [ ] In `app/(app)/wishlist/page.tsx`:
-
-```tsx
-import { EmptyState } from '@/components/empty-state'
-
-{rows.length === 0 ? (
-  <EmptyState
-    title="Nothing on the wishlist"
-    body="Add things you want to buy and the plan will tell you when you can afford them."
-  />
-) : (
-  /* existing list rendering, unchanged */
-)}
-```
-
-- [ ] In `app/(app)/expenses/page.tsx`, guard both the expense list and the insights charts section with the same condition:
-
-```tsx
-import { EmptyState } from '@/components/empty-state'
-
-{rows.length === 0 ? (
-  <EmptyState
-    title="No expenses yet"
-    body="Log day-to-day spending to unlock category insights and a real spend estimate."
-  />
-) : (
-  /* existing list + insights charts, unchanged */
-)}
-```
-
-- [ ] Verify: `pnpm build` exits 0. The walkthrough spec (Task 8) asserts each empty state on a wiped database.
-- [ ] Commit: `git add app/\(app\)/transactions/page.tsx app/\(app\)/bills/page.tsx app/\(app\)/installments/page.tsx app/\(app\)/debts/page.tsx app/\(app\)/wishlist/page.tsx app/\(app\)/expenses/page.tsx && git commit -m "feat(polish): empty states for all list screens"`
+- [ ] Where the empty state renders as an `<li>` inside the list today (`/accounts`, `/transactions`, `/income`, `/bills`, `/installments`), move the guard outside so `EmptyState` replaces the empty `<ul>` instead of rendering inside it.
+- [ ] `/plan`: re-skin both branches - keep the no-debts message's "Add one" link (pass it as the `action` prop) and keep the timeline's `PlanTimeline` string, either in place or lifted into `EmptyState`.
+- [ ] Verify: `npm run build` exits 0. The walkthrough spec (Task 8) asserts each empty state for its fresh first-run user.
+- [ ] Commit: `git add app/\(app\)/ && git commit -m "feat(polish): re-skin list empty states with shared EmptyState"`
 
 ---
 
@@ -336,7 +267,7 @@ export default function AppLoading() {
 }
 ```
 
-- [ ] Verify: `pnpm build` exits 0. Manually confirm the error boundary by temporarily throwing in a page under `(app)` in dev, seeing the boundary render, then reverting the throw.
+- [ ] Verify: `npm run build` exits 0. Manually confirm the error boundary by temporarily throwing in a page under `(app)` in dev, seeing the boundary render, then reverting the throw.
 - [ ] Commit: `git add app/\(app\)/error.tsx app/\(app\)/loading.tsx && git commit -m "feat(polish): error and loading boundaries for the app route group"`
 
 ---
@@ -344,70 +275,69 @@ export default function AppLoading() {
 ### Task 5: form-level error pattern for failed server actions
 
 **Files:**
-- Create: `lib/actions/result.ts`, `components/form-errors.tsx`
-- Modify: the account create form + action (P1) and the wishlist add form + action (P8) as the two reference implementations
+- Modify: `lib/actions/definitions.ts` (extend the existing `ActionResult` in place)
+- Create: `components/form-errors.tsx`
+- Modify: `lib/actions/accounts.ts` + `app/(app)/accounts/new/page.tsx` + `components/account-settings-form.tsx` (the reference implementation), plus the wishlist/debt client components that call throwing actions
 
 **Interfaces:**
-- Produces:
+- `lib/actions/definitions.ts` ALREADY exports `type ActionResult = { ok: true } | { ok: false; error: string }`, consumed by the bills/income/installments actions and read as `.error` in their form components. Do NOT create a second type or a new file; extend the existing one in place, backward compatibly:
 
 ```ts
-// lib/actions/result.ts
+// lib/actions/definitions.ts - existing type, extended in place
 export type ActionResult =
   | { ok: true }
-  | { ok: false; formError?: string; fieldErrors?: Record<string, string[]> }
+  | { ok: false; error: string; fieldErrors?: Record<string, string> }
 ```
 
-The repo-wide pattern: server actions used by forms take `(prev: ActionResult | undefined, formData: FormData)`, `safeParse` with their existing zod schema, and on failure return the flattened issues instead of throwing; clients render them inline with `FormErrors` via `useActionState`. Unexpected (non-validation) errors still throw and land in Task 4's error boundary.
+All existing `.error` call sites keep working unchanged (no new file, no rename). The repo-wide pattern: form actions `safeParse` with their existing zod schema and on validation failure return `{ ok: false, error, fieldErrors }` instead of throwing; clients render the result inline with `FormErrors`. Unexpected (non-validation) errors still throw and land in Task 4's error boundary.
 
 **Steps:**
 
-- [ ] Create `lib/actions/result.ts` with the type above (exactly, nothing more).
-- [ ] Create `components/form-errors.tsx`:
+- [ ] Extend `ActionResult` in `lib/actions/definitions.ts` as above. Verify `npx vitest run` and `npx tsc --noEmit` stay green before touching anything else (the change is additive, so they must).
+- [ ] Create `components/form-errors.tsx`, importing from the existing module:
 
 ```tsx
-import type { ActionResult } from '@/lib/actions/result'
+import type { ActionResult } from '@/lib/actions/definitions'
 
-export function FormErrors({ result, field }: { result: ActionResult | undefined; field?: string }) {
+export function FormErrors({ result, field }: { result: ActionResult | null | undefined; field?: string }) {
   if (!result || result.ok) return null
-  const messages = field ? (result.fieldErrors?.[field] ?? []) : result.formError ? [result.formError] : []
-  if (messages.length === 0) return null
+  const message = field ? result.fieldErrors?.[field] : result.error
+  if (!message) return null
   return (
-    <div role="alert" className="mt-1 text-sm text-red-600">
-      {messages.map((m) => (
-        <p key={m}>{m}</p>
-      ))}
-    </div>
+    <p role="alert" className="mt-1 text-sm text-red-600">
+      {message}
+    </p>
   )
 }
 ```
 
-- [ ] Reference implementation 1, the account create action (adapt the P1 action in `lib/actions/accounts.ts` to this shape, keeping its schema and insert logic unchanged):
+- [ ] Reference implementation: `lib/actions/accounts.ts`. Verify its current shape first: it defines its own `ActionState = { error: string } | null`, and `createAccount`, `renameAccount`, and `archiveAccount` all take `(prev, formData)` via `useActionState` and end with `revalidatePath('/accounts')` + `redirect('/accounts')` on success. Convert ALL THREE together (so the file does not end up with two patterns): replace `ActionState` with `ActionResult` from `./definitions`, and on validation failure return the field errors. The shipped redirect-on-success MUST be preserved; a `{ ok: true }` return that leaves the user sitting on the form is a regression:
 
 ```ts
-import type { ActionResult } from '@/lib/actions/result'
+import { type ActionResult } from './definitions'
 
 export async function createAccount(
-  _prev: ActionResult | undefined,
+  _prev: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
   const user = await requireUser()
   const parsed = createAccountSchema.safeParse({
     name: formData.get('name'),
     currency: formData.get('currency'),
-    openingBalance: formData.get('openingBalance'),
+    openingBalance: formData.get('openingBalance') || '0',
   })
   if (!parsed.success) {
-    const flat = parsed.error.flatten()
-    return { ok: false, formError: flat.formErrors.join(' '), fieldErrors: flat.fieldErrors }
+    const fieldErrors: Record<string, string> = {}
+    for (const issue of parsed.error.issues) fieldErrors[String(issue.path[0])] = issue.message
+    return { ok: false, error: parsed.error.issues[0].message, fieldErrors }
   }
   // existing P1 logic, unchanged: insert account + post the opening transaction
-  await insertAccountWithOpeningBalance(user.id, parsed.data)
   revalidatePath('/accounts')
-  return { ok: true }
+  redirect('/accounts') // success still navigates; redirect() throws, so nothing is returned here
 }
 ```
 
-And in the account form client component:
+Update the two consumers (`app/(app)/accounts/new/page.tsx`, `components/account-settings-form.tsx`) from `state?.error` to `FormErrors`:
 
 ```tsx
 'use client'
@@ -415,8 +345,9 @@ And in the account form client component:
 import { useActionState } from 'react'
 import { FormErrors } from '@/components/form-errors'
 import { createAccount } from '@/lib/actions/accounts'
+import type { ActionResult } from '@/lib/actions/definitions'
 
-const [result, formAction] = useActionState(createAccount, undefined)
+const [result, formAction] = useActionState<ActionResult | null, FormData>(createAccount, null)
 
 // in the JSX:
 <form action={formAction}>
@@ -428,10 +359,15 @@ const [result, formAction] = useActionState(createAccount, undefined)
 </form>
 ```
 
-- [ ] Reference implementation 2: apply the identical shape to the wishlist add action in `lib/actions/wishlist.ts` (safeParse, return `ActionResult`, `revalidatePath('/wishlist')`, `{ ok: true }`) and render `<FormErrors result={result} field="name" />`, `<FormErrors result={result} field="cost" />`, and `<FormErrors result={result} />` in the wishlist form via `useActionState`.
-- [ ] Sweep the remaining form actions (transactions, income, bills, installments, debts, settings): any action a user can fail with bad input (unparseable amount, missing name) gets the same treatment. Actions unreachable with invalid input (e.g. a confirm button with no free-typed fields) stay as they are.
-- [ ] Verify: `pnpm build` exits 0; `pnpm test` stays green; in dev, submitting the account form with an empty name shows the inline zod message instead of crashing to the error boundary.
-- [ ] Commit: `git add lib/actions/result.ts components/form-errors.tsx lib/actions app components && git commit -m "feat(polish): inline zod error pattern for server-action forms"`
+- [ ] Handle the THROWN server-action errors explicitly. `deleteWishlistItem` (its helper throws "Purchased items must be un-purchased before deleting"), `deleteDebt` (throws "This debt has payments; reverse them first"), and the purchase/un-purchase flow (`purchaseItem`/`unpurchaseItem` throw on archived accounts, currency mismatch, concurrent changes) all THROW; today their forms call them with no try/catch, so after Task 4 those throws become full-page error boundaries. Wrap these specific calls in try/catch in a client component and render the caught `error.message` inline via local state:
+  - `components/wishlist/purchase-sheet.tsx` (client): wrap the `purchaseWishlistItem` call.
+  - `components/wishlist/wishlist-item-form.tsx` (client): wrap the `createWishlistItem`/`updateWishlistItem` calls; note `parseToMinor(cost, currency)` in the action closure also throws client-side on an unparseable cost, so the same try/catch covers bad input.
+  - `app/(app)/wishlist/page.tsx` un-purchase form and `app/(app)/wishlist/[id]/page.tsx` delete form: both are inline `'use server'` forms in server components with no client boundary to hold error state; extract each into a small `'use client'` form component with try/catch + inline error.
+  - `app/(app)/debts/[id]/page.tsx` "Reverse" form (calls `deleteDebtPayment`, which throws through `reverseDebtPayment`): same inline-server-form situation, same extraction.
+  - `deleteDebt` currently has NO UI affordance (verified: nothing in `app/` or `components/` calls it); nothing to wrap today, but if P11 adds a delete affordance it must follow this pattern.
+- [ ] Sweep the remaining form actions (transactions, income, bills, installments, settings): any action a user can fail with bad input (unparseable amount, missing name) gets the same treatment. Actions already returning `ActionResult` with `.error` rendered inline (bills, income, installments) are ALREADY correct and stay as they are; `fieldErrors` there is optional polish. Actions unreachable with invalid input (e.g. a confirm button with no free-typed fields) stay as they are.
+- [ ] Verify: `npm run build` exits 0; `npx vitest run` stays green; in dev, submitting the account form with an empty name shows the inline zod message instead of crashing to the error boundary, and deleting a purchased wishlist item shows its message inline.
+- [ ] Commit: `git add lib/actions components app && git commit -m "feat(polish): inline error pattern for server-action forms"`
 
 ---
 
@@ -448,6 +384,8 @@ const [result, formAction] = useActionState(createAccount, undefined)
 4. The attention list count announces changes: `aria-live="polite"` on the count element.
 5. Chart palette contrast: the trend and insights lines use `#2563eb` (blue) and `#dc2626` (red), both at or above the 3:1 non-text contrast minimum against white (WCAG 1.4.11), with adjacent text in default zinc-900.
 6. `prefers-reduced-motion` respected globally, including Recharts (`isAnimationActive={false}` already set in P10; the CSS below covers CSS transitions).
+7. `components/occurrences/confirm-sheet.tsx` has `role="dialog" aria-modal="true"` but NO `aria-labelledby`, no focus trap, and no Escape-to-close; this was explicitly deferred from P3 to P11. Point `aria-labelledby` at the sheet's existing `<h3>` (give it an `id`), trap focus while the sheet is open, and close on Escape.
+8. `components/wishlist/purchase-sheet.tsx` is an inline disclosure, not a dialog: verify it does NOT need dialog semantics, just check its labels and roles (its account `<select>` currently has no label; give it one).
 
 **Steps:**
 
@@ -484,7 +422,8 @@ const [result, formAction] = useActionState(createAccount, undefined)
 
 - [ ] Run the tap-target grep from checklist item 1; add `min-h-11` (and `min-w-11` on icon-only buttons) to each flagged element.
 - [ ] Run the label grep `grep -rn "<input\|<select\|<textarea" app components` and confirm every hit has an associated label; fix any that do not.
-- [ ] Verify: `pnpm build` exits 0; keyboard-tab through the dashboard, one form, and the plan screen in dev, confirming a visible focus ring on every stop; toggle "reduce motion" in OS settings and confirm no animation remains.
+- [ ] Fix `components/occurrences/confirm-sheet.tsx` per checklist item 7: `id` on the `<h3>`, `aria-labelledby` on the dialog wrapper, focus trapped while open, Escape calls `onClose`. Check `components/wishlist/purchase-sheet.tsx` per item 8 (labels only, no dialog semantics).
+- [ ] Verify: `npm run build` exits 0; keyboard-tab through the dashboard, one form, and the plan screen in dev, confirming a visible focus ring on every stop; toggle "reduce motion" in OS settings and confirm no animation remains.
 - [ ] Commit: `git add app components && git commit -m "feat(polish): a11y pass - focus rings, tap targets, labels, aria-live, reduced motion"`
 
 ---
@@ -543,7 +482,7 @@ export function SidebarNav() {
 
 - [ ] In `app/(app)/layout.tsx`: render `<SidebarNav />` alongside the existing bottom tab bar, add `md:hidden` to the bottom tab bar's outer element, and add `md:pl-56` to the main content wrapper so content clears the sidebar.
 - [ ] Responsive audit in dev at 375px, 768px, and 1280px widths on every screen: no horizontal scroll, bottom tabs only below `md`, sidebar only at `md` and up, charts and tables fit or scroll inside their own container.
-- [ ] Verify: `pnpm build` exits 0; `pnpm exec playwright test` stays green (the existing mobile-viewport specs must be unaffected).
+- [ ] Verify: `npm run build` exits 0; `npx playwright test` stays green (the existing mobile-viewport specs must be unaffected). Note the stated trade-off: every Playwright project runs `devices['Pixel 7']`, so a green suite cannot exercise the md+ sidebar; the manual desktop pass above is the explicit verification for the sidebar (an optional desktop-viewport project is a stretch goal, not required).
 - [ ] Commit: `git add components/sidebar-nav.tsx app/\(app\)/layout.tsx && git commit -m "feat(polish): md+ sidebar nav, bottom tabs mobile-only"`
 
 ---
@@ -554,66 +493,41 @@ export function SidebarNav() {
 - Create: `e2e/walkthrough.spec.ts`
 
 **Interfaces:**
-- Consumes: the whole app; `@neondatabase/serverless` raw SQL for the initial reset; `page.route` on `**/api/ai/advice` (the P9 seam, so no Gemini traffic); env `E2E_EMAIL` / `E2E_PASSWORD`, `DATABASE_URL`.
+- Consumes: the whole app; a FRESH stamped user signed up through the real `/sign-up` flow (requires `ALLOW_SIGNUP=true`, the same gate `e2e/auth.setup.ts` already relies on); `createAccount` from `e2e/helpers.ts`; `@neondatabase/serverless` raw SQL for the P10 snapshot seed only (env `DATABASE_URL`); `page.route` on `**/api/ai/advice` (the P9 seam, so no Gemini traffic); env `E2E_TEST_PASSWORD` for the fresh user's password.
 
-This is the spec's top scenario (§1, §7) as one Playwright spec. It intentionally starts from a wiped database, so it also proves Task 2's checklist and Task 3's empty states. It must run serially with everything else (`workers: 1`).
+This is the spec's top scenario (§1, §7) as one Playwright spec. The shared Neon dev DB test user accumulates rows across runs BY DESIGN (every other spec is self-contained and `Date.now()`-stamped, and specs assume prior fixtures persist), so this spec must NOT wipe shared data - a blanket delete can destroy other specs' rows mid-suite, with no run-order guarantee. Instead it signs up a fresh `walkthrough-${Date.now()}@example.com` user at the start, which gives genuine first-run empty states (proving Task 2's checklist and Task 3's empty states) with zero cross-spec interference. Because the `app` Playwright project applies the shared `storageState` to every non-unauth spec, this spec must reset it with `test.use({ storageState: { cookies: [], origins: [] } })` (or an equivalent reset). Every created name is stamped and every list assertion row-scoped. The load-heavy pages (`/plan` and `/wishlist` both run the full planner against live Neon) are slow on the dev DB: the config timeout is 60s, this spec sets its own 240s budget, and the documented policy for transient Neon failures is re-run once. It must run serially with everything else (`workers: 1`).
 
 **Steps:**
 
-- [ ] Write `e2e/walkthrough.spec.ts`:
+- [ ] Write `e2e/walkthrough.spec.ts`. Add-affordances are Next.js `<Link>`s (role "link", NOT buttons) with this real copy: `/accounts` "Add account", `/bills` "New bill", `/income` "New income source", `/installments` "New installment", `/debts` "Add debt". `/wishlist` has NO add button: `WishlistItemForm` renders inline, always visible, submit button "Add". `/expenses` has no add button either: expenses are logged via `/transactions/new` ("New entry" form). Account creation reuses `createAccount` from `e2e/helpers.ts` (drives `/accounts/new` and its real "Create account" button). The income/bill/installment forms have NO Currency field (currency follows the selected account, whose option label is `` `${name} (${currency})` ``) and their create submit button is "Create"; the installment create form has "Total payments" and no remaining-count field (remaining starts at total):
 
 ```ts
 import { neon } from '@neondatabase/serverless'
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+import { createAccount } from './helpers'
 
 const sql = neon(process.env.DATABASE_URL!)
 
-async function signIn(page: Page) {
-  await page.goto('/')
-  if (await page.getByLabel('Email').isVisible({ timeout: 3000 }).catch(() => false)) {
-    await page.getByLabel('Email').fill(process.env.E2E_EMAIL!)
-    await page.getByLabel('Password').fill(process.env.E2E_PASSWORD!)
-    await page.getByRole('button', { name: /sign in/i }).click()
-    await page.waitForURL('**/')
-  }
-}
+// Fresh stamped user per run: genuine first-run empty states, zero interference
+// with other specs' rows on the shared dev DB (which persist by design).
+const stamp = Date.now()
+const EMAIL = `walkthrough-${stamp}@example.com`
+const PASSWORD = process.env.E2E_TEST_PASSWORD!
+const eurAccount = `Revolut EUR ${stamp}`
+const usdAccount = `Payoneer USD ${stamp}`
+const egpAccount = `CIB EGP ${stamp}`
+const salary = `Salary ${stamp}`
+const rent = `Rent ${stamp}`
+const phone = `Phone installment ${stamp}`
+const dadLoan = `Loan from Dad ${stamp}`
+const card = `Credit card ${stamp}`
+const desk = `Standing desk ${stamp}`
 
-async function wipeUserData() {
-  const rows = (await sql`select user_id from settings limit 1`) as { user_id: string }[]
-  if (rows.length === 0) return
-  const userId = rows[0].user_id
-  // Order matters only for readability; every table is user_id-scoped.
-  for (const table of [
-    'ai_advice_cache',
-    'net_worth_snapshots',
-    'occurrences',
-    'wishlist_items',
-    'flexible_debts',
-    'installments',
-    'bills',
-    'income_sources',
-    'expense_categories',
-    'transactions',
-    'accounts',
-  ]) {
-    await sql.query(`delete from ${table} where user_id = $1`, [userId])
-  }
-}
-
-async function createAccount(page: Page, name: string, currency: string, opening: string) {
-  await page.goto('/accounts')
-  await page.getByRole('button', { name: /add account/i }).click()
-  await page.getByLabel('Name').fill(name)
-  await page.getByLabel('Currency').selectOption(currency)
-  await page.getByLabel('Opening balance').fill(opening)
-  await page.getByRole('button', { name: /save/i }).click()
-  await expect(page.getByText(name)).toBeVisible()
-}
-
-test.describe.configure({ mode: 'serial' })
+// Do NOT reuse the shared storageState: this spec authenticates its own fresh user.
+test.use({ storageState: { cookies: [], origins: [] } })
 
 test('full scenario walkthrough', async ({ page }) => {
-  test.setTimeout(240_000)
+  test.setTimeout(240_000) // /plan and /wishlist run the full planner against live Neon
 
   // Mock the AI seam for the whole test: no Gemini traffic, deterministic panel.
   await page.route('**/api/ai/advice', async (route) => {
@@ -626,150 +540,178 @@ test('full scenario walkthrough', async ({ page }) => {
     })
   })
 
-  // 1. Sign in against a wiped database.
-  await signIn(page)
-  await wipeUserData()
+  // 1. Sign up a fresh user through the real flow (same shape as e2e/auth.setup.ts,
+  //    which proves sign-up works in this env; requires ALLOW_SIGNUP=true).
+  await page.goto('/sign-up')
+  await page.getByLabel('Email').fill(EMAIL)
+  await page.getByLabel('Password').fill(PASSWORD)
+  await Promise.all([
+    page.waitForResponse((r) => r.url().includes('/api/auth/sign-up/email')),
+    page.getByRole('button', { name: /create account/i }).click(),
+  ])
+  await page.goto('/sign-in')
+  await page.getByLabel('Email').fill(EMAIL)
+  await page.getByLabel('Password').fill(PASSWORD)
+  await page.getByRole('button', { name: /sign in/i }).click()
+  await page.waitForURL('/')
 
-  // 2. First-run: dashboard shows the setup checklist, list screens show empty states.
-  await page.goto('/')
+  // 2. First-run: dashboard shows the setup checklist, list screens show their
+  //    existing empty-state copy (Task 3 keeps it).
   await expect(page.getByLabel('Set up My Ledger')).toBeVisible()
   await expect(page.getByRole('link', { name: /create your accounts/i })).toBeVisible()
+  await page.goto('/accounts')
+  await expect(page.getByText('No accounts yet.')).toBeVisible()
   await page.goto('/transactions')
-  await expect(page.getByText('No transactions yet')).toBeVisible()
-  await page.goto('/bills')
-  await expect(page.getByText('No bills yet')).toBeVisible()
-  await page.goto('/installments')
-  await expect(page.getByText('No installments yet')).toBeVisible()
-  await page.goto('/debts')
-  await expect(page.getByText('No debts yet')).toBeVisible()
-  await page.goto('/wishlist')
-  await expect(page.getByText('Nothing on the wishlist')).toBeVisible()
-  await page.goto('/expenses')
-  await expect(page.getByText('No expenses yet')).toBeVisible()
-
-  // 3. Create the three per-currency accounts with opening balances.
-  await createAccount(page, 'Revolut EUR', 'EUR', '3400.00')
-  await createAccount(page, 'Payoneer USD', 'USD', '500.00')
-  await createAccount(page, 'CIB EGP', 'EGP', '95000.00')
-
-  // 4. Add the salary income source.
+  await expect(page.getByText('Nothing here yet.')).toBeVisible()
   await page.goto('/income')
-  await page.getByRole('button', { name: /add income source/i }).click()
-  await page.getByLabel('Name').fill('Salary')
+  await expect(page.getByText('No income sources yet.')).toBeVisible()
+  await page.goto('/bills')
+  await expect(page.getByText('No bills yet.')).toBeVisible()
+  await page.goto('/installments')
+  await expect(page.getByText('No installments yet.')).toBeVisible()
+  await page.goto('/debts')
+  await expect(page.getByText(/No flexible debts/)).toBeVisible()
+  await page.goto('/wishlist')
+  await expect(page.getByText('Nothing here yet. Add something you are saving for.')).toBeVisible()
+  await page.goto('/expenses')
+  await expect(page.getByText(/No expenses in/)).toBeVisible()
+
+  // 3. Create the three per-currency accounts (shared helper: /accounts/new,
+  //    "Create account" button, waits for /accounts).
+  await createAccount(page, eurAccount, 'EUR', '3400.00')
+  await createAccount(page, usdAccount, 'USD', '500.00')
+  await createAccount(page, egpAccount, 'EGP', '95000.00')
+
+  // 4. Add the salary income source (link, not button; no Currency field).
+  await page.goto('/income')
+  await page.getByRole('link', { name: 'New income source' }).click()
+  await page.getByLabel('Name').fill(salary)
   await page.getByLabel('Amount').fill('2500.00')
-  await page.getByLabel('Currency').selectOption('EUR')
+  await page.getByLabel('Account').selectOption({ label: `${eurAccount} (EUR)` })
   await page.getByLabel('Day of month').fill('25')
-  await page.getByLabel('Account').selectOption({ label: 'Revolut EUR' })
-  await page.getByRole('button', { name: /save/i }).click()
-  await expect(page.getByText('Salary')).toBeVisible()
+  await page.getByRole('button', { name: 'Create' }).click()
+  await page.waitForURL('/income')
+  await expect(page.getByRole('link', { name: new RegExp(salary) })).toBeVisible()
 
   // 5. Dashboard housekeeping generated the occurrence; confirm the salary.
+  //    Attention rows are buttons named by source name; the sheet is the dialog.
   await page.goto('/')
-  await expect(page.getByText('Salary')).toBeVisible()
-  await page.getByRole('button', { name: /confirm/i }).first().click()
-  await page.getByRole('button', { name: /confirm/i }).last().click() // pre-filled sheet, accept actuals
-  await expect(page.getByText(/confirmed/i).first()).toBeVisible()
+  await page.getByRole('button', { name: new RegExp(salary) }).click()
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click()
+  await expect(page.getByRole('button', { name: new RegExp(salary) })).toHaveCount(0)
 
   // 6. Add the rent bill (due day 1 makes this month's occurrence overdue) and confirm it.
   await page.goto('/bills')
-  await page.getByRole('button', { name: /add bill/i }).click()
-  await page.getByLabel('Name').fill('Rent')
+  await page.getByRole('link', { name: 'New bill' }).click()
+  await page.getByLabel('Name').fill(rent)
   await page.getByLabel('Amount').fill('12000.00')
-  await page.getByLabel('Currency').selectOption('EGP')
+  await page.getByLabel('Account').selectOption({ label: `${egpAccount} (EGP)` })
   await page.getByLabel('Due day').fill('1')
-  await page.getByLabel('Account').selectOption({ label: 'CIB EGP' })
-  await page.getByRole('button', { name: /save/i }).click()
+  await page.getByRole('button', { name: 'Create' }).click()
   await page.goto('/')
-  await expect(page.getByText('Rent')).toBeVisible()
-  await expect(page.getByText(/overdue/i).first()).toBeVisible()
-  await page.getByRole('button', { name: /confirm/i }).first().click()
-  await page.getByRole('button', { name: /confirm/i }).last().click()
+  await expect(page.getByRole('button', { name: new RegExp(`${rent}.*Overdue`) })).toBeVisible()
+  await page.getByRole('button', { name: new RegExp(rent) }).click()
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click()
+  await expect(page.getByRole('button', { name: new RegExp(rent) })).toHaveCount(0)
 
-  // 7. Add an installment and confirm one payment.
+  // 7. Add an installment (no remaining-count field on create) and confirm one payment.
   await page.goto('/installments')
-  await page.getByRole('button', { name: /add installment/i }).click()
-  await page.getByLabel('Name').fill('Phone installment')
+  await page.getByRole('link', { name: 'New installment' }).click()
+  await page.getByLabel('Name').fill(phone)
   await page.getByLabel('Monthly amount').fill('1500.00')
-  await page.getByLabel('Currency').selectOption('EGP')
+  await page.getByLabel('Account').selectOption({ label: `${egpAccount} (EGP)` })
   await page.getByLabel('Due day').fill('10')
-  await page.getByLabel('Total count').fill('12')
-  await page.getByLabel('Remaining count').fill('8')
-  await page.getByLabel('Start date').fill('2026-03-10')
-  await page.getByLabel('Account').selectOption({ label: 'CIB EGP' })
-  await page.getByRole('button', { name: /save/i }).click()
+  await page.getByLabel('Total payments').fill('12')
+  await page.getByLabel('Start date').fill('2026-07-10')
+  await page.getByRole('button', { name: 'Create' }).click()
   await page.goto('/')
-  await expect(page.getByText('Phone installment')).toBeVisible()
-  await page.getByRole('button', { name: /confirm/i }).first().click()
-  await page.getByRole('button', { name: /confirm/i }).last().click()
+  await page.getByRole('button', { name: new RegExp(phone) }).click()
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirm', exact: true }).click()
   await page.goto('/installments')
-  await expect(page.getByText(/7.*remaining|remaining.*7/i)).toBeVisible()
+  await expect(
+    page.getByRole('listitem').filter({ hasText: phone }).getByText(/Paid 1 of 12/),
+  ).toBeVisible()
 
-  // 8. Add a flexible debt with a deadline plus an ASAP debt.
+  // 8. Add a flexible debt with a deadline plus an ASAP debt (real labels:
+  //    "Original amount", "APR % (0 for interest-free)", "Deadline (optional; ...)").
   await page.goto('/debts')
-  await page.getByRole('button', { name: /add debt/i }).click()
-  await page.getByLabel('Name').fill('Loan from Dad')
-  await page.getByLabel('Amount').fill('50000.00')
+  await page.getByRole('link', { name: 'Add debt' }).click()
+  await page.getByLabel('Name').fill(dadLoan)
   await page.getByLabel('Currency').selectOption('EGP')
-  await page.getByLabel('APR').fill('0')
-  await page.getByLabel('Deadline').fill('2026-12-31')
-  await page.getByRole('button', { name: /save/i }).click()
-  await expect(page.getByText('Loan from Dad')).toBeVisible()
-  await page.getByRole('button', { name: /add debt/i }).click()
-  await page.getByLabel('Name').fill('Credit card')
-  await page.getByLabel('Amount').fill('900.00')
+  await page.getByLabel('Original amount').fill('50000.00')
+  await page.getByLabel(/APR/).fill('0')
+  await page.getByLabel(/Deadline/).fill('2026-12-31')
+  await page.getByRole('button', { name: 'Save' }).click()
+  await page.waitForURL('/debts')
+  await expect(page.getByRole('link', { name: dadLoan })).toBeVisible()
+  await page.getByRole('link', { name: 'Add debt' }).click()
+  await page.getByLabel('Name').fill(card)
   await page.getByLabel('Currency').selectOption('USD')
-  await page.getByLabel('APR').fill('24')
-  await page.getByRole('button', { name: /save/i }).click()
-  await expect(page.getByText('Credit card')).toBeVisible()
+  await page.getByLabel('Original amount').fill('900.00')
+  await page.getByLabel(/APR/).fill('24')
+  await page.getByRole('button', { name: 'Save' }).click()
+  await page.waitForURL('/debts')
+  await expect(page.getByRole('link', { name: card })).toBeVisible()
 
-  // 9. Log expenses, including a one_off.
-  await page.goto('/expenses')
-  await page.getByRole('button', { name: /log expense/i }).click()
+  // 9. Log expenses via /transactions/new ("New entry"; /expenses has no add button).
+  //    Type defaults to expense.
+  await page.goto('/transactions/new')
+  await page.getByLabel('Account').selectOption({ label: `${egpAccount} (EGP)` })
   await page.getByLabel('Amount').fill('850.00')
-  await page.getByLabel('Account').selectOption({ label: 'CIB EGP' })
-  await page.getByLabel('Note').fill('Groceries')
-  await page.getByRole('button', { name: /save/i }).click()
-  await page.getByRole('button', { name: /log expense/i }).click()
+  await page.getByLabel('Note').fill(`Groceries ${stamp}`)
+  await page.getByRole('button', { name: 'Save' }).click()
+  await page.goto('/transactions/new')
+  await page.getByLabel('Account').selectOption({ label: `${egpAccount} (EGP)` })
   await page.getByLabel('Amount').fill('3000.00')
-  await page.getByLabel('Account').selectOption({ label: 'CIB EGP' })
-  await page.getByLabel('Note').fill('Car repair')
+  await page.getByLabel('Note').fill(`Car repair ${stamp}`)
   await page.getByLabel('One-off').check()
-  await page.getByRole('button', { name: /save/i }).click()
+  await page.getByRole('button', { name: 'Save' }).click()
+  await page.goto('/expenses')
+  await expect(page.getByText(`Groceries ${stamp}`)).toBeVisible()
+  await expect(page.getByText(`Car repair ${stamp}`)).toBeVisible()
 
-  // 10. Add a wishlist item with a target date.
+  // 10. Add a wishlist item: NO add button, the inline form is always visible;
+  //     fill Name/Cost and click the "Add" submit directly.
   await page.goto('/wishlist')
-  await page.getByRole('button', { name: /add item/i }).click()
-  await page.getByLabel('Name').fill('Standing desk')
+  await page.getByLabel('Name').fill(desk)
   await page.getByLabel('Cost').fill('400.00')
   await page.getByLabel('Currency').selectOption('EUR')
-  await page.getByLabel('Priority').fill('1')
-  await page.getByLabel('Target date').fill('2026-11-01')
-  await page.getByRole('button', { name: /save/i }).click()
-  await expect(page.getByText('Standing desk')).toBeVisible()
+  await page.getByLabel(/Priority/).selectOption('1')
+  await page.getByLabel(/Target date/).fill('2026-11-01')
+  await page.getByRole('button', { name: 'Add', exact: true }).click()
+  await expect(page.getByRole('link', { name: desk })).toBeVisible()
 
-  // 11. Plan screen: algorithm numbers, funding gap (900 USD debt vs 500 USD balance),
+  // 11. Plan screen: algorithm numbers, the funding-gap suggestion (900 USD debt vs
+  //     500 USD balance; the engine renders "Transfer ~ ... into ..." or
+  //     "No other currency can cover ...", never the phrase "funding gap"),
   //     and the mocked AI panel.
   await page.goto('/plan')
-  await expect(page.getByText(/payoff/i).first()).toBeVisible()
-  await expect(page.getByText(/20\d\d-\d\d/).first()).toBeVisible()
-  await expect(page.getByText(/funding gap/i).first()).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Debt payoff' })).toBeVisible()
+  await expect(
+    page.getByRole('listitem').filter({ hasText: card }).getByText(/Paid off 20\d\d-\d\d|Beyond \d+ months/),
+  ).toBeVisible()
+  await expect(
+    page.getByText(/Transfer ~ .* into (EUR|USD|EGP)|No other currency can cover/).first(),
+  ).toBeVisible()
   await expect(page.getByText('Mocked second opinion')).toBeVisible()
   await page.getByText('What gets sent').click()
   const payloadText = await page.getByTestId('ai-payload').textContent()
   expect(payloadText).toContain('debtA')
-  expect(payloadText).not.toContain('Loan from Dad')
+  expect(payloadText).not.toContain(dadLoan)
 
-  // 12. Purchase the wishlist item.
+  // 12. Purchase the wishlist item: "Buy" opens the inline sheet; the single EUR
+  //     account is auto-selected; "Confirm purchase" completes it.
   await page.goto('/wishlist')
-  await page.getByRole('button', { name: /purchase/i }).click()
-  await page.getByLabel('Account').selectOption({ label: 'Revolut EUR' })
-  await page.getByRole('button', { name: /confirm purchase/i }).click()
-  await expect(page.getByText(/purchased/i)).toBeVisible()
+  await page.getByRole('listitem').filter({ hasText: desk }).getByRole('button', { name: 'Buy' }).click()
+  await page.getByRole('button', { name: 'Confirm purchase' }).click()
+  await expect(page.getByRole('heading', { name: 'Purchased' })).toBeVisible()
+  await expect(
+    page.getByRole('listitem').filter({ hasText: desk }).getByRole('button', { name: 'Un-purchase' }),
+  ).toBeVisible()
 
   // 13. Dashboard: attention list has nothing left; trends section renders
-  //     (seed one prior-day snapshot so two points exist).
-  const rows = (await sql`select user_id from settings limit 1`) as { user_id: string }[]
-  const userId = rows[0].user_id
+  //     (seed one prior-day snapshot for THIS user so two points exist).
+  const [{ id: userId }] = (await sql`select id from "user" where email = ${EMAIL}`) as { id: string }[]
   const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
   await sql`
     insert into net_worth_snapshots
@@ -780,8 +722,8 @@ test('full scenario walkthrough', async ({ page }) => {
     on conflict (user_id, date) do nothing
   `
   await page.goto('/')
-  const attention = page.getByLabel(/attention|needs attention/i)
-  await expect(attention.getByRole('button', { name: /confirm/i })).toHaveCount(0)
+  // AttentionList renders nothing at all when every occurrence is settled.
+  await expect(page.getByText('Needs attention')).toHaveCount(0)
   await expect(page.getByRole('heading', { name: /^Net worth \(/ })).toBeVisible()
   await expect(page.getByRole('heading', { name: /^Total debt \(/ })).toBeVisible()
   // Setup checklist is gone: all four steps are complete.
@@ -789,7 +731,7 @@ test('full scenario walkthrough', async ({ page }) => {
 })
 ```
 
-- [ ] Run `pnpm exec playwright test e2e/walkthrough.spec.ts`. Expected: PASS. Every selector miss means an accessible name drifted from the domain vocabulary; fix the screen, re-run.
+- [ ] Run `npx playwright test e2e/walkthrough.spec.ts`. Expected: PASS. Every selector miss means an accessible name drifted from the domain vocabulary; fix the screen, re-run.
 - [ ] Commit: `git add e2e/walkthrough.spec.ts && git commit -m "test(polish): full-scenario walkthrough e2e of the spec top scenario"`
 
 ---
@@ -803,9 +745,9 @@ Evidence before assertions: run every gate and read the output before claiming a
 
 **Steps:**
 
-- [ ] Run the full unit suite: `pnpm test`. Expected: all suites from P0-P11 green, zero skipped.
-- [ ] Run the full E2E suite: `pnpm exec playwright test`. Expected: all specs green, including the walkthrough.
-- [ ] Run the production build: `pnpm build`. Expected: exit 0, no type errors.
+- [ ] Run the full unit suite: `npx vitest run`. Expected: all suites from P0-P11 green, zero skipped.
+- [ ] Run the full E2E suite: `npx playwright test`. Expected: all specs green, including the walkthrough.
+- [ ] Run the production build: `npm run build`. Expected: exit 0, no type errors.
 - [ ] Manual mobile-viewport (375px) walkthrough mirroring the Task 8 scenario by hand, plus one pass at desktop width for the sidebar.
 - [ ] Only after all four checks pass, update `docs/wiki/status.md`: set P11 (and any straggler rows) to `done` and replace the header line "planning complete, no app code yet" with the shipped state, keeping the instruction "Update this page whenever a phase starts or completes."
 - [ ] Commit: `git add docs/wiki/status.md && git commit -m "docs(status): P11 polish complete, v1 shipped"`
