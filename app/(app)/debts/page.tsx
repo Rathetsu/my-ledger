@@ -3,7 +3,7 @@ import { and, eq, isNull } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { accounts, flexibleDebts } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
-import { debtBalanceMinor } from '@/lib/debts/balance'
+import { debtBalancesByDebt } from '@/lib/debts/balance'
 import { formatMoney, type Currency } from '@/lib/money/money'
 import { DebtPaySheet } from '@/components/debts/debt-pay-sheet'
 
@@ -14,7 +14,8 @@ export default async function DebtsPage() {
     .select()
     .from(accounts)
     .where(and(eq(accounts.userId, user.id), isNull(accounts.archivedAt)))
-  const debts = await Promise.all(debtRows.map(async (d) => ({ ...d, balanceMinor: await debtBalanceMinor(d.id) })))
+  const balById = await debtBalancesByDebt(user.id)
+  const debts = debtRows.map((d) => ({ ...d, balanceMinor: balById[d.id] ?? 0 }))
 
   return (
     <main className="mx-auto max-w-md space-y-4 p-4">

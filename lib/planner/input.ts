@@ -6,7 +6,7 @@ import { getRates } from '@/lib/currency/rates'
 import { CURRENCIES, type Currency } from '@/lib/money/money'
 import { periodOf, todayCairo } from '@/lib/dates/cairo'
 import { variableSpendActuals } from '@/lib/insights/variable-spend'
-import { debtBalanceMinor } from '@/lib/debts/balance'
+import { debtBalancesByDebt } from '@/lib/debts/balance'
 import { activeWishlistForPlan } from './wishlist'
 import { estimateVariableSpend, type SpendActualsRow } from './spend-estimate'
 import type { PlanInput } from './types'
@@ -50,10 +50,9 @@ export async function buildPlanInput(userId: string): Promise<PlanInput> {
   const actualsByCurrency: Partial<Record<Currency, SpendActualsRow[]>> = Object.fromEntries(actualsEntries)
   const { variableSpendMinor, source } = estimateVariableSpend(baseline, actualsByCurrency)
 
-  const debtBalances = await Promise.all(
-    debtRows.map(async (d) => ({ d, balanceMinor: await debtBalanceMinor(d.id) })),
-  )
-  const debts: PlanInput['debts'] = debtBalances
+  const balById = await debtBalancesByDebt(userId)
+  const debts: PlanInput['debts'] = debtRows
+    .map((d) => ({ d, balanceMinor: balById[d.id] ?? 0 }))
     .filter(({ balanceMinor }) => balanceMinor > 0)
     .map(({ d, balanceMinor }) => ({
       id: d.id,
