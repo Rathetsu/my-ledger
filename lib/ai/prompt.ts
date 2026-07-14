@@ -80,7 +80,7 @@ const FEW_SHOT_2_OUTPUT = `This plan is under real pressure: your obligations la
 - debtA meets its 2026-10 deadline exactly, with no slack.
 - itemA never becomes affordable inside the horizon, so it is effectively on hold.
 
-Your spend estimate is still the baseline you set, not measured spending, so treat the surplus figures as rough. Two suggestions: make converting part of each USD paycheck into EGP a monthly habit so funding gaps stop appearing, and treat installmentA as the first thing to renegotiate or clear early if any windfall arrives.`
+Your spend estimate is still the baseline you set, not measured spending, so treat the surplus figures as rough. Two suggestions: make converting part of your USD income into EGP a monthly habit so funding gaps stop appearing, and treat installmentA as the first thing to renegotiate or clear early if any windfall arrives.`
 
 export const FEW_SHOTS: { input: SanitizedPayload; output: string }[] = [
   { input: FEW_SHOT_1_INPUT, output: FEW_SHOT_1_OUTPUT },
