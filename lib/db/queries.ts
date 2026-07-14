@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm'
+import { and, eq, isNull, sql } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import {
   accounts,
@@ -32,6 +32,24 @@ export async function accountBalanceMinor(accountId: string): Promise<number> {
     .from(transactions)
     .where(eq(transactions.accountId, accountId))
   return Number(row?.total ?? 0)
+}
+
+// Batched form of accountBalanceMinor, grouped by currency (fixes the /plan N+1:
+// one Neon HTTP round trip instead of one per account). LEFT JOIN + COALESCE so
+// a non-archived account with zero transactions still contributes its currency at 0.
+export async function accountBalancesByCurrency(
+  userId: string,
+): Promise<Partial<Record<Currency, number>>> {
+  const rows = await db
+    .select({
+      currency: accounts.currency,
+      total: sql<string | null>`coalesce(sum(${transactions.amountMinor}), 0)`,
+    })
+    .from(accounts)
+    .leftJoin(transactions, eq(transactions.accountId, accounts.id))
+    .where(and(eq(accounts.userId, userId), isNull(accounts.archivedAt)))
+    .groupBy(accounts.currency)
+  return Object.fromEntries(rows.map((r) => [r.currency as Currency, Number(r.total ?? 0)]))
 }
 
 export async function totalsByCurrency(
