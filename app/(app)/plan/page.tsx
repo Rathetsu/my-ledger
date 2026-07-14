@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { requireUser } from '@/lib/auth'
 import { buildPlanInput } from '@/lib/planner/input'
 import { buildPlan } from '@/lib/planner/engine'
+import { getSettings } from '@/lib/db/queries'
+import { sanitizePlanPayload } from '@/lib/ai/sanitize'
 import { AiAdvisorSlot } from '@/components/plan/ai-advisor-slot'
 import { AlgorithmSuggests } from '@/components/plan/algorithm-suggests'
 import { PlanTimeline } from '@/components/plan/plan-timeline'
@@ -10,6 +12,8 @@ export default async function PlanPage() {
   const user = await requireUser()
   const input = await buildPlanInput(user.id)
   const plan = buildPlan(input)
+  const s = await getSettings(user.id)
+  const sanitized = sanitizePlanPayload(input, plan)
   const debtNames = Object.fromEntries(input.debts.map((d) => [d.id, d.name]))
   const wishlistNames = Object.fromEntries(input.wishlist.map((w) => [w.id, w.name]))
 
@@ -25,7 +29,7 @@ export default async function PlanPage() {
         </p>
       )}
       <AlgorithmSuggests month={plan.months[0]} debtNames={debtNames} />
-      <AiAdvisorSlot />
+      <AiAdvisorSlot payload={sanitized} aiEnabled={s.aiEnabled} />
       <section className="space-y-2">
         <h2 className="text-sm font-medium">Debt payoff</h2>
         {input.debts.length === 0 ? (
