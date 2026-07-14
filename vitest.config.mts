@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['lib/**/*.test.ts', 'tests/**/*.test.ts'],
+    include: ['lib/**/*.test.ts', 'tests/**/*.test.ts', 'app/**/*.test.ts'],
     setupFiles: ['./vitest.setup.ts'],
     // ponytail: Neon's WebSocket Pool (dbPool.transaction) cold-connects slower than
     // the 5s default, especially on a suspended dev compute. Bump globally so every
