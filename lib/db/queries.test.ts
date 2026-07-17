@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import { db } from '@/lib/db/client'
 import { accounts, transactions } from '@/lib/db/schema'
-import { accountBalanceMinor, accountBalancesByCurrency, totalsByCurrency } from './queries'
+import { accountBalanceMinor, accountBalancesByCurrency, accountBalancesById, totalsByCurrency } from './queries'
 
 // DB-backed against real Postgres (§3: balances are derived by summing
 // transactions). Previously mock-only, which never exercised the SQL SUM/GROUP BY.
@@ -105,5 +105,54 @@ describe('accountBalancesByCurrency', () => {
     expect(actual).toEqual(expected)
     expect(actual.EGP).toBe(2000000) // archived account's 999999 excluded
     expect(actual.USD).toBe(0) // zero-transaction account still present
+  })
+})
+
+describe('accountBalancesById', () => {
+  it('matches accountBalanceMinor per account, excludes archived, includes zero-transaction accounts', async () => {
+    const userId = `test-${randomUUID()}`
+
+    // two non-archived EUR accounts with different transaction sets
+    const eur1 = await seedAccount(userId, 'EUR')
+    await post(userId, eur1.id, 'EUR', 100000)
+    await post(userId, eur1.id, 'EUR', -25000)
+    const eur2 = await seedAccount(userId, 'EUR')
+    await post(userId, eur2.id, 'EUR', 50000)
+
+    // a second currency
+    const egp = await seedAccount(userId, 'EGP')
+    await post(userId, egp.id, 'EGP', 2000000)
+
+    // an archived account, same currency as `egp`, that must NOT contribute
+    const archivedEgp = await seedAccount(userId, 'EGP', true)
+    await post(userId, archivedEgp.id, 'EGP', 999999)
+
+    // a non-archived account with zero transactions — it must still appear, at 0
+    const zeroUsd = await seedAccount(userId, 'USD')
+
+    const nonArchived = [eur1, eur2, egp, zeroUsd]
+    const expected: Record<string, number> = {}
+    for (const a of nonArchived) {
+      expected[a.id] = await accountBalanceMinor(a.id)
+    }
+
+    const actual = await accountBalancesById(userId)
+
+    expect(actual).toEqual(expected)
+    expect(actual[archivedEgp.id]).toBeUndefined()
+    expect(actual[zeroUsd.id]).toBe(0)
+  })
+
+  it('is scoped to the user', async () => {
+    const mine = `test-${randomUUID()}`
+    const other = `test-${randomUUID()}`
+    const mineAccount = await seedAccount(mine, 'EUR')
+    const otherAccount = await seedAccount(other, 'EUR')
+    await post(mine, mineAccount.id, 'EUR', 100000)
+    await post(other, otherAccount.id, 'EUR', 999999)
+
+    expect(await accountBalancesById(mine)).toEqual({
+      [mineAccount.id]: await accountBalanceMinor(mineAccount.id),
+    })
   })
 })

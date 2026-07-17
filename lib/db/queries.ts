@@ -52,6 +52,24 @@ export async function accountBalancesByCurrency(
   return Object.fromEntries(rows.map((r) => [r.currency as Currency, Number(r.total ?? 0)]))
 }
 
+// Batched per-account form of accountBalanceMinor (fixes the /accounts and
+// /wishlist N+1: one grouped query instead of one Neon round trip per account).
+// LEFT JOIN + COALESCE so a non-archived account with zero transactions still
+// appears in the map, at 0. Archived accounts are excluded, matching
+// accountBalancesByCurrency and both render callers.
+export async function accountBalancesById(userId: string): Promise<Record<string, number>> {
+  const rows = await db
+    .select({
+      id: accounts.id,
+      total: sql<string | null>`coalesce(sum(${transactions.amountMinor}), 0)`,
+    })
+    .from(accounts)
+    .leftJoin(transactions, eq(transactions.accountId, accounts.id))
+    .where(and(eq(accounts.userId, userId), isNull(accounts.archivedAt)))
+    .groupBy(accounts.id)
+  return Object.fromEntries(rows.map((r) => [r.id, Number(r.total ?? 0)]))
+}
+
 export async function totalsByCurrency(
   userId: string,
 ): Promise<Partial<Record<Currency, number>>> {
