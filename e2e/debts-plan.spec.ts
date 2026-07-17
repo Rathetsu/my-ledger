@@ -60,6 +60,11 @@ test('debt lifecycle and plan screen', async ({ page }) => {
   await page.goto('/debts')
   await page.getByRole('link', { name: debtName }).first().click()
   await page.getByRole('button', { name: 'Reverse' }).click()
+  // State-based barrier before navigating: reversing the only payment re-renders
+  // the detail page to its empty state, so this proves the mutation committed and
+  // avoids racing the /debts read below (which otherwise renders the stale €200
+  // under 2-worker load — the documented "no barrier after a server action" flake).
+  await expect(page.getByText('No payments yet.')).toBeVisible({ timeout: 15_000 })
   await page.goto('/debts')
   await expect(page.locator('li', { hasText: debtName }).getByText('€300.00')).toBeVisible({ timeout: 15_000 })
 })
