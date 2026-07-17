@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { and, eq, isNull } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
-import { accountBalanceMinor } from '@/lib/db/queries'
+import { accountBalancesById } from '@/lib/db/queries'
 import { accounts, wishlistItems } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
 import { buildPlanInput } from '@/lib/planner/input'
@@ -24,14 +24,13 @@ export default async function WishlistPage() {
     .select()
     .from(accounts)
     .where(and(eq(accounts.userId, user.id), isNull(accounts.archivedAt)))
-  const accountsWithBalances = await Promise.all(
-    accountRows.map(async (a) => ({
-      id: a.id,
-      name: a.name,
-      currency: a.currency,
-      balanceMinor: await accountBalanceMinor(a.id),
-    })),
-  )
+  const balById = await accountBalancesById(user.id)
+  const accountsWithBalances = accountRows.map((a) => ({
+    id: a.id,
+    name: a.name,
+    currency: a.currency,
+    balanceMinor: balById[a.id] ?? 0,
+  }))
   const planned = items.filter((i) => i.status === 'planned')
   const purchased = items.filter((i) => i.status === 'purchased')
 
