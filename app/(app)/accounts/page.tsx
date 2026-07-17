@@ -3,7 +3,7 @@ import { and, asc, eq, isNull } from 'drizzle-orm'
 import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
-import { accountBalanceMinor } from '@/lib/db/queries'
+import { accountBalancesById } from '@/lib/db/queries'
 import { formatMoney } from '@/lib/money/money'
 
 export default async function AccountsPage() {
@@ -13,7 +13,7 @@ export default async function AccountsPage() {
     .from(accounts)
     .where(and(eq(accounts.userId, user.id), isNull(accounts.archivedAt)))
     .orderBy(asc(accounts.createdAt))
-  const balances = await Promise.all(rows.map((a) => accountBalanceMinor(a.id)))
+  const balById = await accountBalancesById(user.id)
 
   return (
     <div className="space-y-4">
@@ -27,7 +27,7 @@ export default async function AccountsPage() {
         </Link>
       </div>
       <ul className="divide-y rounded border">
-        {rows.map((a, i) => (
+        {rows.map((a) => (
           <li key={a.id}>
             <Link
               href={`/accounts/${a.id}`}
@@ -39,7 +39,7 @@ export default async function AccountsPage() {
               </span>
               <span className="font-mono">
                 {formatMoney({
-                  amountMinor: balances[i],
+                  amountMinor: balById[a.id] ?? 0,
                   currency: a.currency,
                 })}
               </span>
