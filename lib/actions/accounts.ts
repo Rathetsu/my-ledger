@@ -10,6 +10,7 @@ import { accounts, transactions } from '@/lib/db/schema'
 import { archiveBlockers } from '@/lib/db/queries'
 import { todayCairo } from '@/lib/dates/cairo'
 import { parseToMinor } from '@/lib/money/money'
+import { type ActionResult } from './definitions'
 
 // The shape every mutation in the app returns to useActionState.
 export type ActionState = { error: string } | null
@@ -21,16 +22,21 @@ const createAccountSchema = z.object({
 })
 
 export async function createAccount(
-  _prev: ActionState,
+  _prev: ActionResult | null,
   formData: FormData,
-): Promise<ActionState> {
+): Promise<ActionResult> {
   const user = await requireUser()
   const parsed = createAccountSchema.safeParse({
     name: formData.get('name'),
     currency: formData.get('currency'),
     openingBalance: formData.get('openingBalance') || '0',
   })
-  if (!parsed.success) return { error: parsed.error.issues[0].message }
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {}
+    for (const issue of parsed.error.issues)
+      fieldErrors[String(issue.path[0])] = issue.message
+    return { ok: false, error: parsed.error.issues[0].message, fieldErrors }
+  }
 
   let openingMinor: number
   try {
@@ -39,7 +45,7 @@ export async function createAccount(
       parsed.data.currency,
     )
   } catch {
-    return { error: 'Opening balance is not a valid amount' }
+    return { ok: false, error: 'Opening balance is not a valid amount' }
   }
 
   // Account row + opening transaction must land together.
@@ -74,15 +80,20 @@ const renameSchema = z.object({
 })
 
 export async function renameAccount(
-  _prev: ActionState,
+  _prev: ActionResult | null,
   formData: FormData,
-): Promise<ActionState> {
+): Promise<ActionResult> {
   const user = await requireUser()
   const parsed = renameSchema.safeParse({
     accountId: formData.get('accountId'),
     name: formData.get('name'),
   })
-  if (!parsed.success) return { error: parsed.error.issues[0].message }
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {}
+    for (const issue of parsed.error.issues)
+      fieldErrors[String(issue.path[0])] = issue.message
+    return { ok: false, error: parsed.error.issues[0].message, fieldErrors }
+  }
   await db
     .update(accounts)
     .set({ name: parsed.data.name })
@@ -94,20 +105,23 @@ export async function renameAccount(
 }
 
 export async function archiveAccount(
-  _prev: ActionState,
+  _prev: ActionResult | null,
   formData: FormData,
-): Promise<ActionState> {
+): Promise<ActionResult> {
   const user = await requireUser()
   const parsed = z
     .object({ accountId: z.string().uuid() })
     .safeParse({ accountId: formData.get('accountId') })
-  if (!parsed.success) return { error: 'Invalid account' }
+  if (!parsed.success) return { ok: false, error: 'Invalid account' }
 
   // Archiving is blocked while any active definition targets the account
   // (spec §3). archiveBlockers returns active income sources and bills; P5 extends it.
   const blockers = await archiveBlockers(parsed.data.accountId, user.id)
   if (blockers.length > 0) {
-    return { error: `Cannot archive: still targeted by ${blockers.join(', ')}` }
+    return {
+      ok: false,
+      error: `Cannot archive: still targeted by ${blockers.join(', ')}`,
+    }
   }
   await db
     .update(accounts)

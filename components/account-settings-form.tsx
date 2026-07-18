@@ -1,12 +1,14 @@
 'use client'
 
 import { useActionState } from 'react'
+import { FormErrors } from '@/components/form-errors'
 import {
   archiveAccount,
   renameAccount,
   type ActionState,
 } from '@/lib/actions/accounts'
 import { reconcileAccount } from '@/lib/actions/transactions'
+import type { ActionResult } from '@/lib/actions/definitions'
 
 export function AccountSettingsForm({
   account,
@@ -19,14 +21,14 @@ export function AccountSettingsForm({
     archived: boolean
   }
 }) {
-  const [renameState, renameAction] = useActionState<ActionState, FormData>(
-    renameAccount,
-    null,
-  )
-  const [archiveState, archiveAction] = useActionState<ActionState, FormData>(
-    archiveAccount,
-    null,
-  )
+  const [renameResult, renameAction] = useActionState<
+    ActionResult | null,
+    FormData
+  >(renameAccount, null)
+  const [archiveResult, archiveAction] = useActionState<
+    ActionResult | null,
+    FormData
+  >(archiveAccount, null)
   const [reconcileState, reconcileAction] = useActionState<
     ActionState,
     FormData
@@ -48,9 +50,8 @@ export function AccountSettingsForm({
             className="mt-1 w-full rounded border p-3"
           />
         </label>
-        {renameState?.error && (
-          <p className="text-sm text-red-600">{renameState.error}</p>
-        )}
+        <FormErrors result={renameResult} field="name" />
+        <FormErrors result={renameResult} />
         <button className="w-full rounded bg-blue-600 py-3 text-white">
           Rename
         </button>
@@ -81,9 +82,7 @@ export function AccountSettingsForm({
       )}
       <form action={archiveAction} className="space-y-2">
         <input type="hidden" name="accountId" value={account.id} />
-        {archiveState?.error && (
-          <p className="text-sm text-red-600">{archiveState.error}</p>
-        )}
+        <FormErrors result={archiveResult} />
         <button className="w-full rounded border border-red-600 py-3 text-red-600">
           Archive account
         </button>

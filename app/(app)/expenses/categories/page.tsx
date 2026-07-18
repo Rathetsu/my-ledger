@@ -1,4 +1,5 @@
 import { eq } from 'drizzle-orm'
+import { EmptyState } from '@/components/empty-state'
 import { db } from '@/lib/db/client'
 import { expenseCategories } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
@@ -17,7 +18,10 @@ export default async function CategoriesPage() {
       <h1 className="text-xl font-semibold">Expense categories</h1>
       <CategoryForm />
       {categories.length === 0 ? (
-        <p className="text-sm text-neutral-500">No categories yet. Add one above; expenses can also stay uncategorized.</p>
+        <EmptyState
+          title="No categories yet."
+          body="Add one above; expenses can also stay uncategorized."
+        />
       ) : (
         <ul className="divide-y rounded-lg border">
           {categories.map((c) => (
@@ -33,7 +37,10 @@ export default async function CategoriesPage() {
                     await deleteCategory({ id: c.id })
                   }}
                 >
-                  <button className="p-2 text-sm text-red-600" aria-label={`Delete ${c.name}`}>
+                  <button
+                    className="inline-flex min-h-11 items-center p-2 text-sm text-red-600"
+                    aria-label={`Delete ${c.name}`}
+                  >
                     Delete
                   </button>
                 </form>
@@ -41,7 +48,9 @@ export default async function CategoriesPage() {
               {/* Native <details> disclosure reveals the edit form full-width without any
                   client state, since this row lives in a server component. */}
               <details>
-                <summary className="cursor-pointer list-none text-sm text-blue-600">Edit</summary>
+                <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm text-blue-600">
+                  Edit
+                </summary>
                 <div className="mt-2">
                   <CategoryForm existing={c} />
                 </div>

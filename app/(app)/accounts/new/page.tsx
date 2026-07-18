@@ -1,11 +1,13 @@
 'use client'
 
 import { useActionState } from 'react'
-import { createAccount, type ActionState } from '@/lib/actions/accounts'
+import { FormErrors } from '@/components/form-errors'
+import { createAccount } from '@/lib/actions/accounts'
+import type { ActionResult } from '@/lib/actions/definitions'
 import { CURRENCIES } from '@/lib/money/money'
 
 export default function NewAccountPage() {
-  const [state, formAction] = useActionState<ActionState, FormData>(
+  const [result, formAction] = useActionState<ActionResult | null, FormData>(
     createAccount,
     null,
   )
@@ -20,6 +22,7 @@ export default function NewAccountPage() {
           className="mt-1 w-full rounded border p-3"
         />
       </label>
+      <FormErrors result={result} field="name" />
       <label className="block">
         <span className="text-sm">Currency</span>
         <select name="currency" className="mt-1 w-full rounded border p-3">
@@ -37,7 +40,8 @@ export default function NewAccountPage() {
           className="mt-1 w-full rounded border p-3"
         />
       </label>
-      {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
+      <FormErrors result={result} field="openingBalance" />
+      <FormErrors result={result} />
       <button className="w-full rounded bg-blue-600 py-3 text-white">
         Create account
       </button>

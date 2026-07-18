@@ -17,7 +17,7 @@ export function AttentionList({ items }: { items: AttentionItem[] }) {
   return (
     <section className="mt-4">
       <h2 className="px-4 text-sm font-semibold text-gray-500">
-        Needs attention
+        Needs attention <span aria-live="polite">({items.length})</span>
       </h2>
       <ul className="divide-y divide-gray-100">
         {items.map((item) => (

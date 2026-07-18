@@ -1,13 +1,14 @@
 import Link from 'next/link'
-import { asc, desc, eq } from 'drizzle-orm'
+import { and, asc, count, desc, eq } from 'drizzle-orm'
 import { AttentionList } from '@/components/dashboard/attention-list'
+import { SetupChecklist } from '@/components/setup-checklist'
 import { TrendCharts, type TrendPoint } from '@/components/trend-charts'
 import { requireUser } from '@/lib/auth'
 import { convert } from '@/lib/currency/convert'
 import { getRates } from '@/lib/currency/rates'
 import { todayCairo } from '@/lib/dates/cairo'
 import { db } from '@/lib/db/client'
-import { accounts, netWorthSnapshots, transactions } from '@/lib/db/schema'
+import { accounts, bills, incomeSources, installments, netWorthSnapshots, transactions } from '@/lib/db/schema'
 import { getSettings, totalsByCurrency } from '@/lib/db/queries'
 import { housekeeping } from '@/lib/housekeeping'
 import { rederiveDebtMinor, rederiveNetWorthMinor } from '@/lib/housekeeping/snapshot'
@@ -26,33 +27,42 @@ export default async function HomePage() {
   const user = await requireUser()
   const today = todayCairo()
   await housekeeping(user.id, today)
-  const [s, totals, rates, recent, attention, snapshotRows] = await Promise.all([
-    getSettings(user.id),
-    totalsByCurrency(user.id),
-    getRates(),
-    db
-      .select({
-        id: transactions.id,
-        type: transactions.type,
-        amountMinor: transactions.amountMinor,
-        currency: transactions.currency,
-        occurredOn: transactions.occurredOn,
-        note: transactions.note,
-        transferGroupId: transactions.transferGroupId,
-        accountName: accounts.name,
-      })
-      .from(transactions)
-      .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-      .where(eq(transactions.userId, user.id))
-      .orderBy(desc(transactions.occurredOn), desc(transactions.createdAt))
-      .limit(10),
-    getAttentionItems(user.id, today),
-    db
-      .select()
-      .from(netWorthSnapshots)
-      .where(eq(netWorthSnapshots.userId, user.id))
-      .orderBy(asc(netWorthSnapshots.date)),
-  ])
+  const [s, totals, rates, recent, attention, snapshotRows, [acct], [inc], [bill], [inst], [exp]] =
+    await Promise.all([
+      getSettings(user.id),
+      totalsByCurrency(user.id),
+      getRates(),
+      db
+        .select({
+          id: transactions.id,
+          type: transactions.type,
+          amountMinor: transactions.amountMinor,
+          currency: transactions.currency,
+          occurredOn: transactions.occurredOn,
+          note: transactions.note,
+          transferGroupId: transactions.transferGroupId,
+          accountName: accounts.name,
+        })
+        .from(transactions)
+        .innerJoin(accounts, eq(transactions.accountId, accounts.id))
+        .where(eq(transactions.userId, user.id))
+        .orderBy(desc(transactions.occurredOn), desc(transactions.createdAt))
+        .limit(10),
+      getAttentionItems(user.id, today),
+      db
+        .select()
+        .from(netWorthSnapshots)
+        .where(eq(netWorthSnapshots.userId, user.id))
+        .orderBy(asc(netWorthSnapshots.date)),
+      db.select({ n: count() }).from(accounts).where(eq(accounts.userId, user.id)),
+      db.select({ n: count() }).from(incomeSources).where(eq(incomeSources.userId, user.id)),
+      db.select({ n: count() }).from(bills).where(eq(bills.userId, user.id)),
+      db.select({ n: count() }).from(installments).where(eq(installments.userId, user.id)),
+      db
+        .select({ n: count() })
+        .from(transactions)
+        .where(and(eq(transactions.userId, user.id), eq(transactions.type, 'expense'))),
+    ])
   const home = s.homeCurrency
   // Convert each per-currency total once, round half-up, then sum (spec §3).
   const netWorth = CURRENCIES.reduce(
@@ -71,6 +81,15 @@ export default async function HomePage() {
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-semibold">My Ledger</h1>
+
+      <SetupChecklist
+        state={{
+          hasAccount: acct.n > 0,
+          hasIncomeSource: inc.n > 0,
+          hasCommitment: bill.n + inst.n > 0,
+          hasExpense: exp.n > 0,
+        }}
+      />
 
       <AttentionList items={attention} />
 

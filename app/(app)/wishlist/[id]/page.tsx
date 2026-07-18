@@ -3,12 +3,16 @@ import { and, eq } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { wishlistItems } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
-import { deleteWishlistItem } from '@/lib/actions/wishlist'
 import { WishlistItemForm } from '@/components/wishlist/wishlist-item-form'
+import { DeleteItemForm } from '@/components/wishlist/delete-item-form'
 import type { Currency } from '@/lib/money/money'
 import { redirect } from 'next/navigation'
 
-export default async function WishlistItemPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function WishlistItemPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   const { id } = await params
   const user = await requireUser()
   const [item] = await db
@@ -31,15 +35,7 @@ export default async function WishlistItemPage({ params }: { params: Promise<{ i
           targetDate: item.targetDate,
         }}
       />
-      <form
-        action={async () => {
-          'use server'
-          await deleteWishlistItem({ id: item.id })
-          redirect('/wishlist')
-        }}
-      >
-        <button className="w-full rounded-lg border border-red-300 p-3 text-sm text-red-600">Delete item</button>
-      </form>
+      <DeleteItemForm id={item.id} />
     </main>
   )
 }

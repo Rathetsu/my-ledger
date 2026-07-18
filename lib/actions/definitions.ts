@@ -8,7 +8,9 @@ import { accounts } from '@/lib/db/schema'
 import { parseToMinor } from '@/lib/money/money'
 import type { Currency } from '@/lib/money/money'
 
-export type ActionResult = { ok: true } | { ok: false; error: string }
+export type ActionResult =
+  | { ok: true }
+  | { ok: false; error: string; fieldErrors?: Record<string, string> }
 
 // Thrown inside a definition-update transaction to distinguish "not found" from a
 // real error; only the message is surfaced, never the class name.

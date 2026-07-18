@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   confirmOccurrenceAction,
   skipOccurrenceAction,
@@ -18,6 +18,41 @@ export function ConfirmSheet({
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const focusedRef = useRef(false)
+
+  // Trap focus within the sheet and close on Escape while it is open
+  // (a11y: role="dialog" needs a labelled title, focus containment, and Escape).
+  useEffect(() => {
+    const node = dialogRef.current
+    if (!node) return
+    const focusables = node.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href]',
+    )
+    // Move focus into the sheet once, on open — not on every re-render.
+    if (!focusedRef.current) {
+      focusables[0]?.focus()
+      focusedRef.current = true
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab' || focusables.length === 0) return
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    node.addEventListener('keydown', onKey)
+    return () => node.removeEventListener('keydown', onKey)
+  }, [onClose])
 
   async function onConfirm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -54,17 +89,21 @@ export function ConfirmSheet({
 
   return (
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-50 bg-black/40"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
+      aria-labelledby="confirm-sheet-title"
     >
       <form
         onSubmit={onConfirm}
         onClick={(e) => e.stopPropagation()}
         className="absolute inset-x-0 bottom-0 space-y-3 rounded-t-2xl bg-white p-4"
       >
-        <h3 className="font-semibold">{item.sourceName}</h3>
+        <h3 id="confirm-sheet-title" className="font-semibold">
+          {item.sourceName}
+        </h3>
         <label className="block text-sm">
           Amount ({item.currency})
           <input

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { and, desc, eq, gte, lt } from 'drizzle-orm'
+import { EmptyState } from '@/components/empty-state'
 import { db } from '@/lib/db/client'
 import { expenseCategories, transactions } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
@@ -46,14 +47,19 @@ export default async function ExpensesPage({
       categoryIcon: expenseCategories.icon,
     })
     .from(transactions)
-    .leftJoin(expenseCategories, eq(transactions.categoryId, expenseCategories.id))
+    .leftJoin(
+      expenseCategories,
+      eq(transactions.categoryId, expenseCategories.id),
+    )
     .where(
       and(
         eq(transactions.userId, user.id),
         eq(transactions.type, 'expense'),
         gte(transactions.occurredOn, `${period}-01`),
         lt(transactions.occurredOn, `${addPeriods(period, 1)}-01`),
-        categoryFilter ? eq(transactions.categoryId, categoryFilter) : undefined,
+        categoryFilter
+          ? eq(transactions.categoryId, categoryFilter)
+          : undefined,
       ),
     )
     .orderBy(desc(transactions.occurredOn))
@@ -67,8 +73,19 @@ export default async function ExpensesPage({
         </Link>
       </div>
       <form method="GET" className="flex gap-2">
-        <input type="month" name="month" defaultValue={period} className="min-w-0 flex-1 rounded-lg border p-3" />
-        <select name="category" defaultValue={params.category ?? ''} className="min-w-0 flex-1 rounded-lg border p-3">
+        <input
+          type="month"
+          name="month"
+          defaultValue={period}
+          aria-label="Month"
+          className="min-w-0 flex-1 rounded-lg border p-3"
+        />
+        <select
+          name="category"
+          defaultValue={params.category ?? ''}
+          aria-label="Category filter"
+          className="min-w-0 flex-1 rounded-lg border p-3"
+        >
           <option value="">All categories</option>
           {categories.map((c) => (
             <option key={c.id} value={c.id}>
@@ -76,16 +93,22 @@ export default async function ExpensesPage({
             </option>
           ))}
         </select>
-        <button type="submit" className="rounded-lg border px-4">
+        <button
+          type="submit"
+          className="inline-flex min-h-11 items-center justify-center rounded-lg border px-4"
+        >
           Go
         </button>
       </form>
       {rows.length === 0 ? (
-        <p className="text-sm text-neutral-500">No expenses in {period}.</p>
+        <EmptyState title={`No expenses in ${period}.`} />
       ) : (
         <ul className="divide-y rounded-lg border">
           {rows.map((r) => (
-            <li key={r.id} className="flex items-center justify-between gap-2 p-3">
+            <li
+              key={r.id}
+              className="flex items-center justify-between gap-2 p-3"
+            >
               <div className="min-w-0">
                 <p className="truncate">{r.note || 'Expense'}</p>
                 <p className="text-xs text-neutral-500">
@@ -95,7 +118,10 @@ export default async function ExpensesPage({
                 </p>
               </div>
               <span className="shrink-0 tabular-nums">
-                {formatMoney({ amountMinor: -r.amountMinor, currency: r.currency })}
+                {formatMoney({
+                  amountMinor: -r.amountMinor,
+                  currency: r.currency,
+                })}
               </span>
             </li>
           ))}

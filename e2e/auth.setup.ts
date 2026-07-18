@@ -22,7 +22,12 @@ setup('register (first run) then sign in', async ({ page }) => {
   await page.getByLabel('Password').fill(PASSWORD)
   await page.getByRole('button', { name: /sign in/i }).click()
   await page.waitForURL('/')
-  await expect(page.getByRole('heading', { name: 'My Ledger' })).toBeVisible()
+  // The (app)/loading.tsx boundary lets '/' commit before the dashboard's
+  // server render (housekeeping + queries) completes, so allow for a cold
+  // `next dev` compile of the route on first hit.
+  await expect(
+    page.getByRole('heading', { name: 'My Ledger', exact: true }),
+  ).toBeVisible({ timeout: 30_000 })
 
   await page.context().storageState({ path: authFile })
 })

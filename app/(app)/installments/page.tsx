@@ -1,5 +1,6 @@
 import { and, asc, eq, inArray } from 'drizzle-orm'
 import Link from 'next/link'
+import { EmptyState } from '@/components/empty-state'
 import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { installments, occurrences } from '@/lib/db/schema'
@@ -38,43 +39,42 @@ export default async function InstallmentsPage() {
           New installment
         </Link>
       </div>
-      <ul className="divide-y divide-gray-100">
-        {rows.map((i) => {
-          const paid = i.totalCount - i.remainingCount
-          return (
-            <li key={i.id}>
-              <Link
-                href={`/installments/${i.id}/edit`}
-                className="flex items-center justify-between px-4 py-3"
-              >
-                <span>
-                  <span className="block font-medium">{i.name}</span>
-                  <span className="block text-sm text-gray-500">
-                    Paid {paid} of {i.totalCount}
-                    {i.remainingCount === 0
-                      ? ', completed'
-                      : nextDue.has(i.id)
-                        ? `, next due ${nextDue.get(i.id)}`
-                        : ''}
+      {rows.length === 0 ? (
+        <EmptyState title="No installments yet." />
+      ) : (
+        <ul className="divide-y divide-gray-100">
+          {rows.map((i) => {
+            const paid = i.totalCount - i.remainingCount
+            return (
+              <li key={i.id}>
+                <Link
+                  href={`/installments/${i.id}/edit`}
+                  className="flex items-center justify-between px-4 py-3"
+                >
+                  <span>
+                    <span className="block font-medium">{i.name}</span>
+                    <span className="block text-sm text-gray-500">
+                      Paid {paid} of {i.totalCount}
+                      {i.remainingCount === 0
+                        ? ', completed'
+                        : nextDue.has(i.id)
+                          ? `, next due ${nextDue.get(i.id)}`
+                          : ''}
+                    </span>
                   </span>
-                </span>
-                <span className="font-medium">
-                  {formatMoney({
-                    amountMinor: i.monthlyAmountMinor,
-                    currency: i.currency,
-                  })}
-                  /mo
-                </span>
-              </Link>
-            </li>
-          )
-        })}
-        {rows.length === 0 && (
-          <li className="px-4 py-6 text-sm text-gray-500">
-            No installments yet.
-          </li>
-        )}
-      </ul>
+                  <span className="font-medium">
+                    {formatMoney({
+                      amountMinor: i.monthlyAmountMinor,
+                      currency: i.currency,
+                    })}
+                    /mo
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      )}
     </main>
   )
 }

@@ -1,15 +1,16 @@
 import Link from 'next/link'
 import { and, eq, isNull } from 'drizzle-orm'
+import { EmptyState } from '@/components/empty-state'
 import { db } from '@/lib/db/client'
 import { accountBalancesById } from '@/lib/db/queries'
 import { accounts, wishlistItems } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
 import { buildPlanInput } from '@/lib/planner/input'
 import { buildPlan } from '@/lib/planner/engine'
-import { unpurchaseWishlistItem } from '@/lib/actions/wishlist'
 import { formatMoney, type Currency } from '@/lib/money/money'
 import { WishlistItemForm } from '@/components/wishlist/wishlist-item-form'
 import { PurchaseSheet } from '@/components/wishlist/purchase-sheet'
+import { UnpurchaseForm } from '@/components/wishlist/unpurchase-form'
 
 export default async function WishlistPage() {
   const user = await requireUser()
@@ -39,7 +40,7 @@ export default async function WishlistPage() {
       <h1 className="text-xl font-semibold">Wishlist</h1>
       <WishlistItemForm />
       {planned.length === 0 && purchased.length === 0 && (
-        <p className="text-sm text-neutral-500">Nothing here yet. Add something you are saving for.</p>
+        <EmptyState title="Nothing here yet. Add something you are saving for." />
       )}
       {planned.length > 0 && (
         <ul className="space-y-3">
@@ -49,7 +50,12 @@ export default async function WishlistPage() {
                 <Link href={`/wishlist/${i.id}`} className="font-medium">
                   {i.name}
                 </Link>
-                <span className="tabular-nums">{formatMoney({ amountMinor: i.costMinor, currency: i.currency as Currency })}</span>
+                <span className="tabular-nums">
+                  {formatMoney({
+                    amountMinor: i.costMinor,
+                    currency: i.currency as Currency,
+                  })}
+                </span>
               </div>
               <p className="text-xs text-neutral-500">
                 Priority {i.priority}
@@ -61,10 +67,19 @@ export default async function WishlistPage() {
                   : `Beyond ${input.horizonMonths} months`}
               </span>
               <PurchaseSheet
-                item={{ id: i.id, name: i.name, costMinor: i.costMinor, currency: i.currency as Currency }}
+                item={{
+                  id: i.id,
+                  name: i.name,
+                  costMinor: i.costMinor,
+                  currency: i.currency as Currency,
+                }}
                 accounts={accountsWithBalances
                   .filter((a) => a.currency === i.currency)
-                  .map((a) => ({ id: a.id, name: a.name, balanceMinor: a.balanceMinor }))}
+                  .map((a) => ({
+                    id: a.id,
+                    name: a.name,
+                    balanceMinor: a.balanceMinor,
+                  }))}
               />
             </li>
           ))}
@@ -75,18 +90,18 @@ export default async function WishlistPage() {
           <h2 className="text-sm font-medium">Purchased</h2>
           <ul className="divide-y rounded-lg border">
             {purchased.map((i) => (
-              <li key={i.id} className="flex items-center justify-between p-3 text-sm">
+              <li
+                key={i.id}
+                className="flex items-center justify-between p-3 text-sm"
+              >
                 <span>
-                  {i.name} · {formatMoney({ amountMinor: i.costMinor, currency: i.currency as Currency })}
+                  {i.name} ·{' '}
+                  {formatMoney({
+                    amountMinor: i.costMinor,
+                    currency: i.currency as Currency,
+                  })}
                 </span>
-                <form
-                  action={async () => {
-                    'use server'
-                    await unpurchaseWishlistItem({ id: i.id })
-                  }}
-                >
-                  <button className="p-2 text-xs text-red-600">Un-purchase</button>
-                </form>
+                <UnpurchaseForm id={i.id} />
               </li>
             ))}
           </ul>
