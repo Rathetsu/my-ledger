@@ -16,7 +16,7 @@ const TABS = [
 export function BottomTabs() {
   const pathname = usePathname()
   return (
-    <nav className="fixed inset-x-0 bottom-0 border-t bg-white">
+    <nav className="fixed inset-x-0 bottom-0 border-t bg-white md:hidden">
       <ul className="flex">
         {TABS.map((t) => {
           const active =
