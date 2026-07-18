@@ -7,6 +7,7 @@ import {
   occurrences,
 } from '@/lib/db/schema'
 import { dueDateFor, periodOf } from '@/lib/dates/cairo'
+import { upsertDailySnapshot } from './snapshot'
 
 export function nextPeriod(period: string): string {
   const [y, m] = period.split('-').map(Number)
@@ -129,6 +130,7 @@ export async function housekeeping(
         lt(occurrences.dueDate, today),
       ),
     )
+  await upsertDailySnapshot(userId, today)
 }
 
 // Definition-edit rail shared by income, bills, and (P5) installments.
