@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { and, asc, eq, isNull } from 'drizzle-orm'
+import { EmptyState } from '@/components/empty-state'
 import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts } from '@/lib/db/schema'
@@ -26,30 +27,31 @@ export default async function AccountsPage() {
           Add account
         </Link>
       </div>
-      <ul className="divide-y rounded border">
-        {rows.map((a) => (
-          <li key={a.id}>
-            <Link
-              href={`/accounts/${a.id}`}
-              className="flex items-center justify-between p-3"
-            >
-              <span>
-                {a.name}{' '}
-                <span className="text-xs text-gray-500">({a.currency})</span>
-              </span>
-              <span className="font-mono">
-                {formatMoney({
-                  amountMinor: balById[a.id] ?? 0,
-                  currency: a.currency,
-                })}
-              </span>
-            </Link>
-          </li>
-        ))}
-        {rows.length === 0 && (
-          <li className="p-3 text-sm text-gray-500">No accounts yet.</li>
-        )}
-      </ul>
+      {rows.length === 0 ? (
+        <EmptyState title="No accounts yet." />
+      ) : (
+        <ul className="divide-y rounded border">
+          {rows.map((a) => (
+            <li key={a.id}>
+              <Link
+                href={`/accounts/${a.id}`}
+                className="flex items-center justify-between p-3"
+              >
+                <span>
+                  {a.name}{' '}
+                  <span className="text-xs text-gray-500">({a.currency})</span>
+                </span>
+                <span className="font-mono">
+                  {formatMoney({
+                    amountMinor: balById[a.id] ?? 0,
+                    currency: a.currency,
+                  })}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { and, asc, desc, eq, gte, isNull, lte, type SQL } from 'drizzle-orm'
+import { EmptyState } from '@/components/empty-state'
 import { requireUser } from '@/lib/auth'
 import { db } from '@/lib/db/client'
 import { accounts, transactions, TRANSACTION_TYPES } from '@/lib/db/schema'
@@ -141,38 +142,39 @@ export default async function TransactionsPage({
         <button className="col-span-2 rounded border py-2">Filter</button>
       </form>
 
-      <ul className="divide-y rounded border">
-        {rows.map((t) => (
-          <li key={t.id}>
-            <Link
-              href={
-                t.transferGroupId
-                  ? `/transfers/${t.transferGroupId}`
-                  : `/transactions/${t.id}`
-              }
-              className="flex items-center justify-between p-3"
-            >
-              <span className="min-w-0">
-                <span className="block truncate">{t.note || t.type}</span>
-                <span className="block text-xs text-gray-500">
-                  {t.type} · {t.accountName} · {t.occurredOn}
-                </span>
-              </span>
-              <span
-                className={`font-mono ${t.amountMinor < 0 ? 'text-red-600' : 'text-green-700'}`}
+      {rows.length === 0 ? (
+        <EmptyState title="Nothing here yet." />
+      ) : (
+        <ul className="divide-y rounded border">
+          {rows.map((t) => (
+            <li key={t.id}>
+              <Link
+                href={
+                  t.transferGroupId
+                    ? `/transfers/${t.transferGroupId}`
+                    : `/transactions/${t.id}`
+                }
+                className="flex items-center justify-between p-3"
               >
-                {formatMoney({
-                  amountMinor: t.amountMinor,
-                  currency: t.currency,
-                })}
-              </span>
-            </Link>
-          </li>
-        ))}
-        {rows.length === 0 && (
-          <li className="p-3 text-sm text-gray-500">Nothing here yet.</li>
-        )}
-      </ul>
+                <span className="min-w-0">
+                  <span className="block truncate">{t.note || t.type}</span>
+                  <span className="block text-xs text-gray-500">
+                    {t.type} · {t.accountName} · {t.occurredOn}
+                  </span>
+                </span>
+                <span
+                  className={`font-mono ${t.amountMinor < 0 ? 'text-red-600' : 'text-green-700'}`}
+                >
+                  {formatMoney({
+                    amountMinor: t.amountMinor,
+                    currency: t.currency,
+                  })}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
