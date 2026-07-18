@@ -15,7 +15,9 @@ export function ReversePaymentForm({ id }: { id: string }) {
         }
       }}
     >
-      <button className="p-2 text-xs text-red-600">Reverse</button>
+      <button className="inline-flex min-h-11 items-center p-2 text-xs text-red-600">
+        Reverse
+      </button>
       {error && (
         <p role="alert" className="mt-2 text-sm text-red-600">
           {error}

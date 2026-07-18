@@ -38,7 +38,7 @@ export default async function CategoriesPage() {
                   }}
                 >
                   <button
-                    className="p-2 text-sm text-red-600"
+                    className="inline-flex min-h-11 items-center p-2 text-sm text-red-600"
                     aria-label={`Delete ${c.name}`}
                   >
                     Delete
@@ -48,7 +48,7 @@ export default async function CategoriesPage() {
               {/* Native <details> disclosure reveals the edit form full-width without any
                   client state, since this row lives in a server component. */}
               <details>
-                <summary className="cursor-pointer list-none text-sm text-blue-600">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center text-sm text-blue-600">
                   Edit
                 </summary>
                 <div className="mt-2">

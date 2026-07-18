@@ -29,7 +29,7 @@ export function PurchaseSheet({
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full rounded-lg border p-2 text-sm"
+        className="flex min-h-11 w-full items-center justify-center rounded-lg border p-2 text-sm"
       >
         Buy
       </button>
@@ -51,6 +51,7 @@ export function PurchaseSheet({
         value={accountId}
         onChange={(e) => setAccountId(e.target.value)}
         required
+        aria-label="Buy from account"
         className="w-full rounded-lg border p-3"
       >
         {accounts.length > 1 && <option value="">Buy from…</option>}
@@ -83,14 +84,14 @@ export function PurchaseSheet({
       <div className="flex gap-2">
         <button
           type="submit"
-          className="flex-1 rounded-lg bg-neutral-900 p-2 text-sm text-white dark:bg-neutral-100 dark:text-neutral-900"
+          className="flex min-h-11 flex-1 items-center justify-center rounded-lg bg-neutral-900 p-2 text-sm text-white dark:bg-neutral-100 dark:text-neutral-900"
         >
           Confirm purchase
         </button>
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="rounded-lg border px-3 text-sm"
+          className="inline-flex min-h-11 items-center justify-center rounded-lg border px-3 text-sm"
         >
           Cancel
         </button>

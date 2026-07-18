@@ -77,11 +77,13 @@ export default async function ExpensesPage({
           type="month"
           name="month"
           defaultValue={period}
+          aria-label="Month"
           className="min-w-0 flex-1 rounded-lg border p-3"
         />
         <select
           name="category"
           defaultValue={params.category ?? ''}
+          aria-label="Category filter"
           className="min-w-0 flex-1 rounded-lg border p-3"
         >
           <option value="">All categories</option>
@@ -91,7 +93,10 @@ export default async function ExpensesPage({
             </option>
           ))}
         </select>
-        <button type="submit" className="rounded-lg border px-4">
+        <button
+          type="submit"
+          className="inline-flex min-h-11 items-center justify-center rounded-lg border px-4"
+        >
           Go
         </button>
       </form>

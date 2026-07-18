@@ -139,7 +139,7 @@ export default async function TransactionsPage({
             className="mt-1 w-full rounded border p-2"
           />
         </label>
-        <button className="col-span-2 rounded border py-2">Filter</button>
+        <button className="col-span-2 min-h-11 rounded border">Filter</button>
       </form>
 
       {rows.length === 0 ? (
