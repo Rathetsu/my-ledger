@@ -8,6 +8,8 @@ export default defineConfig({
   globalSetup: './e2e/global.setup.ts',
   timeout: 60_000,
   fullyParallel: false,
+  // Single shared Neon test DB: specs must run one at a time (see 11-polish.md).
+  workers: 1,
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
