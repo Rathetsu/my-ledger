@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/lib/housekeeping', () => ({
   housekeeping: vi.fn(async () => undefined),
@@ -6,10 +6,13 @@ vi.mock('@/lib/housekeeping', () => ({
 vi.mock('@/lib/dates/cairo', () => ({
   todayCairo: () => '2026-07-07',
 }))
+
+const usersToReturn: { userId: string }[] = [{ userId: 'user-1' }]
+
 vi.mock('@/lib/db/client', () => ({
   db: {
     selectDistinct: () => ({
-      from: async () => [{ userId: 'user-1' }],
+      from: async () => usersToReturn,
     }),
   },
 }))
@@ -24,7 +27,14 @@ function get(headers: Record<string, string> = {}) {
 describe('GET /api/cron/daily', () => {
   beforeEach(() => {
     vi.mocked(housekeeping).mockClear()
+    vi.mocked(housekeeping).mockImplementation(async () => undefined)
+    usersToReturn.length = 0
+    usersToReturn.push({ userId: 'user-1' })
     vi.stubEnv('CRON_SECRET', 's3cret')
+  })
+
+  afterEach(() => {
+    vi.unstubAllEnvs()
   })
 
   it('returns 401 without an Authorization header', async () => {
@@ -47,7 +57,21 @@ describe('GET /api/cron/daily', () => {
   it('runs housekeeping per user and reports the count with the right secret', async () => {
     const res = await get({ authorization: 'Bearer s3cret' })
     expect(res.status).toBe(200)
-    await expect(res.json()).resolves.toEqual({ ok: true, ran: 1 })
+    await expect(res.json()).resolves.toEqual({ ok: true, ran: 1, failed: 0 })
     expect(housekeeping).toHaveBeenCalledWith('user-1', '2026-07-07')
+  })
+
+  it('isolates a per-user housekeeping failure: other users still run', async () => {
+    usersToReturn.length = 0
+    usersToReturn.push({ userId: 'user-1' }, { userId: 'user-2' })
+    vi.mocked(housekeeping).mockImplementation(async (userId: string) => {
+      if (userId === 'user-1') throw new Error('boom')
+    })
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const res = await get({ authorization: 'Bearer s3cret' })
+    consoleError.mockRestore()
+    expect(res.status).toBe(200)
+    await expect(res.json()).resolves.toEqual({ ok: false, ran: 1, failed: 1 })
+    expect(housekeeping).toHaveBeenCalledTimes(2)
   })
 })
