@@ -48,6 +48,12 @@ describe('GET /api/cron/daily', () => {
     expect(res.status).toBe(401)
   })
 
+  it('returns 401 for an equal-length wrong bearer (exercises timingSafeEqual content compare)', async () => {
+    const res = await get({ authorization: 'Bearer s3xret' })
+    expect(res.status).toBe(401)
+    expect(housekeeping).not.toHaveBeenCalled()
+  })
+
   it('returns 401 when CRON_SECRET is unset, even for a literal match attempt', async () => {
     vi.stubEnv('CRON_SECRET', '')
     const res = await get({ authorization: 'Bearer undefined' })
