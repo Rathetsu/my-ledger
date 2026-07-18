@@ -36,6 +36,7 @@ export default async function globalSetup() {
   await sql`delete from flexible_debts where user_id = ${userId}`
   await sql`delete from wishlist_items where user_id = ${userId}`
   await sql`delete from ai_advice_cache where user_id = ${userId}`
+  await sql`delete from net_worth_snapshots where user_id = ${userId}`
   await sql`delete from settings where user_id = ${userId}`
   console.log(`[e2e prune] cleared data for e2e user ${userId}`)
 }
