@@ -249,7 +249,7 @@ export function rederiveDebtMinor(
 }
 ```
 
-- [ ] Run `npx vitest run lib/housekeeping/snapshot.test.ts`. Expected: PASS (6 tests).
+- [ ] Run `npx vitest run lib/housekeeping/snapshot.test.ts`. Expected: PASS (5 tests).
 - [ ] Commit: `git add lib/housekeeping/snapshot.ts lib/housekeeping/snapshot.test.ts && git commit -m "feat(snapshots): pure snapshot math and stored-rates re-derivation"`
 
 ---

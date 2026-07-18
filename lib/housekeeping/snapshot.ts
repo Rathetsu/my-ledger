@@ -99,7 +99,7 @@ export async function upsertDailySnapshot(userId: string, date: string): Promise
   const debtRows = await db.select().from(flexibleDebts).where(eq(flexibleDebts.userId, userId))
   const debtTotalsMinor: Partial<Record<Currency, number>> = {}
   for (const d of debtRows) {
-    // ponytail: one round trip per debt; debts are few per user, so this stays flat
+    // ponytail: two round trips per debt (debt row + its transactions); debts are few per user, so this stays flat
     const balance = await debtBalanceMinor(d.id)
     if (balance > 0) {
       const c = d.currency as Currency
