@@ -71,6 +71,13 @@
       "when": 1784059516041,
       "tag": "0009_p9-ai-advice-cache",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1784365469513,
+      "tag": "0010_p10-net-worth-snapshots",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,5 @@
 import {
+  bigint,
   boolean,
   date,
   doublePrecision,
@@ -88,6 +89,23 @@ export const settings = pgTable('settings', {
   >(),
   aiEnabled: boolean('ai_enabled').notNull().default(true),
 })
+
+export const netWorthSnapshots = pgTable(
+  'net_worth_snapshots',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: text('user_id').notNull(),
+    date: date('date').notNull(), // Cairo calendar day, YYYY-MM-DD
+    perCurrency: jsonb('per_currency').notNull().$type<Partial<Record<'EUR' | 'USD' | 'EGP', number>>>(),
+    // bigint diverges from the integer-column convention on purpose: these are converted
+    // SUMS that can exceed int4 for EGP-home users; mode 'number' keeps them JS numbers.
+    combinedMinor: bigint('combined_minor', { mode: 'number' }).notNull(),
+    homeCurrency: currencyEnum('home_currency').notNull(),
+    rates: jsonb('rates').notNull().$type<{ base: 'USD'; rates: Record<'EUR' | 'USD' | 'EGP', number>; fetchedAt: string }>(),
+    totalDebtMinor: bigint('total_debt_minor', { mode: 'number' }).notNull(),
+  },
+  (t) => [uniqueIndex('net_worth_snapshots_user_date').on(t.userId, t.date)],
+)
 
 export const occurrenceKind = pgEnum('occurrence_kind', [
   'income',
