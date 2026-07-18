@@ -1,3 +1,9 @@
 {
-  "buildCommand": "drizzle-kit migrate && next build"
+  "buildCommand": "drizzle-kit migrate && next build",
+  "crons": [
+    {
+      "path": "/api/cron/daily",
+      "schedule": "0 3 * * *"
+    }
+  ]
 }
