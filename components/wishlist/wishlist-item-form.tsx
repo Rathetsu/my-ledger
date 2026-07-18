@@ -5,45 +5,74 @@ import { useRouter } from 'next/navigation'
 import { createWishlistItem, updateWishlistItem } from '@/lib/actions/wishlist'
 import { parseToMinor, type Currency } from '@/lib/money/money'
 
-type Existing = { id: string; name: string; costMinor: number; currency: Currency; priority: number; targetDate: string | null }
+type Existing = {
+  id: string
+  name: string
+  costMinor: number
+  currency: Currency
+  priority: number
+  targetDate: string | null
+}
 
 export function WishlistItemForm({ existing }: { existing?: Existing }) {
   const router = useRouter()
   const [name, setName] = useState(existing?.name ?? '')
-  const [currency, setCurrency] = useState<Currency>(existing?.currency ?? 'EUR')
-  const [cost, setCost] = useState(existing ? (existing.costMinor / 100).toFixed(2) : '')
-  const [priority, setPriority] = useState(existing ? String(existing.priority) : '3')
+  const [currency, setCurrency] = useState<Currency>(
+    existing?.currency ?? 'EUR',
+  )
+  const [cost, setCost] = useState(
+    existing ? (existing.costMinor / 100).toFixed(2) : '',
+  )
+  const [priority, setPriority] = useState(
+    existing ? String(existing.priority) : '3',
+  )
   const [targetDate, setTargetDate] = useState(existing?.targetDate ?? '')
+  const [error, setError] = useState<string | null>(null)
   return (
     <form
       action={async () => {
-        const payload = {
-          name,
-          costMinor: parseToMinor(cost, currency),
-          currency,
-          priority: Number(priority),
-          targetDate: targetDate || undefined,
-        }
-        if (existing) {
-          await updateWishlistItem({ id: existing.id, ...payload })
-          router.push('/wishlist')
-        } else {
-          await createWishlistItem(payload)
-          setName('')
-          setCost('')
-          setTargetDate('')
+        try {
+          const payload = {
+            name,
+            costMinor: parseToMinor(cost, currency),
+            currency,
+            priority: Number(priority),
+            targetDate: targetDate || undefined,
+          }
+          if (existing) {
+            await updateWishlistItem({ id: existing.id, ...payload })
+            router.push('/wishlist')
+          } else {
+            await createWishlistItem(payload)
+            setName('')
+            setCost('')
+            setTargetDate('')
+          }
+        } catch (err) {
+          setError(err instanceof Error ? err.message : String(err))
         }
       }}
       className="space-y-3"
     >
       <label className="block text-sm">
         Name
-        <input value={name} onChange={(e) => setName(e.target.value)} required className="mt-1 w-full rounded-lg border p-3" />
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="mt-1 w-full rounded-lg border p-3"
+        />
       </label>
       <div className="flex gap-2">
         <label className="block flex-1 text-sm">
           Cost
-          <input value={cost} onChange={(e) => setCost(e.target.value)} inputMode="decimal" required className="mt-1 w-full rounded-lg border p-3" />
+          <input
+            value={cost}
+            onChange={(e) => setCost(e.target.value)}
+            inputMode="decimal"
+            required
+            className="mt-1 w-full rounded-lg border p-3"
+          />
         </label>
         <label className="block text-sm">
           Currency
@@ -62,7 +91,11 @@ export function WishlistItemForm({ existing }: { existing?: Existing }) {
       <div className="flex gap-2">
         <label className="block flex-1 text-sm">
           Priority (1 = highest)
-          <select value={priority} onChange={(e) => setPriority(e.target.value)} className="mt-1 w-full rounded-lg border p-3">
+          <select
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+            className="mt-1 w-full rounded-lg border p-3"
+          >
             {['1', '2', '3', '4', '5'].map((p) => (
               <option key={p}>{p}</option>
             ))}
@@ -70,10 +103,23 @@ export function WishlistItemForm({ existing }: { existing?: Existing }) {
         </label>
         <label className="block flex-1 text-sm">
           Target date (optional)
-          <input type="date" value={targetDate} onChange={(e) => setTargetDate(e.target.value)} className="mt-1 w-full rounded-lg border p-3" />
+          <input
+            type="date"
+            value={targetDate}
+            onChange={(e) => setTargetDate(e.target.value)}
+            className="mt-1 w-full rounded-lg border p-3"
+          />
         </label>
       </div>
-      <button type="submit" className="w-full rounded-lg bg-neutral-900 p-3 text-white dark:bg-neutral-100 dark:text-neutral-900">
+      {error && (
+        <p role="alert" className="mt-2 text-sm text-red-600">
+          {error}
+        </p>
+      )}
+      <button
+        type="submit"
+        className="w-full rounded-lg bg-neutral-900 p-3 text-white dark:bg-neutral-100 dark:text-neutral-900"
+      >
         {existing ? 'Save' : 'Add'}
       </button>
     </form>

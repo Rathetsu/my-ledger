@@ -7,10 +7,10 @@ import { accounts, wishlistItems } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
 import { buildPlanInput } from '@/lib/planner/input'
 import { buildPlan } from '@/lib/planner/engine'
-import { unpurchaseWishlistItem } from '@/lib/actions/wishlist'
 import { formatMoney, type Currency } from '@/lib/money/money'
 import { WishlistItemForm } from '@/components/wishlist/wishlist-item-form'
 import { PurchaseSheet } from '@/components/wishlist/purchase-sheet'
+import { UnpurchaseForm } from '@/components/wishlist/unpurchase-form'
 
 export default async function WishlistPage() {
   const user = await requireUser()
@@ -101,16 +101,7 @@ export default async function WishlistPage() {
                     currency: i.currency as Currency,
                   })}
                 </span>
-                <form
-                  action={async () => {
-                    'use server'
-                    await unpurchaseWishlistItem({ id: i.id })
-                  }}
-                >
-                  <button className="p-2 text-xs text-red-600">
-                    Un-purchase
-                  </button>
-                </form>
+                <UnpurchaseForm id={i.id} />
               </li>
             ))}
           </ul>

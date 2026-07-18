@@ -3,11 +3,15 @@ import { and, desc, eq } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { flexibleDebts, transactions } from '@/lib/db/schema'
 import { requireUser } from '@/lib/auth'
-import { deleteDebtPayment } from '@/lib/actions/debts'
 import { DebtForm } from '@/components/debts/debt-form'
+import { ReversePaymentForm } from '@/components/debts/reverse-payment-form'
 import { formatMoney, type Currency } from '@/lib/money/money'
 
-export default async function DebtDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function DebtDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   const { id } = await params
   const user = await requireUser()
   const [debt] = await db
@@ -18,7 +22,12 @@ export default async function DebtDetailPage({ params }: { params: Promise<{ id:
   const payments = await db
     .select()
     .from(transactions)
-    .where(and(eq(transactions.sourceType, 'flexible_debt'), eq(transactions.sourceId, id)))
+    .where(
+      and(
+        eq(transactions.sourceType, 'flexible_debt'),
+        eq(transactions.sourceId, id),
+      ),
+    )
     .orderBy(desc(transactions.occurredOn))
 
   return (
@@ -42,18 +51,18 @@ export default async function DebtDetailPage({ params }: { params: Promise<{ id:
         ) : (
           <ul className="divide-y rounded-lg border">
             {payments.map((p) => (
-              <li key={p.id} className="flex items-center justify-between p-3 text-sm">
+              <li
+                key={p.id}
+                className="flex items-center justify-between p-3 text-sm"
+              >
                 <span>
-                  {p.occurredOn} · {formatMoney({ amountMinor: -p.amountMinor, currency: p.currency as Currency })}
+                  {p.occurredOn} ·{' '}
+                  {formatMoney({
+                    amountMinor: -p.amountMinor,
+                    currency: p.currency as Currency,
+                  })}
                 </span>
-                <form
-                  action={async () => {
-                    'use server'
-                    await deleteDebtPayment({ id: p.id })
-                  }}
-                >
-                  <button className="p-2 text-xs text-red-600">Reverse</button>
-                </form>
+                <ReversePaymentForm id={p.id} />
               </li>
             ))}
           </ul>
