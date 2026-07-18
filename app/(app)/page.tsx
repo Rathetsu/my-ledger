@@ -1,14 +1,16 @@
 import Link from 'next/link'
-import { desc, eq } from 'drizzle-orm'
+import { asc, desc, eq } from 'drizzle-orm'
 import { AttentionList } from '@/components/dashboard/attention-list'
+import { TrendCharts, type TrendPoint } from '@/components/trend-charts'
 import { requireUser } from '@/lib/auth'
 import { convert } from '@/lib/currency/convert'
 import { getRates } from '@/lib/currency/rates'
 import { todayCairo } from '@/lib/dates/cairo'
 import { db } from '@/lib/db/client'
-import { accounts, transactions } from '@/lib/db/schema'
+import { accounts, netWorthSnapshots, transactions } from '@/lib/db/schema'
 import { getSettings, totalsByCurrency } from '@/lib/db/queries'
 import { housekeeping } from '@/lib/housekeeping'
+import { rederiveDebtMinor, rederiveNetWorthMinor } from '@/lib/housekeeping/snapshot'
 import { getAttentionItems } from '@/lib/occurrences/attention'
 import { CURRENCIES, formatMoney } from '@/lib/money/money'
 
@@ -24,7 +26,7 @@ export default async function HomePage() {
   const user = await requireUser()
   const today = todayCairo()
   await housekeeping(user.id, today)
-  const [s, totals, rates, recent, attention] = await Promise.all([
+  const [s, totals, rates, recent, attention, snapshotRows] = await Promise.all([
     getSettings(user.id),
     totalsByCurrency(user.id),
     getRates(),
@@ -45,6 +47,11 @@ export default async function HomePage() {
       .orderBy(desc(transactions.occurredOn), desc(transactions.createdAt))
       .limit(10),
     getAttentionItems(user.id, today),
+    db
+      .select()
+      .from(netWorthSnapshots)
+      .where(eq(netWorthSnapshots.userId, user.id))
+      .orderBy(asc(netWorthSnapshots.date)),
   ])
   const home = s.homeCurrency
   // Convert each per-currency total once, round half-up, then sum (spec §3).
@@ -53,6 +60,13 @@ export default async function HomePage() {
     0,
   )
   const stale = isStale(rates.fetchedAt)
+  // Trend charts: every past point is re-derived in the CURRENT home currency
+  // from that snapshot's OWN stored rates, never today's rates.
+  const trendPoints: TrendPoint[] = snapshotRows.map((row) => ({
+    date: row.date,
+    netWorth: rederiveNetWorthMinor(row.perCurrency, row.rates, home) / 100,
+    debt: rederiveDebtMinor(row.totalDebtMinor, row.homeCurrency, row.rates, home) / 100,
+  }))
 
   return (
     <div className="space-y-6">
@@ -136,6 +150,8 @@ export default async function HomePage() {
           )}
         </ul>
       </section>
+
+      <TrendCharts points={trendPoints} homeCurrency={home} />
     </div>
   )
 }
