@@ -74,7 +74,7 @@ export function WindfallForm({ accounts }: { accounts: AccountOption[] }) {
       {error && <p className="text-sm text-red-600">{error}</p>}
       <button
         type="submit"
-        className="w-full rounded border py-2 text-sm font-medium"
+        className="min-h-11 w-full rounded border py-2 text-sm font-medium"
       >
         Add extra income
       </button>
