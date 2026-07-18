@@ -16,8 +16,9 @@ Next.js (App Router) + TypeScript + Tailwind, mobile-first (bottom tab nav). Neo
 app/
   api/auth/[...all]/route.ts      # Better Auth handler (toNextJsHandler)
   sign-in/page.tsx, sign-up/page.tsx  # email+password forms (outside (app))
-  (app)/layout.tsx                # protected shell + bottom tabs
-  (app)/page.tsx                  # dashboard: attention list, net worth, trends
+  (app)/layout.tsx                # protected shell: bottom tabs (mobile) + md sidebar
+  (app)/error.tsx, (app)/loading.tsx  # route-group error/loading boundaries
+  (app)/page.tsx                  # dashboard: setup checklist, attention list, net worth, trends
   (app)/accounts|transactions|income|bills|installments|debts|expenses|wishlist|plan|settings/
   api/cron/daily/route.ts         # CRON_SECRET-guarded → housekeeping()
 lib/
